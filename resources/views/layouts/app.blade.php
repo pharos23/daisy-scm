@@ -114,15 +114,6 @@
     // Select the checkbox
     const themeSwitcher = document.getElementById('theme-switcher');
 
-    // Function to toggle themes
-    function toggleTheme() {
-        if (themeSwitcher.checked) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        } else {
-            document.documentElement.setAttribute('data-theme', 'light');
-        }
-    }
-
     // Function to toggle and store the theme
     function toggleTheme() {
         if (themeSwitcher.checked) {
@@ -134,7 +125,7 @@
         }
     }
 
-    // Load saved theme on page load
+    // Load saved theme on a page load
     window.addEventListener('DOMContentLoaded', () => {
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
@@ -143,7 +134,7 @@
         }
     });
 
-    // Add event listener to the checkbox
+    // Add an event listener to the checkbox
     themeSwitcher.addEventListener('change', toggleTheme);
 </script>
 
