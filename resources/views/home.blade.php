@@ -38,7 +38,17 @@
                     <div class="stat place-items-center">
                         <div class="stat-title">Role</div>
                         <div class="stat-value">{{ Auth::user()->getRoleNames()->first() }}</div>
-                        <div class="stat-desc">Maybe Important!</div>
+                        <div class="stat-desc">
+                            @if(Auth::user()->hasRole('Super Admin'))
+                                Maybe important !
+                            @elseif(Auth::user()->hasRole('Admin'))
+                                The power of the Admin !
+                            @elseif(Auth::user()->hasRole('Contact Manager'))
+                                Manage and Contact !
+                            @elseif(Auth::user()->hasRole('User'))
+                                You are the system !
+                            @endif
+                        </div>
                     </div>
 
                     <div class="stat place-items-center">

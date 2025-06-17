@@ -56,6 +56,17 @@ class ContactController extends Controller
             'funcionalidades' => ['nullable', 'string', 'max:20'],
             'ativacao' => ['nullable', 'string', 'max:20'],
             'desativacao' => ['nullable', 'string', 'max:20'],
+        ]);
+
+        $contact = Contact::find($id);
+        $contact->update($request->all());
+
+        return redirect()->back()->with('success', 'Save successful');
+    }
+
+    public function updateTicket(Request $request, $id)
+    {
+        $request->validate([
             'ticket_scmp' => ['nullable', 'string', 'max:20'],
             'ticket_fse' => ['nullable', 'string', 'max:20'],
             'iccid' => ['nullable', 'string', 'max:20'],
@@ -68,7 +79,9 @@ class ContactController extends Controller
         $contact = Contact::find($id);
         $contact->update($request->all());
 
-        return redirect()->back()->with('success', 'Save successful');
+        return redirect()->back()->with('success', 'Save successful')
+            ->with('activeTab', 'ticketing');
+
     }
 
     public function destroy(Contact $contact)

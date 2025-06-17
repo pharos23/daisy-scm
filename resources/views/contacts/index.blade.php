@@ -20,21 +20,31 @@
                             <path d="m21 21-4.3-4.3"></path>
                         </g>
                     </svg>
+                    <!--suppress HtmlUnknownTag -->
                     <form action="{{ route('contacts.search') }}" method="GET">
-                        <input type="search" class="grow" name="search" placeholder="Search" />
+                        <input type="search" class="grow" name="search" placeholder="Procurar" />
                     </form>
                 </label>
+
+                <form class="filter mt-5">
+                    <input class="btn btn-square" type="reset" value="×"/>
+                    <input class="btn" type="radio" name="frameworks" aria-label="HP"/>
+                    <input class="btn" type="radio" name="frameworks" aria-label="SPEC"/>
+                    <input class="btn" type="radio" name="frameworks" aria-label="CF"/>
+                    <input class="btn" type="radio" name="frameworks" aria-label="DSI"/>
+                    <input class="btn" type="radio" name="frameworks" aria-label="OPS"/>
+                    <input class="btn" type="radio" name="frameworks" aria-label="TP"/>
+                </form>
 
                 <!-- Botão para criar um novo contacto -->
                 @can('create-contact')
                     <button class="btn btn-primary place-items-center m-5"
-                            onclick="modal_new.showModal()">New</button>
+                            onclick="modal_new.showModal()">Novo</button>
                 @endcan
                 @cannot('create-contact')
                     <button class="btn btn-primary place-items-center m-5"
                             disabled="disabled">New</button>
                 @endcannot
-
 
                 <!-- Popup (modal) para a criação de um novo contacto -->
                 <dialog id="modal_new" class="modal">
@@ -42,30 +52,38 @@
                         <form method="dialog">
                             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                         </form>
-                        <h3 class="text-lg font-bold">New Contact</h3>
+                        <h3 class="text-lg font-bold">Novo Contacto</h3>
                         <form action="{{ route('contacts.create') }}" method="POST" id="contact-form">
                             @csrf
                             @method('PUT')
                             <div class="md:grid md:auto-cols-2 grid-flow-col gap-4 m-5 ml-10">
                                 <div>
-                                    <fieldset class="fieldset">
+                                    <fieldset class="fieldset" title="Selecione o local desejado">
                                         <legend class="fieldset-legend">Local</legend>
-                                        <input type="text" class="input" placeholder="My awesome page"
-                                               name="local" id="local" value="{{ old('local') }}" required />
+                                        <select class="select" name="local" id="local" required>
+                                            <option disabled selected>Escolha o Local</option>
+                                            <option>Hospital Prelada</option>
+                                            <option>Spec</option>
+                                            <option>Conde de Ferreira</option>
+                                        </select>
                                     </fieldset>
-                                    <fieldset class="fieldset">
+                                    <fieldset class="fieldset" title="Selecione o local desejado">
                                         <legend class="fieldset-legend">Grupo</legend>
-                                        <input type="text" class="input" placeholder="My awesome page"
-                                               name="grupo" id="grupo" value="{{ old('grupo') }}" required />
+                                        <select class="select" name="grupo" id="grupo" required>
+                                            <option disabled selected>Escolha o grupo</option>
+                                            <option>DSI</option>
+                                            <option>OPS</option>
+                                            <option>Transporte</option>
+                                        </select>
                                     </fieldset>
                                     <fieldset class="fieldset">
                                         <legend class="fieldset-legend">Nome</legend>
-                                        <input type="text" class="input" placeholder="My awesome page"
+                                        <input type="text" class="input" placeholder="Nome"
                                                name="nome" id="nome" value="{{ old('nome') }}" required />
                                     </fieldset>
                                     <fieldset class="fieldset">
                                         <legend class="fieldset-legend">Telemóvel</legend>
-                                        <input type="text" class="input" placeholder="My awesome page"
+                                        <input type="text" class="input" placeholder="Telemóvel"
                                                name="telemovel" id="telemovel" value="{{ old('telemovel') }}" required />
                                     </fieldset>
                                 </div>
@@ -82,30 +100,30 @@
             <!-- Tabela -->
             <div class="m-5">
                 <table class="table">
-                <!-- head -->
-                <thead>
-                <tr>
-                    <th>Local</th>
-                    <th>Grupo</th>
-                    <th>Nome</th>
-                    <th>Telemóvel</th>
-                </tr>
-                </thead>
-                <tbody>
-                <!-- rows -->
-                @foreach($contacts as $contact)
-                <tr>
-                    <td>{{ $contact->local }}</td>
-                    <td>{{ $contact->grupo }}</td>
-                    <td>{{ $contact->nome }}</td>
-                    <td>{{ $contact->telemovel }}</td>
-                    <th class="max-w-10">
-                        <button class="btn" onclick="window.location='{{ route('contacts.show', ['id' => $contact->id]) }}'">Show</button>
-                    </th>
-                </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    <!-- head -->
+                    <thead>
+                    <tr>
+                        <th>Local</th>
+                        <th>Grupo</th>
+                        <th>Nome</th>
+                        <th>Telemóvel</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- rows -->
+                    @foreach($contacts as $contact)
+                        <tr>
+                            <td>{{ $contact->local }}</td>
+                            <td>{{ $contact->grupo }}</td>
+                            <td>{{ $contact->nome }}</td>
+                            <td>{{ $contact->telemovel }}</td>
+                            <th class="max-w-10">
+                                <button class="btn" onclick="window.location='{{ route('contacts.show', ['id' => $contact->id]) }}'">Show</button>
+                            </th>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
 
             <div class="absolute bottom-0 center w-full p-5">

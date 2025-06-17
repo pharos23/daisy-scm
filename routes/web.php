@@ -53,6 +53,10 @@ Route::group(['middleware' => ['permission:view-contact']], function () {
         ->middleware('permission:edit-contact')
         ->name('contacts.update');
 
+    Route::put('/contacts/{id}/ticket', [ContactController::class, 'updateTicket'])
+        ->middleware('permission:edit-contact')
+        ->name('contacts.updateTicket');
+
     Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])
         ->middleware('permission:delete-contact')
         ->name('contacts.destroy');
