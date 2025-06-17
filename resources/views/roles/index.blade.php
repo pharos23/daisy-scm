@@ -17,49 +17,57 @@
 
                 <!-- Popup (modal) para a criação de uma nova role -->
                 <dialog id="modal_role" class="modal">
-                    <div class="modal-box max-w-115">
+                    <div class="modal-box w-full max-w-xl">
                         <form method="dialog">
                             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                         </form>
-                        <h3 class="text-lg font-bold">New User</h3>
-                        <form action="{{ route('roles.store') }}" method="POST" id="user-form">
+
+                        <h3 class="text-2xl font-semibold mb-4">Create New Role</h3>
+
+                        <form action="{{ route('roles.store') }}" method="POST" id="role-form">
                             @csrf
 
-                            <div class="md:grid md:auto-cols-2 grid-flow-col gap-4 m-5 ml-10">
-                                <div>
-                                    <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-                                        <legend class="fieldset-legend">Name</legend>
-                                        <input type="text" class="input" placeholder="The role's name" name="name" id="name" required />
-                                        <div class="hidden" id="name_confirmation">
-                                            <p id="name-error" style="color: red;"></p>
-                                        </div>
-                                    </fieldset>
+                            <div class="grid grid-cols-1 gap-6 px-1">
+                                {{-- Role Name --}}
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Role Name</span>
+                                    </div>
+                                    <input type="text" class="input input-bordered w-full" placeholder="e.g., Manager"
+                                           name="name" id="name" required />
+                                    <div class="label hidden text-error" id="name-error-label">
+                                        <span class="label-text-alt" id="name-error-text">This field is required.</span>
+                                    </div>
+                                </label>
 
-                                    <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-                                        <legend class="fieldset-legend text-sm">Permissions</legend>
-                                        <div class="col-md-6">
-                                            <select class="form-select @error('permissions') is-invalid @enderror" multiple aria-label="Permissions" id="permissions" name="permissions[]" style="height: 210px;">
-                                                @forelse ($permissions as $permission)
-                                                    <option value="{{ $permission->id }}" {{ in_array($permission->id, old('permissions') ?? []) ? 'selected' : '' }}>
-                                                        {{ $permission->name }}
-                                                    </option>
-                                                @empty
-
-                                                @endforelse
-                                            </select>
-                                            @error('permissions')
-                                            <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </fieldset>
-                                </div>
+                                {{-- Permissions --}}
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Permissions</span>
+                                    </div>
+                                    <select class="select select-bordered w-full min-h-50" multiple size="6"
+                                            aria-label="Permissions" id="permissions" name="permissions[]">
+                                        @forelse ($permissions as $permission)
+                                            <option value="{{ $permission->id }}" {{ in_array($permission->id, old('permissions') ?? []) ? 'selected' : '' }}>
+                                                {{ $permission->name }}
+                                            </option>
+                                        @empty
+                                            <option disabled>No permissions available</option>
+                                        @endforelse
+                                    </select>
+                                    <div class="label hidden text-error mt-2" id="permissions-error-label">
+                                        <span class="label-text-alt" id="permissions-error-text">Select at least one permission.</span>
+                                    </div>
+                                </label>
                             </div>
-                            <div class="flex justify-end gap-2 m-5">
-                                <button class="btn btn-accent" id="submitBtn" disabled type="submit">Create</button>
+
+                            <div class="flex justify-end gap-2 mt-6">
+                                <button class="btn btn-accent" id="submitBtn" type="submit" disabled>Create</button>
                             </div>
                         </form>
                     </div>
                 </dialog>
+
             </div>
 
             <!-- Table -->
@@ -125,31 +133,38 @@
     </div>
 
     <script>
-        const nameInput = document.getElementById("name");
-        const submitBtn = document.getElementById("submitBtn");
+        document.addEventListener('DOMContentLoaded', function () {
+            const nameInput = document.getElementById('name');
+            const permissionsSelect = document.getElementById('permissions');
+            const submitBtn = document.getElementById('submitBtn');
 
-        const confirmName = document.getElementById("name_confirmation");
+            const nameError = document.getElementById('name-error-label');
+            const permissionsError = document.getElementById('permissions-error-label');
 
-        nameInput.addEventListener("input", validateName);
-
-        function validateName() {
-            const name = nameInput.value.trim();
-            const nameError = document.getElementById('name-error');
-            if (name.length < 3) {
-                nameError.textContent = 'Name must be at least 3 characters.';
-                confirmName.classList.remove("hidden");
-                submitBtn.disabled = true;
-                return false;
-            } else if (name.length > 30) {
-                nameError.textContent = 'Name cannot exceed 30 characters.';
-                confirmName.classList.remove("hidden");
-                submitBtn.disabled = true;
-                return false;
-            } else {
-                nameError.textContent = '';
-                submitBtn.disabled = false
-                return true;
+            function validateName() {
+                const isValid = nameInput.value.trim().length > 0;
+                nameError.classList.toggle('hidden', isValid);
+                nameInput.classList.toggle('input-error', !isValid);
+                return isValid;
             }
-        }
+
+            function validatePermissions() {
+                const selected = Array.from(permissionsSelect.options).filter(opt => opt.selected);
+                const isValid = selected.length > 0;
+                permissionsError.classList.toggle('hidden', isValid);
+                permissionsSelect.classList.toggle('select-error', !isValid);
+                return isValid;
+            }
+
+            function validateAll() {
+                const allValid = validateName() && validatePermissions();
+                submitBtn.disabled = !allValid;
+            }
+
+            nameInput.addEventListener('input', validateAll);
+            permissionsSelect.addEventListener('change', validateAll);
+
+            validateAll();
+        });
     </script>
 @endsection

@@ -9,6 +9,8 @@ class ContactController extends Controller
 {
     public function index($request) {
         $contacts = Contact::query()->paginate();
+        $perPage = $request->input('perPage', 8);
+
         return view('contacts.index', compact('contacts'));
     }
 

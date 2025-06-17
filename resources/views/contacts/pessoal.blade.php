@@ -1,107 +1,127 @@
 <form action="{{ route('contacts.update', $contact->id) }}" method="POST" id="contact-form">
     @csrf
     @method('PUT')
-    <div class="flex-row">
-        @can('edit-contact')
-            <div class="flex gap-10 ml-10 mb-10">
-                <fieldset class="fieldset">
-                    <legend class="fieldset-legend">Local</legend>
-                    <input type="text" class="input" placeholder="Local"
-                           name="local" id="local" value="{{ $contact->local }}" required />
-                </fieldset>
-                <fieldset class="fieldset">
-                    <legend class="fieldset-legend">Grupo</legend>
-                    <input type="text" class="input" placeholder="Grupo"
-                           name="grupo" id="grupo" value="{{ $contact->grupo }}" />
-                </fieldset>
-            </div>
-            <div class="md:grid md:auto-cols-2 grid-flow-col gap-4 m-5 ml-10">
-                <div>
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Nome</legend>
-                        <input type="text" class="input" placeholder="Nome"
-                               name="nome" id="nome" value="{{ $contact->nome }}" required />
-                    </fieldset>
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Telemóvel</legend>
-                        <input type="text" class="input" placeholder="Telemóvel"
-                               name="telemovel" id="telemovel" value="{{ $contact->telemovel }}" required />
-                    </fieldset>
 
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Extensão</legend>
-                        <input type="text" class="input" placeholder="Extensão"
-                               name="extensao" id="extensao" value="{{ $contact->extensao }}" />
-                    </fieldset>
-                </div>
-                <div>
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Funcionalidades</legend>
-                        <input type="text" class="input" placeholder="Funcionalidades"
-                               name="funcionalidades" id="funcionalidades" value="{{ $contact->funcionalidades }}" />
-                    </fieldset>
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Ativação/Reativação</legend>
-                        <input type="date" class="input" placeholder="Ativação/Reativação"
-                               name="ativacao" id="ativacao" value="{{ $contact->ativacao }}" />
-                    </fieldset>
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Desativação</legend>
-                        <input type="date" class="input" placeholder="Desativação"
-                               name="desativacao" id="desativacao" value="{{ $contact->desativacao }}" />
-                    </fieldset>
-                </div>
-            </div>
-        @else
-            <div class="flex gap-10 ml-10 mb-10">
-                <fieldset class="fieldset">
-                    <legend class="fieldset-legend">Local</legend>
-                    <input type="text" class="input" placeholder="Local"
-                           name="local" id="local" value="{{ $contact->local }}" required disabled/>
-                </fieldset>
-                <fieldset class="fieldset">
-                    <legend class="fieldset-legend">Grupo</legend>
-                    <input type="text" class="input" placeholder="Grupo"
-                           name="grupo" id="grupo" value="{{ $contact->grupo }}" disabled/>
-                </fieldset>
-            </div>
-            <div class="md:grid md:auto-cols-2 grid-flow-col gap-4 m-5 ml-10">
-                <div>
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Nome</legend>
-                        <input type="text" class="input" placeholder="Nome"
-                               name="nome" id="nome" value="{{ $contact->nome }}" required disabled/>
-                    </fieldset>
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Telemóvel</legend>
-                        <input type="text" class="input" placeholder="Telemóvel"
-                               name="telemovel" id="telemovel" value="{{ $contact->telemovel }}" required disabled/>
-                    </fieldset>
+    @can('edit-contact')
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
 
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Extensão</legend>
-                        <input type="text" class="input" placeholder="Extensão"
-                               name="extensao" id="extensao" value="{{ $contact->extensao }}" disabled/>
-                    </fieldset>
-                </div>
-                <div>
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Funcionalidades</legend>
-                        <input type="text" class="input" placeholder="Funcionalidades"
-                               name="funcionalidades" id="funcionalidades" value="{{ $contact->funcionalidades }}" disabled/>
-                    </fieldset>
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Ativação/Reativação</legend>
-                        <input type="date" class="input" placeholder="Ativação/Reativação"
-                               name="ativacao" id="ativacao" value="{{ $contact->ativacao }}" disabled/>
-                    </fieldset>
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Desativação</legend>
-                        <input type="date" class="input" placeholder="Desativação"
-                               name="desativacao" id="desativacao" value="{{ $contact->desativacao }}" disabled/>
-                    </fieldset>
-                </div>
-            </div>
-        @endcan
-    </div>
+            {{-- Local --}}
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Local</span></div>
+                <select class="select select-bordered w-full" name="local" id="local" required>
+                    <option disabled {{ $contact->local ? '' : 'selected' }}>Escolha o Local</option>
+                    <option {{ $contact->local === 'Hospital Prelada' ? 'selected' : '' }}>Hospital Prelada</option>
+                    <option {{ $contact->local === 'Spec' ? 'selected' : '' }}>Spec</option>
+                    <option {{ $contact->local === 'Conde de Ferreira' ? 'selected' : '' }}>Conde de Ferreira</option>
+                </select>
+            </label>
+
+            {{-- Grupo --}}
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Grupo</span></div>
+                <select class="select select-bordered w-full" name="grupo" id="grupo" required>
+                    <option disabled {{ $contact->grupo ? '' : 'selected' }}>Escolha o grupo</option>
+                    <option {{ $contact->grupo === 'DSI' ? 'selected' : '' }}>DSI</option>
+                    <option {{ $contact->grupo === 'OPS' ? 'selected' : '' }}>OPS</option>
+                    <option {{ $contact->grupo === 'Transporte' ? 'selected' : '' }}>Transporte</option>
+                </select>
+            </label>
+
+            {{-- Nome --}}
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Nome</span></div>
+                <input type="text" name="nome" id="nome" value="{{ $contact->nome }}"
+                       placeholder="Nome" class="input input-bordered w-full" required>
+            </label>
+
+            {{-- Telemóvel --}}
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Telemóvel</span></div>
+                <input type="text" name="telemovel" id="telemovel" value="{{ $contact->telemovel }}"
+                       placeholder="Telemóvel" class="input input-bordered w-full" required>
+            </label>
+
+            {{-- Extensão --}}
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Extensão</span></div>
+                <input type="text" name="extensao" id="extensao" value="{{ $contact->extensao }}"
+                       placeholder="Extensão" class="input input-bordered w-full">
+            </label>
+
+            {{-- Funcionalidades --}}
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Funcionalidades</span></div>
+                <input type="text" name="funcionalidades" id="funcionalidades" value="{{ $contact->funcionalidades }}"
+                       placeholder="Funcionalidades" class="input input-bordered w-full">
+            </label>
+
+            {{-- Ativação --}}
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Ativação/Reativação</span></div>
+                <input type="date" name="ativacao" id="ativacao" value="{{ $contact->ativacao }}"
+                       class="input input-bordered w-full">
+            </label>
+
+            {{-- Desativação --}}
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Desativação</span></div>
+                <input type="date" name="desativacao" id="desativacao" value="{{ $contact->desativacao }}"
+                       class="input input-bordered w-full">
+            </label>
+        </div>
+    @else
+        {{-- View-Only Mode --}}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
+
+            @php $readonly = 'readonly disabled'; @endphp
+
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Local</span></div>
+                <input type="text" name="local" id="local" value="{{ $contact->local }}"
+                       placeholder="Local" class="input input-bordered w-full bg-base-200" {{ $readonly }}>
+            </label>
+
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Grupo</span></div>
+                <input type="text" name="grupo" id="grupo" value="{{ $contact->grupo }}"
+                       placeholder="Grupo" class="input input-bordered w-full bg-base-200" {{ $readonly }}>
+            </label>
+
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Nome</span></div>
+                <input type="text" name="nome" id="nome" value="{{ $contact->nome }}"
+                       placeholder="Nome" class="input input-bordered w-full bg-base-200" {{ $readonly }}>
+            </label>
+
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Telemóvel</span></div>
+                <input type="text" name="telemovel" id="telemovel" value="{{ $contact->telemovel }}"
+                       placeholder="Telemóvel" class="input input-bordered w-full bg-base-200" {{ $readonly }}>
+            </label>
+
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Extensão</span></div>
+                <input type="text" name="extensao" id="extensao" value="{{ $contact->extensao }}"
+                       placeholder="Extensão" class="input input-bordered w-full bg-base-200" {{ $readonly }}>
+            </label>
+
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Funcionalidades</span></div>
+                <input type="text" name="funcionalidades" id="funcionalidades" value="{{ $contact->funcionalidades }}"
+                       placeholder="Funcionalidades" class="input input-bordered w-full bg-base-200" {{ $readonly }}>
+            </label>
+
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Ativação/Reativação</span></div>
+                <input type="date" name="ativacao" id="ativacao" value="{{ $contact->ativacao }}"
+                       class="input input-bordered w-full bg-base-200" {{ $readonly }}>
+            </label>
+
+            <label class="form-control w-full">
+                <div class="label"><span class="label-text">Desativação</span></div>
+                <input type="date" name="desativacao" id="desativacao" value="{{ $contact->desativacao }}"
+                       class="input input-bordered w-full bg-base-200" {{ $readonly }}>
+            </label>
+        </div>
+    @endcan
 </form>

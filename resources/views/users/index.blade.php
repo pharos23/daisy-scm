@@ -33,152 +33,109 @@
                     <button class="btn btn-primary place-items-center m-5" onclick="modal_user.showModal()">New</button>
                 @endcan
 
-                <!-- Popup (modal) para a criação de um novo contacto -->
+                <!-- Popup (modal) para a criação de um novo user -->
                 <dialog id="modal_user" class="modal">
-                    <div class="modal-box max-w-115">
+                    <div class="modal-box w-full max-w-2xl">
                         <form method="dialog">
                             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                         </form>
-                        <h3 class="text-lg font-bold">New User</h3>
+
+                        <h3 class="text-2xl font-semibold mb-4">Create New User</h3>
+
                         <form action="{{ route('users.store') }}" method="POST" id="user-form">
                             @csrf
 
-                            <div class="md:grid md:auto-cols-2 grid-flow-col gap-4 m-5 ml-10">
-                                <div>
-                                    <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-                                        <label class="input validator">
-                                            <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <g
-                                                    stroke-linejoin="round"
-                                                    stroke-linecap="round"
-                                                    stroke-width="2.5"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                >
-                                                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                                                    <circle cx="12" cy="7" r="4"></circle>
-                                                </g>
-                                            </svg>
-                                            <input
-                                                type="text" placeholder="Name" name="name" id="name"
-                                                pattern="[A-Za-z][A-Za-z0-9\-]*" minlength="3" maxlength="30"
-                                                title="Only letters, numbers or dash"
-                                                value="{{ old('name') }}" class="@error('name') is-invalid @enderror" required
-                                            />
-                                        </label>
-                                        <div class="hidden" id="name_confirmation">
-                                            <p id="name-error" style="color: red;"></p>
-                                        </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {{-- Name --}}
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Name</span>
+                                    </div>
+                                    <input type="text" id="name" name="name"
+                                           class="input input-bordered w-full"
+                                           placeholder="e.g., johndoe"
+                                           pattern="[A-Za-z][A-Za-z0-9\-]*"
+                                           minlength="3" maxlength="30"
+                                           title="Only letters, numbers or dash"
+                                           required />
+                                    <div class="label hidden text-error" id="name-error">
+                                        <span class="label-text-alt">Name must be at least 3 characters (letters, numbers or dashes).</span>
+                                    </div>
+                                </label>
 
-                                        <label class="input validator">
-                                            <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <g
-                                                    stroke-linejoin="round"
-                                                    stroke-linecap="round"
-                                                    stroke-width="2.5"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                >
-                                                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                                                </g>
-                                            </svg>
-                                            <input type="email" name="email" id="email" placeholder="mail@site.com"
-                                                   value="{{ old('email') }}" class="@error('email') is-invalid @enderror" required />
-                                        </label>
-                                        <div class="hidden" id="email_confirmation">
-                                            <p id="email-error" style="color: red;"></p>
-                                        </div>
+                                {{-- Email --}}
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Email</span>
+                                    </div>
+                                    <input type="email" id="email" name="email"
+                                           class="input input-bordered w-full"
+                                           placeholder="mail@example.com"
+                                           required />
+                                    <div class="label hidden text-error" id="email-error">
+                                        <span class="label-text-alt">Please enter a valid email address.</span>
+                                    </div>
+                                </label>
 
-                                        <label class="input validator">
-                                            <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <g
-                                                    stroke-linejoin="round"
-                                                    stroke-linecap="round"
-                                                    stroke-width="2.5"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                >
-                                                    <path
-                                                        d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
-                                                    ></path>
-                                                    <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
-                                                </g>
-                                            </svg>
-                                            <input
-                                                type="password" name="password" id="password"
-                                                placeholder="Password" class="@error('password') is-invalid @enderror" required
-                                                minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                                title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
-                                            />
-                                        </label>
-                                        <p class="hidden">
-                                            Must be more than 8 characters, including
-                                            <br />At least one number <br />At least one lowercase letter <br />At least one uppercase letter
-                                        </p>
+                                {{-- Password --}}
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Password</span>
+                                    </div>
+                                    <input type="password" id="password" name="password"
+                                           class="input input-bordered w-full"
+                                           placeholder="********"
+                                           minlength="8"
+                                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                           title="Must include number, lowercase and uppercase letter"
+                                           required />
+                                    <div class="label hidden text-error" id="password-error">
+                                        <span class="label-text-alt">Password must be at least 8 characters with a number, lowercase and uppercase letter.</span>
+                                    </div>
+                                </label>
 
-                                        <label class="input validator">
-                                            <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                                <g
-                                                    stroke-linejoin="round"
-                                                    stroke-linecap="round"
-                                                    stroke-width="2.5"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                >
-                                                    <path
-                                                        d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
-                                                    ></path>
-                                                    <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
-                                                </g>
-                                            </svg>
-                                            <input
-                                                type="password" name="password_confirmation" id="password_confirmation"
-                                                placeholder="Confirm Password" required
-                                                minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                                title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
-                                            />
-                                        </label>
-                                        <div class="hidden" id="confirmEmail">
-                                            <p id="confirmPassword-feedback" style="color: red;"></p>
-                                        </div>
-                                    </fieldset>
+                                {{-- Confirm Password --}}
+                                <label class="form-control w-full">
+                                    <div class="label">
+                                        <span class="label-text">Confirm Password</span>
+                                    </div>
+                                    <input type="password" id="password_confirmation" name="password_confirmation"
+                                           class="input input-bordered w-full"
+                                           placeholder="********"
+                                           minlength="8"
+                                           required />
+                                    <div class="label hidden text-error" id="confirm-password-error">
+                                        <span class="label-text-alt">Passwords do not match.</span>
+                                    </div>
+                                </label>
 
-                                    <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-                                        <legend class="fieldset-legend text-sm">Roles</legend>
-                                        <div class="col-md-6">
-                                            <select class="form-select @error('roles') is-invalid @enderror" multiple aria-label="Roles" id="roles" name="roles[]">
-                                                @forelse ($roles as $role)
-
-                                                    @if ($role!='Super Admin')
-                                                        <option class="text-sm" value="{{ $role }}" {{ in_array($role, old('roles') ?? []) ? 'selected' : '' }}>
-                                                            {{ $role }}
-                                                        </option>
-                                                    @else
-                                                        @if (Auth::user()->hasRole('Super Admin'))
-                                                            <option class="text-sm" value="{{ $role }}" {{ in_array($role, old('roles') ?? []) ? 'selected' : '' }}>
-                                                                {{ $role }}
-                                                            </option>
-                                                        @endif
-                                                    @endif
-
-                                                @empty
-
-                                                @endforelse
-                                            </select>
-                                            @error('roles')
-                                            <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </fieldset>
+                                {{-- Roles --}}
+                                <div class="form-control w-full md:col-span-2">
+                                    <div class="label">
+                                        <span class="label-text">Roles</span>
+                                    </div>
+                                    <select id="roles" name="roles[]" class="select select-bordered w-full min-h-20" multiple required>
+                                        @forelse ($roles as $role)
+                                            @if ($role != 'Super Admin' || Auth::user()->hasRole('Super Admin'))
+                                                <option value="{{ $role }}">{{ $role }}</option>
+                                            @endif
+                                        @empty
+                                            <option disabled>No roles available</option>
+                                        @endforelse
+                                    </select>
+                                    <div class="label hidden text-error" id="roles-error">
+                                        <span class="label-text-alt">Select at least one role.</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex justify-end gap-2 m-5">
+
+                            <div class="flex justify-end gap-2 mt-6">
                                 <button class="btn btn-accent" id="submitBtn" disabled type="submit">Create</button>
                             </div>
                         </form>
                     </div>
                 </dialog>
+
             </div>
 
             <!-- Tabela -->
@@ -249,69 +206,76 @@
     </div>
 
     <script>
-        const nameInput = document.getElementById("name");
-        const emailInput = document.getElementById("email");
-        const password = document.getElementById("password");
-        const feedback = document.getElementById("confirmPassword-feedback");
-        const confirmHint = document.getElementById("confirmHint");
-        const submitBtn = document.getElementById("submitBtn");
+        document.addEventListener('DOMContentLoaded', function () {
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const passwordConfirmInput = document.getElementById('password_confirmation');
+            const rolesSelect = document.getElementById('roles');
+            const submitBtn = document.getElementById('submitBtn');
 
-        const confirmName = document.getElementById("name_confirmation");
-        const confirmEmail = document.getElementById("email_confirmation");
-        const confirmPassword = document.getElementById("password_confirmation");
-
-        nameInput.addEventListener("input", validateName);
-        emailInput.addEventListener("input", validateEmail);
-        password.addEventListener("input", validatePassword);
-        confirmPassword.addEventListener("input", validatePassword);
-
-        function validateName() {
-            const name = nameInput.value.trim();
             const nameError = document.getElementById('name-error');
-            if (name.length < 3) {
-                nameError.textContent = 'Name must be at least 3 characters.';
-                confirmName.classList.remove("hidden");
-                return false;
-            } else if (name.length > 30) {
-                nameError.textContent = 'Name cannot exceed 30 characters.';
-                confirmName.classList.remove("hidden");
-                return false;
-            } else {
-                nameError.textContent = '';
-                return true;
-            }
-        }
-
-        function validateEmail() {
-            const email = emailInput.value.trim();
             const emailError = document.getElementById('email-error');
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                emailError.textContent = 'Please enter a valid email address.';
-                confirmEmail.classList.remove("hidden");
-                return false;
-            } else {
-                emailError.textContent = '';
-                return true;
+            const passwordError = document.getElementById('password-error');
+            const confirmPasswordError = document.getElementById('confirm-password-error');
+            const rolesError = document.getElementById('roles-error');
+
+            function validateName() {
+                const isValid = nameInput.value.trim().length >= 3 && /^[A-Za-z][A-Za-z0-9\-]*$/.test(nameInput.value);
+                nameError.classList.toggle('hidden', isValid);
+                nameInput.classList.toggle('input-error', !isValid);
+                return isValid;
             }
-        }
 
-        function validatePassword() {
-            const passwordValue = password.value;
-            const confirmPasswordValue = confirmPassword.value;
-
-            if (passwordValue !== confirmPasswordValue) {
-                feedback.textContent = "Passwords do not match.";
-                confirmHint.classList.remove("hidden");
-                return false;
-            } else {
-                feedback.textContent = "";
-                return true;
+            function validateEmail() {
+                const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
+                emailError.classList.toggle('hidden', isValid);
+                emailInput.classList.toggle('input-error', !isValid);
+                return isValid;
             }
-        }
 
-        function validateForm() {
-            submitBtn.disabled = !(validateName() === true && validateEmail() === true && validatePassword() === true);
-        }
+            function validatePassword() {
+                const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+                const isValid = pattern.test(passwordInput.value);
+                passwordError.classList.toggle('hidden', isValid);
+                passwordInput.classList.toggle('input-error', !isValid);
+                return isValid;
+            }
+
+            function validatePasswordConfirmation() {
+                const isValid = passwordConfirmInput.value === passwordInput.value && passwordConfirmInput.value.length > 0;
+                confirmPasswordError.classList.toggle('hidden', isValid);
+                passwordConfirmInput.classList.toggle('input-error', !isValid);
+                return isValid;
+            }
+
+            function validateRoles() {
+                const selected = Array.from(rolesSelect.options).filter(opt => opt.selected);
+                const isValid = selected.length > 0;
+                rolesError.classList.toggle('hidden', isValid);
+                rolesSelect.classList.toggle('select-error', !isValid);
+                return isValid;
+            }
+
+            function validateAll() {
+                const allValid = [
+                    validateName(),
+                    validateEmail(),
+                    validatePassword(),
+                    validatePasswordConfirmation(),
+                    validateRoles()
+                ].every(Boolean);
+
+                submitBtn.disabled = !allValid;
+            }
+
+            nameInput.addEventListener('input', validateAll);
+            emailInput.addEventListener('input', validateAll);
+            passwordInput.addEventListener('input', validateAll);
+            passwordConfirmInput.addEventListener('input', validateAll);
+            rolesSelect.addEventListener('change', validateAll);
+
+            validateAll();
+        });
     </script>
 @endsection

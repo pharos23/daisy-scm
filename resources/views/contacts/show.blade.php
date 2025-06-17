@@ -38,7 +38,6 @@
                 @endcan
                 @can('edit-contact')
                     <button id="save-button" class="btn btn-accent" type="button">Save</button>
-
                 @else
                     <button class="btn btn-accent" disabled="disabled">Save</button>
                 @endcan
@@ -55,9 +54,9 @@
         </div>
     </div>
 
+    // Hide success toast
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Hide success toast
             var successMessage = document.getElementById('success-message');
             if (successMessage) {
                 setTimeout(function() {
@@ -65,43 +64,45 @@
                 }, 3000);
             }
 
-            // Detetar qual a tab que está aberta para fazer o submit e guardar os dados certos
-            // Tab 1 aberta -> Save dos dados mostrados na tab Pessoal - Tab 2 aberta -> Save dos dados mostrados na tab Ticketing
-            const saveButton = document.getElementById('save-button');
-            if (saveButton) {
-                saveButton.addEventListener('click', function () {
-                    const activeTab = document.querySelector('input[name="dataTabs"]:checked');
-                    if (!activeTab) return;
-
-                    let formId = null;
-                    switch (activeTab.getAttribute('aria-label')) {
-                        case 'Pessoal':
-                            formId = 'contact-form';
-                            break;
-                        case 'Ticketing':
-                            formId = 'contact-form-ticket';
-                            break;
-                    }
-
-                    if (formId) {
-                        const form = document.getElementById(formId);
-                        if (form) {
-                            form.submit();
-                        }
-                    }
-                });
-            }
-
-            // Verificar qual tab deve ser aberta após o refresh
-            const activeTab = @json(session('activeTab'));
-            if (activeTab) {
-                const tabInput = document.querySelector(`input[aria-label="${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}"]`);
-                if (tabInput) {
-                    tabInput.checked = true;
-                }
-            }
-        });
     </script>
 
+    // Detetar qual a tab que está aberta para fazer o submit e guardar os dados certos
+    // Tab 1 aberta -> Save dos dados mostrados na tab Pessoal - Tab 2 aberta -> Save dos dados mostrados na tab Ticketing
+    <script>
+        const saveButton = document.getElementById('save-button');
+        if (saveButton) {
+            saveButton.addEventListener('click', function () {
+                const activeTab = document.querySelector('input[name="dataTabs"]:checked');
+                if (!activeTab) return;
 
+                let formId = null;
+                switch (activeTab.getAttribute('aria-label')) {
+                    case 'Pessoal':
+                        formId = 'contact-form';
+                        break;
+                    case 'Ticketing':
+                        formId = 'contact-form-ticket';
+                        break;
+                }
+
+                if (formId) {
+                    const form = document.getElementById(formId);
+                    if (form) {
+                        form.submit();
+                    }
+                }
+            });
+        }
+    </script>
+
+    // Verificar qual tab deve ser aberta após o refresh
+    <script>
+        const activeTab = @json(session('activeTab'));
+        if (activeTab) {
+            const tabInput = document.querySelector(`input[aria-label="${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}"]`);
+            if (tabInput) {
+                tabInput.checked = true;
+            }
+        }
+    </script>
 @endsection

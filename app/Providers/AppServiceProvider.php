@@ -25,6 +25,6 @@ class AppServiceProvider extends ServiceProvider
             return $user->hasRole('Super Admin') ? true : null;
         });
 
-        Paginator::useTailwind();
+        Paginator::$defaultView = 'vendor.pagination.daisyui';
     }
 }
