@@ -78,7 +78,7 @@
                     <th scope="col">S#</th>
                     <th scope="col" style="max-width:100px;">Role Name</th>
                     <th scope="col">Permissions</th>
-                    <th scope="col" style="width: 250px;">Action</th>
+                    <th scope="col" style="width: 250px;"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -94,24 +94,28 @@
                                 @endforelse
                             </ul>
                         </td>
-                        <td class="flex gap-2">
-                            @if ($role->name!='Super Admin')
-                                @can('edit-role')
-                                    <button class="btn btn-primary btn-sm" onclick="window.location='{{ route('roles.edit', $role->id) }}'">Edit</button>
-                                @endcan
+                        <td class="text-right whitespace-nowrap">
+                            <div class="flex justify-end gap-2">
+                                @if ($role->name != 'Super Admin')
+                                    @can('edit-role')
+                                        <button class="btn btn-primary btn-sm"
+                                                onclick="window.location='{{ route('roles.edit', $role->id) }}'">
+                                            Edit
+                                        </button>
+                                    @endcan
 
-                                @can('delete-role')
-                                        @if ($role->name!=Auth::user()->hasRole($role->name))
-                                            <form action="{{ route('roles.destroy', $role->id) }}" method="post">
+                                    @can('delete-role')
+                                        @if (!Auth::user()->hasRole($role->name))
+                                            <form action="{{ route('roles.destroy', $role->id) }}" method="POST"
+                                                  onsubmit="return confirm('Do you want to delete this role?');">
                                                 @csrf
                                                 @method('DELETE')
-
-                                                <button type="submit" class="btn btn-error btn-sm"
-                                                        onclick="return confirm('Do you want to delete this role?');">Delete</button>
+                                                <button type="submit" class="btn btn-error btn-sm">Delete</button>
                                             </form>
                                         @endif
                                     @endcan
-                            @endif
+                                @endif
+                            </div>
                         </td>
                     </tr>
                 @empty

@@ -22,8 +22,10 @@ Route::resources([
     'users' => UserController::class,
 ]);
 
-Route::get('/user', [SettingController::class, 'index'])
-    ->name('userSettings');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/user', [SettingController::class, 'edit'])->name('userSettings.edit');
+    Route::put('/user', [SettingController::class, 'update'])->name('userSettings.update');
+});
 
 Route::get('/admin', function () {
     return view('users.admin');

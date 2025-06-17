@@ -116,31 +116,34 @@
 
             <!-- Tabela -->
             <div class="m-5">
-                <table class="table" id="contactsTable">
-                    <!-- head -->
-                    <thead>
+                <table class="table table-zebra table-md w-full" id="contactsTable">
+                    <thead class="bg-base-200 text-base-content">
                     <tr>
                         <th>Local</th>
                         <th>Grupo</th>
                         <th>Nome</th>
                         <th>Telemóvel</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <!-- rows -->
                     @foreach($contacts as $contact)
                         <tr>
                             <td class="local">{{ $contact->local }}</td>
                             <td class="group">{{ $contact->grupo }}</td>
                             <td class="name">{{ $contact->nome }}</td>
                             <td class="phone">{{ $contact->telemovel }}</td>
-                            <th class="max-w-10">
-                                <button class="btn" onclick="window.location='{{ route('contacts.show', ['id' => $contact->id]) }}'">Show</button>
-                            </th>
+                            <td>
+                                <button class="btn btn-sm btn-outline btn-info"
+                                        onclick="window.location='{{ route('contacts.show', ['id' => $contact->id]) }}'">
+                                    Show
+                                </button>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
+
             </div>
 
             <div class="absolute bottom-0 center w-full p-5">

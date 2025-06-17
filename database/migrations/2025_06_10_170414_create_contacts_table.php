@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
             $table->string('local');
-            $table->string('grupo')->nullable();
+            $table->string('grupo');
             $table->string('nome');
             $table->string('telemovel');
             $table->string('extensao')->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('ticket_fse')->nullable();
             $table->string('iccid')->nullable();
             $table->string('equipamento')->nullable();
-            $table->boolean('equip_sn')->default(false);
+            $table->boolean('serial_number')->default(false);
             $table->string('imei')->nullable();
             $table->text('obs')->nullable();
             $table->softDeletes();

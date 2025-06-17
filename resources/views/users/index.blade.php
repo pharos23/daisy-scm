@@ -5,25 +5,18 @@
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">
 
             <!-- Cabeçalho da Tabela -->
-            <div class="flex w-full flex-col lg:flex-row">
-                <!-- Barra de Search -->
-                <label class="input grow place-items-center m-5">
-                    <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <g
-                            stroke-linejoin="round"
-                            stroke-linecap="round"
-                            stroke-width="2.5"
-                            fill="none"
-                            stroke="currentColor"
-                        >
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.3-4.3"></path>
-                        </g>
-                    </svg>
-                    <form action="{{ route('users.search') }}" method="GET">
-                        <input type="search" class="grow" name="search" placeholder="Search" />
-                    </form>
-                </label>
+            <div class="flex w-full justify-between">
+                {{-- Search + Role Filter --}}
+                <div class="flex gap-4 m-5">
+                    <input type="text" id="userSearch" placeholder="Search by name or email" class="input input-bordered w-full max-w-xs" />
+
+                    <select id="roleFilter" class="select select-bordered max-w-xs">
+                        <option value="">All Roles</option>
+                        @foreach($roles as $role) {{-- Ensure $roles = Role::pluck('name') or similar --}}
+                        <option value="{{ $role }}">{{ $role }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
                 <!-- Botão para criar um novo user -->
                 {{-- @can('create-user')
@@ -32,25 +25,27 @@
                 @can('create-user')
                     <button class="btn btn-primary place-items-center m-5" onclick="modal_user.showModal()">New</button>
                 @endcan
+            </div>
 
-                <!-- Popup (modal) para a criação de um novo user -->
-                <dialog id="modal_user" class="modal">
-                    <div class="modal-box w-full max-w-2xl">
-                        <form method="dialog">
-                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                        </form>
+            <!-- Popup (modal) para a criação de um novo user -->
+            <dialog id="modal_user" class="modal">
+                <div class="modal-box w-full max-w-2xl">
+                    <form method="dialog">
+                        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
 
-                        <h3 class="text-2xl font-semibold mb-4">Create New User</h3>
+                    <h3 class="text-2xl font-semibold mb-4">Create New User</h3>
 
-                        <form action="{{ route('users.store') }}" method="POST" id="user-form">
-                            @csrf
+                    <form action="{{ route('users.store') }}" method="POST" id="user-form">
+                        @csrf
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {{-- Name --}}
-                                <label class="form-control w-full">
-                                    <div class="label">
-                                        <span class="label-text">Name</span>
-                                    </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {{-- Name --}}
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Name</span>
+                                </div>
+                                <div class="flex flex-col space-y-1">
                                     <input type="text" id="name" name="name"
                                            class="input input-bordered w-full"
                                            placeholder="e.g., johndoe"
@@ -58,30 +53,35 @@
                                            minlength="3" maxlength="30"
                                            title="Only letters, numbers or dash"
                                            required />
-                                    <div class="label hidden text-error" id="name-error">
-                                        <span class="label-text-alt">Name must be at least 3 characters (letters, numbers or dashes).</span>
+                                    <div class="text-error text-sm hidden" id="name-error">
+                                        Name must be at least 3 characters (letters, numbers or dashes).
                                     </div>
-                                </label>
+                                </div>
+                            </label>
 
-                                {{-- Email --}}
-                                <label class="form-control w-full">
-                                    <div class="label">
-                                        <span class="label-text">Email</span>
-                                    </div>
+
+                            {{-- Email --}}
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Email</span>
+                                </div>
+                                <div class="flex flex-col space-y-1">
                                     <input type="email" id="email" name="email"
                                            class="input input-bordered w-full"
                                            placeholder="mail@example.com"
                                            required />
-                                    <div class="label hidden text-error" id="email-error">
-                                        <span class="label-text-alt">Please enter a valid email address.</span>
+                                    <div class="text-error text-sm hidden" id="email-error">
+                                        Please enter a valid email address.
                                     </div>
-                                </label>
+                                </div>
+                            </label>
 
-                                {{-- Password --}}
-                                <label class="form-control w-full">
-                                    <div class="label">
-                                        <span class="label-text">Password</span>
-                                    </div>
+                            {{-- Password --}}
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Password</span>
+                                </div>
+                                <div class="flex flex-col space-y-1">
                                     <input type="password" id="password" name="password"
                                            class="input input-bordered w-full"
                                            placeholder="********"
@@ -89,113 +89,127 @@
                                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                                            title="Must include number, lowercase and uppercase letter"
                                            required />
-                                    <div class="label hidden text-error" id="password-error">
-                                        <span class="label-text-alt">Password must be at least 8 characters with a number, lowercase and uppercase letter.</span>
+                                    <div class="text-error text-sm hidden" id="password-error">
+                                        Password must be at least 8 characters with a number, lowercase and uppercase letter.
                                     </div>
-                                </label>
+                                </div>
+                            </label>
 
-                                {{-- Confirm Password --}}
-                                <label class="form-control w-full">
-                                    <div class="label">
-                                        <span class="label-text">Confirm Password</span>
-                                    </div>
+                            {{-- Confirm Password --}}
+                            <label class="form-control w-full">
+                                <div class="label">
+                                    <span class="label-text">Confirm Password</span>
+                                </div>
+                                <div class="flex flex-col space-y-1">
                                     <input type="password" id="password_confirmation" name="password_confirmation"
                                            class="input input-bordered w-full"
                                            placeholder="********"
                                            minlength="8"
                                            required />
-                                    <div class="label hidden text-error" id="confirm-password-error">
-                                        <span class="label-text-alt">Passwords do not match.</span>
-                                    </div>
-                                </label>
-
-                                {{-- Roles --}}
-                                <div class="form-control w-full md:col-span-2">
-                                    <div class="label">
-                                        <span class="label-text">Roles</span>
-                                    </div>
-                                    <select id="roles" name="roles[]" class="select select-bordered w-full min-h-20" multiple required>
-                                        @forelse ($roles as $role)
-                                            @if ($role != 'Super Admin' || Auth::user()->hasRole('Super Admin'))
-                                                <option value="{{ $role }}">{{ $role }}</option>
-                                            @endif
-                                        @empty
-                                            <option disabled>No roles available</option>
-                                        @endforelse
-                                    </select>
-                                    <div class="label hidden text-error" id="roles-error">
-                                        <span class="label-text-alt">Select at least one role.</span>
+                                    <div class="text-error text-sm hidden" id="confirm-password-error">
+                                        Passwords do not match.
                                     </div>
                                 </div>
-                            </div>
+                            </label>
 
-                            <div class="flex justify-end gap-2 mt-6">
-                                <button class="btn btn-accent" id="submitBtn" disabled type="submit">Create</button>
-                            </div>
-                        </form>
-                    </div>
-                </dialog>
 
-            </div>
+                            {{-- Roles --}}
+                            <div class="form-control w-full md:col-span-2">
+                                <div class="label">
+                                    <span class="label-text">Roles</span>
+                                </div>
+                                <select id="roles" name="roles[]" class="select select-bordered w-full min-h-20" multiple required>
+                                    @forelse ($roles as $role)
+                                        @if ($role != 'Super Admin' || Auth::user()->hasRole('Super Admin'))
+                                            <option value="{{ $role }}">{{ $role }}</option>
+                                        @endif
+                                    @empty
+                                        <option disabled>No roles available</option>
+                                    @endforelse
+                                </select>
+                                <div class="label hidden text-error" id="roles-error">
+                                    <span class="label-text-alt">Select at least one role.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end gap-2 mt-6">
+                            <button class="btn btn-accent" id="submitBtn" disabled type="submit">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </dialog>
 
             <!-- Tabela -->
             <div class="m-5">
-                <table class="table table-striped table-bordered">
-                <thead>
-                <tr>
-                    <th scope="col">S#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Roles</th>
-                    <th scope="col">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                @forelse ($users as $user)
+                <table class="table table-zebra table-sm w-full" id="usersTable">
+                    <thead class="bg-base-200 text-base-content">
                     <tr>
-                        <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>
-                            <ul>
-                                @forelse ($user->getRoleNames() as $role)
-                                    <li>{{ $role }}</li>
-                                @empty
-                                @endforelse
-                            </ul>
-                        </td>
-                        <td class="flex gap-2">
-                            @if (in_array('Super Admin', $user->getRoleNames()->toArray() ?? []) )
-                                @if (Auth::user()->hasRole('Super Admin'))
-                                    <button class="btn btn-primary btn-sm" onclick="window.location='{{ route('users.edit', $user->id) }}'">Edit</button>
-                                @endif
-                            @else
-                                @can('edit-user')
-                                    <button class="btn btn-primary btn-sm" onclick="window.location='{{ route('users.edit', $user->id) }}'">Edit</button>
-                                @endcan
-
-                                @can('delete-user')
-                                        <form action="{{ route('users.destroy', $user->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                    @if (Auth::user()->id!=$user->id)
-                                        <button type="submit" class="btn btn-error btn-sm"
-                                                onclick="return confirm('Do you want to delete this user?');">Delete</button>
-                                    @endif
-                                        </form>
-                                @endcan
-                            @endif
-                        </td>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Roles</th>
+                        <th></th>
                     </tr>
-                @empty
-                    <td colspan="5">
-                        <span class="text-danger">
-                            <strong>No User Found!</strong>
-                        </span>
-                    </td>
-                @endforelse
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @forelse ($users as $user)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td class="name">{{ $user->name }}</td>
+                            <td class="email">{{ $user->email }}</td>
+                            <td class="roles">
+                                <ul>
+                                    @forelse ($user->getRoleNames() as $role)
+                                        <li>{{ $role }}</li>
+                                    @empty
+                                        <li class="text-gray-400 italic">No role</li>
+                                    @endforelse
+                                </ul>
+                            </td>
+                            <td class="text-right whitespace-nowrap">
+                                <div class="flex justify-end gap-2">
+                                    @php $isSuperAdmin = in_array('Super Admin', $user->getRoleNames()->toArray()); @endphp
+
+                                    @if ($isSuperAdmin)
+                                        @if (Auth::user()->hasRole('Super Admin'))
+                                            <button class="btn btn-sm btn-primary"
+                                                    onclick="window.location='{{ route('users.edit', $user->id) }}'">Edit</button>
+                                            <button class="btn btn-sm btn-error" disabled="disabled">Delete</button>
+                                        @endif
+                                    @else
+                                        @can('edit-user')
+                                            <button class="btn btn-sm btn-primary"
+                                                    onclick="window.location='{{ route('users.edit', $user->id) }}'">Edit</button>
+                                        @else
+                                            <button class="btn btn-sm btn-primary" disabled="disabled">Edit</button>
+                                        @endcan
+
+                                        @can('delete-user')
+                                            @if (Auth::user()->id !== $user->id)
+                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Delete this user?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-sm btn-error">Delete</button>
+                                                </form>
+                                                @else
+                                                    <button class="btn btn-sm btn-error" disabled="disabled">Delete</button>
+                                            @endif
+                                            @else
+                                                <button class="btn btn-sm btn-error" disabled="disabled">Delete</button>
+                                        @endcan
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center text-error font-semibold">No User Found!</td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+
             </div>
 
             <!-- Paginação -->
@@ -204,6 +218,33 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const searchInput = document.getElementById('userSearch');
+            const roleFilter = document.getElementById('roleFilter');
+            const rows = document.querySelectorAll('#usersTable tbody tr');
+
+            function filterTable() {
+                const search = searchInput.value.toLowerCase();
+                const role = roleFilter.value.toLowerCase();
+
+                rows.forEach(row => {
+                    const name = row.querySelector('.name')?.textContent.toLowerCase() ?? '';
+                    const email = row.querySelector('.email')?.textContent.toLowerCase() ?? '';
+                    const roles = row.querySelector('.roles')?.textContent.toLowerCase() ?? '';
+
+                    const matchesSearch = name.includes(search) || email.includes(search);
+                    const matchesRole = !role || roles.includes(role);
+
+                    row.style.display = matchesSearch && matchesRole ? '' : 'none';
+                });
+            }
+
+            searchInput.addEventListener('input', filterTable);
+            roleFilter.addEventListener('change', filterTable);
+        });
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

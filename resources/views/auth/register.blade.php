@@ -1,77 +1,133 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ __('Register') }}</title>
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+    {{-- CSRF Token --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+    {{-- Styles --}}
+    @vite(['resources/css/app.css'])
+</head>
+<body class="min-h-screen bg-base-200 flex items-center justify-center">
 
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+<div class="w-full max-w-md p-8 shadow-lg rounded-box bg-base-100">
+    <h1 class="text-2xl font-bold text-center mb-6">{{ __('Register') }}</h1>
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+    <form method="POST" action="{{ route('register') }}" class="space-y-4">
+        @csrf
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        {{-- Name --}}
+        <div>
+            <label for="name" class="label">
+                <span class="label-text">{{ __('Name') }}</span>
+            </label>
+            <input
+                id="name"
+                type="text"
+                name="name"
+                value="{{ old('name') }}"
+                required
+                autofocus
+                class="input input-bordered w-full @error('name') input-error @enderror"
+            >
+            @error('name')
+            <p class="text-error text-sm mt-1">{{ $message }}</p>
+            @enderror
         </div>
-    </div>
+
+        {{-- Email --}}
+        <div>
+            <label for="email" class="label">
+                <span class="label-text">{{ __('Email Address') }}</span>
+            </label>
+            <input
+                id="email"
+                type="email"
+                name="email"
+                value="{{ old('email') }}"
+                required
+                class="input input-bordered w-full @error('email') input-error @enderror"
+            >
+            @error('email')
+            <p class="text-error text-sm mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+        {{-- Password --}}
+        <div>
+            <label for="password" class="label">
+                <span class="label-text">{{ __('Password') }}</span>
+            </label>
+            <input
+                id="password"
+                type="password"
+                name="password"
+                required
+                autocomplete="new-password"
+                class="input input-bordered w-full @error('password') input-error @enderror"
+            >
+            @error('password')
+            <p class="text-error text-sm mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+        {{-- Confirm Password --}}
+        <div>
+            <label for="password-confirm" class="label">
+                <span class="label-text">{{ __('Confirm Password') }}</span>
+            </label>
+            <input
+                id="password-confirm"
+                type="password"
+                name="password_confirmation"
+                required
+                autocomplete="new-password"
+                class="input input-bordered w-full"
+            >
+        </div>
+
+        {{-- Submit --}}
+        <div class="form-control mt-4">
+            <button type="submit" class="btn btn-primary w-full">
+                {{ __('Register') }}
+            </button>
+        </div>
+
+        {{-- Already registered? --}}
+        <div class="text-center mt-2">
+            <p class="text-sm">
+                {{ __('Already have an account?') }}
+                <a href="{{ route('login') }}" class="link link-hover">
+                    {{ __('Login') }}
+                </a>
+            </p>
+        </div>
+    </form>
 </div>
-@endsection
+
+{{-- Theme Toggle Script --}}
+<script>
+    const themeSwitcher = document.getElementById('theme-switcher');
+
+    function toggleTheme() {
+        const theme = themeSwitcher.checked ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            themeSwitcher.checked = (savedTheme === 'dark');
+        }
+    });
+
+    themeSwitcher.addEventListener('change', toggleTheme);
+</script>
+
+</body>
+</html>
