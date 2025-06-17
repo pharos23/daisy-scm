@@ -145,7 +145,7 @@
                                     </fieldset>
 
                                     <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-                                        <legend for="roles" class="fieldset-legend text-sm">Roles</legend>
+                                        <legend class="fieldset-legend text-sm">Roles</legend>
                                         <div class="col-md-6">
                                             <select class="form-select @error('roles') is-invalid @enderror" multiple aria-label="Roles" id="roles" name="roles[]">
                                                 @forelse ($roles as $role)
@@ -261,6 +261,7 @@
         const confirmPassword = document.getElementById("password_confirmation");
 
         nameInput.addEventListener("input", validateName);
+        emailInput.addEventListener("input", validateEmail);
         password.addEventListener("input", validatePassword);
         confirmPassword.addEventListener("input", validatePassword);
 
@@ -301,12 +302,16 @@
 
             if (passwordValue !== confirmPasswordValue) {
                 feedback.textContent = "Passwords do not match.";
-                submitBtn.disabled = true;
                 confirmHint.classList.remove("hidden");
+                return false;
             } else {
                 feedback.textContent = "";
-                submitBtn.disabled = false;
+                return true;
             }
+        }
+
+        function validateForm() {
+            submitBtn.disabled = !(validateName() === true && validateEmail() === true && validatePassword() === true);
         }
     </script>
 @endsection
