@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    // Hide success toast
+    {{-- Hide success toast --}}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var successMessage = document.getElementById('success-message');
@@ -65,8 +65,8 @@
             }})
     </script>
 
-    // Detetar qual a tab que está aberta para fazer o submit e guardar os dados certos
-    // Tab 1 aberta -> Save dos dados mostrados na tab Pessoal - Tab 2 aberta -> Save dos dados mostrados na tab Ticketing
+    {{-- Detetar qual a tab que está aberta para fazer o submit e guardar os dados certos
+    Tab 1 aberta -> Save dos dados mostrados na tab Pessoal - Tab 2 aberta -> Save dos dados mostrados na tab Ticketing --}}
     <script>
         const saveButton = document.getElementById('save-button');
         if (saveButton) {
@@ -94,7 +94,7 @@
         }
     </script>
 
-    // Verificar qual tab deve ser aberta após o refresh
+    {{-- Verificar qual tab deve ser aberta após o refresh --}}
     <script>
         const activeTab = @json(session('activeTab'));
         if (activeTab) {
