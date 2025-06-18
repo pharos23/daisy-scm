@@ -3,6 +3,8 @@
 @section('content')
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">
+
+            {{-- Tabs --}}
             <div class="tabs tabs-border">
                 <input type="radio" name="dataTabs" class="tab" aria-label="Pessoal" checked="checked" />
                 <div class="tab-content bg-base-200 p-10">
@@ -14,6 +16,8 @@
                     @include('contacts.ticketing')
                 </div>
             </div>
+
+            {{-- Buttons --}}
             <div class="flex gap-4 m-5 absolute bottom-5 right-5">
                 @can('delete-contact')
                     <button class="btn btn-error" type="submit"
@@ -36,14 +40,6 @@
                 @endcan
                 <button class="btn btn-primary" onclick="window.location='{{ route('contacts') }}'">Back</button>
             </div>
-        </div>
-
-        <div class="toast toast-top toast-end">
-            @if(session('success'))
-                <div class="alert alert-success" id="success-message">
-                    <span>Save successful.</span>
-                </div>
-            @endif
         </div>
     </div>
 

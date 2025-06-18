@@ -67,7 +67,6 @@
                         </form>
                     </div>
                 </dialog>
-
             </div>
 
             {{-- Table --}}
@@ -136,6 +135,7 @@
         </div>
     </div>
 
+    {{-- Data Validation --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const nameInput = document.getElementById('name');

@@ -4,7 +4,7 @@
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">
 
-            {{-- Cabeçalho da Tabela --}}
+            {{-- Table Header --}}
             <div class="flex w-full justify-between">
                 {{-- Search and filter inputs --}}
                 <div class="flex gap-4 m-5">
@@ -114,7 +114,7 @@
                 </dialog>
             </div>
 
-            {{-- Tabela --}}
+            {{-- Table --}}
             <div class="m-5">
                 <table class="table table-zebra table-md w-full" id="contactsTable">
                     <thead class="bg-base-200 text-base-content">
@@ -146,14 +146,14 @@
 
             </div>
 
-            {{-- Paginação --}}
+            {{-- Pagination --}}
             <div class="absolute bottom-0 center w-full p-5">
                 {{ $contacts->appends(request()->except('page'))->links() }}
             </div>
         </div>
     </div>
 
-    {{-- Função de Search --}}
+    {{-- Search Function --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const searchInput = document.getElementById('searchInput');
@@ -200,7 +200,7 @@
         });
     </script>
 
-    {{-- Paginação dinamica --}}
+    {{-- Dynamic Pagination --}}
     <script>
         function calculateItemsPerPage() {
             const itemHeight = 100; // estimated height of each contact item in pixels
@@ -220,7 +220,7 @@
         }
     </script>
 
-    {{-- Validação do Modal New --}}
+    {{-- Modal (New) Validation --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('contact-form');

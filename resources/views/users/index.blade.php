@@ -4,7 +4,7 @@
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">
 
-            <!-- Cabeçalho da Tabela -->
+            {{-- Table Heading --}}
             <div class="flex w-full justify-between">
                 {{-- Search + Role Filter --}}
                 <div class="flex gap-4 m-5">
@@ -18,16 +18,13 @@
                     </select>
                 </div>
 
-                <!-- Botão para criar um novo user -->
-                {{-- @can('create-user')
-                    <a href="{{ route('users.create') }}" class="btn btn-success btn-sm my-2"><i class="bi bi-plus-circle"></i> Add New User</a>
-                @endcan --}}
+                {{-- Botão para criar um novo user --}}
                 @can('create-user')
                     <button class="btn btn-primary place-items-center m-5" onclick="modal_user.showModal()">New</button>
                 @endcan
             </div>
 
-            <!-- Popup (modal) para a criação de um novo user -->
+            {{-- Popup (modal) para a criação de um novo user --}}
             <dialog id="modal_user" class="modal">
                 <div class="modal-box w-full max-w-2xl">
                     <form method="dialog">
@@ -140,7 +137,7 @@
                 </div>
             </dialog>
 
-            <!-- Tabela -->
+            {{-- Table --}}
             <div class="m-5">
                 <table class="table table-zebra table-sm w-full" id="usersTable">
                     <thead class="bg-base-200 text-base-content">
@@ -212,13 +209,14 @@
 
             </div>
 
-            <!-- Paginação -->
+            {{-- Pagination --}}
             <div class="absolute bottom-0 center w-full p-5">
                 {{ $users->links() }}
             </div>
         </div>
     </div>
 
+    {{-- Search Function --}}
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const searchInput = document.getElementById('userSearch');
@@ -246,6 +244,7 @@
         });
     </script>
 
+    {{-- Validation Function --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const nameInput = document.getElementById('name');
