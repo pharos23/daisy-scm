@@ -161,7 +161,7 @@
                             <td class="roles">
                                 <ul>
                                     @forelse ($user->getRoleNames() as $role)
-                                        <li>{{ $role }}</li>
+                                        <div class="badge badge-outline">{{ $role }}</div>
                                     @empty
                                         <li class="text-gray-400 italic">No role</li>
                                     @endforelse
