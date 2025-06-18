@@ -146,6 +146,7 @@
 
             </div>
 
+            {{-- Paginação --}}
             <div class="absolute bottom-0 center w-full p-5">
                 {{ $contacts->appends(request()->except('page'))->links() }}
             </div>

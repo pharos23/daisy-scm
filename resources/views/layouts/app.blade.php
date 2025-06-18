@@ -90,18 +90,28 @@
         @endif
 
         @if(session('deleted'))
-            <div id="toast-deleted" class="alert alert-error shadow-lg flex justify-between items-center gap-2">
+            <div id="toast-deleted" class="alert alert-warning shadow-lg flex justify-between items-center gap-2">
                 <span>{{ session('deleted') }}</span>
                 <button class="btn btn-sm btn-ghost" onclick="this.parentElement.remove()">✕</button>
             </div>
         @endif
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div class=" error-alert alert alert-error shadow-lg flex justify-between items-center gap-2 max-w-sm">
+                    <span>{{ $error }}</span>
+                    <button class="btn btn-sm btn-ghost" onclick="this.parentElement.remove()">✕</button>
+                </div>
+            @endforeach
+        @endif
     </toasts>
 
-    {{-- Toast Dismiss Script --}}
+    {{-- Toast Timer --}}
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const successToast = document.getElementById('toast-success');
             const deletedToast = document.getElementById('toast-deleted');
+            const errorToasts = document.getElementsByClassName('error-alert');
 
             if (successToast) {
                 setTimeout(() => {
@@ -116,10 +126,19 @@
                     setTimeout(() => deletedToast.remove(), 300);
                 }, 4000); // 4 seconds
             }
+
+            if (errorToasts.length > 0) {
+                Array.from(errorToasts).forEach(toast => {
+                    setTimeout(() => {
+                        toast.classList.add('opacity-0', 'transition', 'duration-300');
+                        setTimeout(() => toast.remove(), 300);
+                    }, 4000); // 4 seconds
+                });
+            }
         });
     </script>
 
-    {{-- Sidebar Hover Script --}}
+    {{-- Sidebar Hover --}}
     <script>
         const sidebar = document.getElementById('sidebar');
         const hoverZone = document.getElementById('hover-zone');
@@ -140,7 +159,7 @@
         sidebar.addEventListener('mouseleave', hideSidebar);
     </script>
 
-    {{-- Theme Toggle Script --}}
+    {{-- Theme Toggle --}}
     <script>
         const themeSwitcher = document.getElementById('theme-switcher');
 

@@ -2,13 +2,6 @@
 
 @section('content')
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
-        @if($errors->any())
-            <div class="mt-4">
-                @foreach($errors->all() as $error)
-                    <div class="bg-red-100 text-red-700 p-4 rounded">{{ $error }}</div>
-                @endforeach
-            </div>
-        @endif
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">
             <div class="tabs tabs-border">
                 <input type="radio" name="dataTabs" class="tab" aria-label="Pessoal" checked="checked" />
@@ -53,17 +46,6 @@
             @endif
         </div>
     </div>
-
-    {{-- Hide success toast --}}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var successMessage = document.getElementById('success-message');
-            if (successMessage) {
-                setTimeout(function() {
-                    successMessage.style.display = 'none';
-                }, 3000);
-            }})
-    </script>
 
     {{-- Detetar qual a tab que está aberta para fazer o submit e guardar os dados certos
     Tab 1 aberta -> Save dos dados mostrados na tab Pessoal - Tab 2 aberta -> Save dos dados mostrados na tab Ticketing --}}
