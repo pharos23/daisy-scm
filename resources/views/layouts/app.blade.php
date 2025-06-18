@@ -78,6 +78,45 @@
         @yield('content')
     </main>
 
+    {{-- Toast Notifications --}}
+    <toasts class="toast toast-top toast-end z-50 space-y-2">
+        @if(session('success'))
+            <div id="toast-success" class="alert alert-success shadow-lg flex justify-between items-center gap-2">
+                <span>{{ session('success') }}</span>
+                <button class="btn btn-sm btn-ghost" onclick="this.parentElement.remove()">✕</button>
+            </div>
+        @endif
+
+        @if(session('deleted'))
+            <div id="toast-deleted" class="alert alert-error shadow-lg flex justify-between items-center gap-2">
+                <span>{{ session('deleted') }}</span>
+                <button class="btn btn-sm btn-ghost" onclick="this.parentElement.remove()">✕</button>
+            </div>
+        @endif
+    </toasts>
+
+    {{-- Toast Dismiss Script --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const successToast = document.getElementById('toast-success');
+            const deletedToast = document.getElementById('toast-deleted');
+
+            if (successToast) {
+                setTimeout(() => {
+                    successToast.classList.add('opacity-0', 'transition', 'duration-300');
+                    setTimeout(() => successToast.remove(), 300);
+                }, 4000); // 4 seconds
+            }
+
+            if (deletedToast) {
+                setTimeout(() => {
+                    deletedToast.classList.add('opacity-0', 'transition', 'duration-300');
+                    setTimeout(() => deletedToast.remove(), 300);
+                }, 4000); // 4 seconds
+            }
+        });
+    </script>
+
     {{-- Sidebar Hover Script --}}
     <script>
         const sidebar = document.getElementById('sidebar');
@@ -104,7 +143,7 @@
         const themeSwitcher = document.getElementById('theme-switcher');
 
         function toggleTheme() {
-            const theme = themeSwitcher.checked ? 'dark' : 'light';
+            const theme = themeSwitcher.checked ? 'dark' : 'cmyk';
             document.documentElement.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
         }

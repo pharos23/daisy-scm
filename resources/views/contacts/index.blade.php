@@ -134,7 +134,7 @@
                             <td class="name">{{ $contact->nome }}</td>
                             <td class="phone">{{ $contact->telemovel }}</td>
                             <td>
-                                <button class="btn btn-sm btn-outline btn-info"
+                                <button class="btn btn-sm btn-outline"
                                         onclick="window.location='{{ route('contacts.show', ['id' => $contact->id]) }}'">
                                     Show
                                 </button>
@@ -150,33 +150,7 @@
                 {{ $contacts->appends(request()->except('page'))->links() }}
             </div>
         </div>
-
-        {{-- Avisos --}}
-        <div class="toast toast-top toast-end">
-            @if(session('success'))
-                <div class="alert alert-success" id="success-message">
-                    <span>Contact created successfully</span>
-                </div>
-            @endif
-            @if(session('deleted'))
-                <div class="alert alert-error" id="success-message">
-                    <span>Contact deleted successfully</span>
-                </div>
-            @endif
-        </div>
     </div>
-
-    <!-- Temporizador para os Avisos -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var successMessage = document.getElementById('success-message');
-            if (successMessage) {
-                setTimeout(function() {
-                    successMessage.style.display = 'none';
-                }, 3000); // 5000 milliseconds = 5 seconds
-            }
-        });
-    </script>
 
     {{-- Função de Search --}}
     <script>

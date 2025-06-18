@@ -37,8 +37,7 @@ class ContactController extends Controller
 
         Contact::create($validated);
 
-        return redirect()->route('contacts')
-            ->with('success', 'Contact created successfully');
+        return back()->with('success', 'Contact created successfully');
     }
 
     public function show($id)
@@ -89,6 +88,7 @@ class ContactController extends Controller
     public function destroy(Contact $contact)
     {
         $contact->delete();
+
         return redirect()->route('contacts')
             ->with('deleted','Contact deleted successfully');
     }
