@@ -7,6 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
+
     @vite(['resources/css/app.css'])
 </head>
 <body class="min-h-screen flex bg-base-100 relative">
