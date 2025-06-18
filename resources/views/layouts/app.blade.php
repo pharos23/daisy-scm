@@ -36,6 +36,7 @@
                 <div class="divider">Admin</div>
                 <li><a href="{{ route('users.index') }}">Manage Users</a></li>
                 <li><a href="{{ route('roles.index') }}">Manage Roles</a></li>
+                <li><a href="{{ route('permissions.index') }}">Manage Permissions</a></li>
                 @endhasanyrole
             </ul>
 

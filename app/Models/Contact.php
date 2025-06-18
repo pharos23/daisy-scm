@@ -22,7 +22,7 @@ class Contact extends Model
         'ticket_fse',
         'iccid',
         'equipamento',
-        'equip_sn',
+        'serial_number',
         'imei',
         'obs',
     ];

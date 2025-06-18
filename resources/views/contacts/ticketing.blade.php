@@ -33,7 +33,7 @@
 
             <label class="form-control w-full">
                 <div class="label"><span class="label-text">Serial Number</span></div>
-                <input type="text" name="equip_sn" id="equip_sn" value="{{ $contact->equip_sn }}"
+                <input type="text" name="serial_number" id="serial_number" value="{{ $contact->serial_number }}"
                        placeholder="Serial Number" class="input input-bordered w-full">
             </label>
 

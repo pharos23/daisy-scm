@@ -73,7 +73,7 @@ class ContactController extends Controller
             'ticket_fse' => ['nullable', 'string', 'max:20'],
             'iccid' => ['nullable', 'string', 'max:20'],
             'equipamento' => ['nullable', 'string', 'max:20'],
-            'equip_sn' => ['nullable', 'string', 'max:20'],
+            'serial_number' => ['nullable', 'string', 'max:20'],
             'imei' => ['nullable', 'string', 'max:20'],
             'obs' => ['nullable', 'string', 'max:255'],
         ]);

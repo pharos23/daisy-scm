@@ -15,7 +15,7 @@
                     <button class="btn btn-primary place-items-center m-5" onclick="modal_role.showModal()">New</button>
                 @endcan
 
-                <!-- Popup (modal) para a criação de uma nova role -->
+                {{-- Popup (modal) para a criação de uma nova role --}}
                 <dialog id="modal_role" class="modal">
                     <div class="modal-box w-full max-w-xl">
                         <form method="dialog">
@@ -70,7 +70,7 @@
 
             </div>
 
-            <!-- Table -->
+            {{-- Table --}}
             <div class="m-5">
                 <table class="table table-striped table-bordered">
                 <thead>
@@ -129,7 +129,7 @@
             </table>
             </div>
 
-            <!-- Pagination -->
+            {{-- Pagination --}}
             <div class="absolute bottom-0 center w-full p-5">
                 {{ $roles->links() }}
             </div>
