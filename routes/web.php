@@ -18,22 +18,29 @@ Route::get('/', function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::resources([
-    'roles' => RoleController::class,
-    'users' => UserController::class,
-]);
+Route::middleware(['role:Admin|Super Admin'])->group(function () {
+    Route::resources([
+        'roles' => RoleController::class,
+        'users' => UserController::class,
+    ]);
+
+    Route::get('/user-search', [UserController::class, 'search'])
+        ->name('users.search');
+
+    Route::resource('permissions',
+        PermissionController::class)->only([
+        'index', 'store', 'destroy'
+    ]);
+
+    Route::get('/admin', function () {
+        return view('users.admin');
+    })->name('admin.dashboard');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/user', [SettingController::class, 'edit'])->name('userSettings.edit');
     Route::put('/user', [SettingController::class, 'update'])->name('userSettings.update');
 });
-
-Route::get('/admin', function () {
-    return view('users.admin');
-})->name('admin.dashboard');
-
-Route::get('/user-search', [UserController::class, 'search'])
-    ->name('users.search');
 
 Route::group(['middleware' => ['permission:view-contact']], function () {
 
@@ -64,7 +71,3 @@ Route::group(['middleware' => ['permission:view-contact']], function () {
         ->middleware('permission:delete-contact')
         ->name('contacts.destroy');
 });
-
-Route::resource('permissions', PermissionController::class)->only([
-    'index', 'store', 'destroy'
-]);

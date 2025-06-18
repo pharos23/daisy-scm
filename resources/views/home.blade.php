@@ -62,7 +62,7 @@
                         <div class="stat-value">{{ DB::table('contacts')
                             ->whereBetween('created_at', [
                                 now()->subWeek()->startOfWeek(),
-                                now()->subWeek()->today()])
+                                now()->endOfDay()])
                                 ->count() }}
                         </div>
                         <div class="stat-desc">This Week!</div>
