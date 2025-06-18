@@ -62,8 +62,7 @@
                 setTimeout(function() {
                     successMessage.style.display = 'none';
                 }, 3000);
-            }
-
+            }})
     </script>
 
     // Detetar qual a tab que está aberta para fazer o submit e guardar os dados certos

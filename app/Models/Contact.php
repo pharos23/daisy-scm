@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
-    use hasFactory;
+    use HasFactory;
+
     protected $fillable = [
         'local',
         'grupo',

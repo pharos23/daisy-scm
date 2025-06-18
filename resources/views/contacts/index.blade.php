@@ -4,9 +4,9 @@
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">
 
-            <!-- Cabeçalho da Tabela -->
+            {{-- Cabeçalho da Tabela --}}
             <div class="flex w-full justify-between">
-                <!-- Search and filter inputs -->
+                {{-- Search and filter inputs --}}
                 <div class="flex gap-4 m-5">
                     <input type="text" id="searchInput" placeholder="Search..." class="input input-bordered" />
 
@@ -25,7 +25,7 @@
                     </select>
                 </div>
 
-                <!-- Botão para criar um novo contacto -->
+                {{-- Botão para criar um novo contacto --}}
                 @can('create-contact')
                     <button class="btn btn-primary place-items-center m-5"
                             onclick="modal_new.showModal()">Novo</button>
@@ -114,7 +114,7 @@
                 </dialog>
             </div>
 
-            <!-- Tabela -->
+            {{-- Tabela --}}
             <div class="m-5">
                 <table class="table table-zebra table-md w-full" id="contactsTable">
                     <thead class="bg-base-200 text-base-content">
@@ -151,7 +151,7 @@
             </div>
         </div>
 
-        <!-- Avisos -->
+        {{-- Avisos --}}
         <div class="toast toast-top toast-end">
             @if(session('success'))
                 <div class="alert alert-success" id="success-message">
@@ -178,6 +178,7 @@
         });
     </script>
 
+    {{-- Função de Search --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const searchInput = document.getElementById('searchInput');
@@ -224,6 +225,7 @@
         });
     </script>
 
+    {{-- Paginação automática --}}
     <script>
         function calculateItemsPerPage() {
             const itemHeight = 100; // estimated height of each contact item in pixels
@@ -243,6 +245,7 @@
         }
     </script>
 
+    {{-- Validação do Modal New --}}
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('contact-form');
