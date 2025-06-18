@@ -56,7 +56,7 @@
                 <tbody>
                 @forelse($permissions as $permission)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $permission->id }}</td>
                         <td class="permission-name">{{ $permission->name }}</td>
                         <td class="text-right">
                             @can('delete-permission')
