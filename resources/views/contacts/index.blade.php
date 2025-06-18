@@ -225,7 +225,7 @@
         });
     </script>
 
-    {{-- Paginação automática --}}
+    {{-- Paginação dinamica --}}
     <script>
         function calculateItemsPerPage() {
             const itemHeight = 100; // estimated height of each contact item in pixels

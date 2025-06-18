@@ -19,9 +19,19 @@ class PermissionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $permissions = Permission::orderBy('name')->paginate(10);
+        $perPage = $request->input('perPage', 8); // default 8
+        $search = $request->input('search');
+
+        $query = Permission::query();
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $permissions = $query->orderBy('name')->paginate($perPage);
+
         return view('permissions.index', compact('permissions'));
     }
 
