@@ -87,9 +87,9 @@
                         <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $role->name }}</td>
                         <td>
-                            <ul>
+                            <ul class="p-2  flex flex-wrap gap-2">
                                 @forelse ($role->permissions as $permission)
-                                    <li>{{ $permission->name }}</li>
+                                    <div class="badge badge-outline">{{ $permission->name }}</div>
                                 @empty
                                 @endforelse
                             </ul>
