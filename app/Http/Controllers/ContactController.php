@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ContactsExport;
+use App\Imports\ContactsImport;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+
 // Controller for managing contacts. Create, edit, etc.
 class ContactController extends Controller
 {
@@ -99,4 +103,21 @@ class ContactController extends Controller
         return redirect()->route('contacts')
             ->with('deleted','Contact deleted successfully');
     }
+
+    public function export()
+    {
+        return Excel::download(new ContactsExport, 'contacts.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new ContactsImport, $request->file('file'));
+
+        return back()->with('success', 'Contacts imported successfully.');
+    }
+
 }

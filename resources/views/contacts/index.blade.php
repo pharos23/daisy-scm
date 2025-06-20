@@ -25,6 +25,22 @@
                     </select>
                 </div>
 
+                <form action="{{ route('contacts.import') }}" method="POST" enctype="multipart/form-data" class="flex items-center gap-2">
+                    @csrf
+
+                    <input type="file" name="file" required class="file-input file-input-bordered file-input w-full max-w-xs" />
+
+                    <div class="btn-group">
+                        <button type="submit" class="btn btn-success ml-3">
+                            Import
+                        </button>
+                    </div>
+                </form>
+
+                <button class="btn btn-success mt-5 ml-5" onclick="window.location.href='{{ route('contacts.export') }}'">
+                    Export
+                </button>
+
                 {{-- Botão para criar um novo contacto --}}
                 @can('create-contact')
                     <button class="btn btn-primary place-items-center m-5"
