@@ -25,109 +25,33 @@
                     </select>
                 </div>
 
-                <form action="{{ route('contacts.import') }}" method="POST" enctype="multipart/form-data" class="flex items-center gap-2">
-                    @csrf
+                <buttons class="flex justify-end gap-4 m-5">
+                    <form action="{{ route('contacts.import') }}" method="POST" enctype="multipart/form-data" class="flex items-center gap-4">
+                        @csrf
 
-                    <input type="file" name="file" required class="file-input file-input-bordered file-input w-full max-w-xs" />
+                        <input type="file" name="file" required class="file-input file-input-bordered file-input w-full max-w-xs" />
 
-                    <div class="btn-group">
-                        <button type="submit" class="btn btn-success ml-3">
-                            Import
-                        </button>
-                    </div>
-                </form>
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-success">
+                                Import
+                            </button>
+                        </div>
+                    </form>
 
-                <button class="btn btn-success mt-5 ml-5" onclick="window.location.href='{{ route('contacts.export') }}'">
-                    Export
-                </button>
+                    <button class="btn btn-success" onclick="window.location.href='{{ route('contacts.export') }}'">
+                        Export
+                    </button>
 
-                {{-- Botão para criar um novo contacto --}}
-                @can('create-contact')
-                    <button class="btn btn-primary place-items-center m-5"
-                            onclick="modal_new.showModal()">Novo</button>
-                @endcan
-                @cannot('create-contact')
-                    <button class="btn btn-primary place-items-center m-5"
-                            disabled="disabled">New</button>
-                @endcannot
-
-                {{-- Popup (modal) para a criação de um novo contacto --}}
-                <dialog id="modal_new" class="modal">
-                    <div class="modal-box w-full max-w-xl">
-                        <form method="dialog">
-                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                        </form>
-
-                        <h3 class="text-2xl font-semibold mb-4">Novo Contacto</h3>
-
-                        <form action="{{ route('contacts.create') }}" method="POST" id="contact-form">
-                            @csrf
-                            @method('PUT')
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {{-- Local --}}
-                                <label class="form-control w-full">
-                                    <div class="label">
-                                        <span class="label-text">Local</span>
-                                    </div>
-                                    <select class="select select-bordered w-full" name="local" id="local" required>
-                                        <option disabled selected>Escolha o Local</option>
-                                        <option>Hospital Prelada</option>
-                                        <option>Spec</option>
-                                        <option>Conde de Ferreira</option>
-                                    </select>
-                                    <div class="label hidden text-error" id="local-error">
-                                        <span class="label-text-alt">Selecione um local.</span>
-                                    </div>
-                                </label>
-
-                                {{-- Grupo --}}
-                                <label class="form-control w-full">
-                                    <div class="label">
-                                        <span class="label-text">Grupo</span>
-                                    </div>
-                                    <select class="select select-bordered w-full" name="grupo" id="grupo" required>
-                                        <option disabled selected>Escolha o grupo</option>
-                                        <option>DSI</option>
-                                        <option>OPS</option>
-                                        <option>Transporte</option>
-                                    </select>
-                                    <div class="label hidden text-error" id="grupo-error">
-                                        <span class="label-text-alt">Selecione um grupo.</span>
-                                    </div>
-                                </label>
-
-                                {{-- Nome --}}
-                                <label class="form-control w-full">
-                                    <div class="label">
-                                        <span class="label-text">Nome</span>
-                                    </div>
-                                    <input type="text" class="input input-bordered w-full" placeholder="Nome"
-                                           name="nome" id="nome" value="{{ old('nome') }}" required />
-                                    <div class="label hidden text-error" id="nome-error">
-                                        <span class="label-text-alt">Nome é obrigatório.</span>
-                                    </div>
-                                </label>
-
-                                {{-- Telemóvel --}}
-                                <label class="form-control w-full">
-                                    <div class="label">
-                                        <span class="label-text">Telemóvel</span>
-                                    </div>
-                                    <input type="text" class="input input-bordered w-full" placeholder="Telemóvel"
-                                           name="telemovel" id="telemovel" value="{{ old('telemovel') }}" pattern="^\d{9}$" required />
-                                    <div class="label hidden text-error" id="telemovel-error">
-                                        <span class="label-text-alt">Insira um número de 9 dígitos.</span>
-                                    </div>
-                                </label>
-                            </div>
-
-                            <div class="flex justify-end gap-2 mt-6">
-                                <button class="btn btn-accent" id="submitBtn" type="submit" disabled>Criar</button>
-                            </div>
-                        </form>
-                    </div>
-                </dialog>
+                    {{-- Botão para criar um novo contacto --}}
+                    @can('create-contact')
+                        <button class="btn btn-primary place-items-center"
+                                onclick="modal_new.showModal()">Novo</button>
+                    @endcan
+                    @cannot('create-contact')
+                        <button class="btn btn-primary place-items-center"
+                                disabled="disabled">New</button>
+                    @endcannot
+                </buttons>
             </div>
 
             {{-- Table --}}
@@ -168,4 +92,82 @@
             </div>
         </div>
     </div>
+
+    {{-- Popup (modal) para a criação de um novo contacto --}}
+    <dialog id="modal_new" class="modal">
+        <div class="modal-box w-full max-w-xl">
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+
+            <h3 class="text-2xl font-semibold mb-4">Novo Contacto</h3>
+
+            <form action="{{ route('contacts.create') }}" method="POST" id="contact-form">
+                @csrf
+                @method('PUT')
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {{-- Local --}}
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Local</span>
+                        </div>
+                        <select class="select select-bordered w-full" name="local" id="local" required>
+                            <option disabled selected>Escolha o Local</option>
+                            <option>Hospital Prelada</option>
+                            <option>Spec</option>
+                            <option>Conde de Ferreira</option>
+                        </select>
+                        <div class="label hidden text-error" id="local-error">
+                            <span class="label-text-alt">Selecione um local.</span>
+                        </div>
+                    </label>
+
+                    {{-- Grupo --}}
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Grupo</span>
+                        </div>
+                        <select class="select select-bordered w-full" name="grupo" id="grupo" required>
+                            <option disabled selected>Escolha o grupo</option>
+                            <option>DSI</option>
+                            <option>OPS</option>
+                            <option>Transporte</option>
+                        </select>
+                        <div class="label hidden text-error" id="grupo-error">
+                            <span class="label-text-alt">Selecione um grupo.</span>
+                        </div>
+                    </label>
+
+                    {{-- Nome --}}
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Nome</span>
+                        </div>
+                        <input type="text" class="input input-bordered w-full" placeholder="Nome"
+                               name="nome" id="nome" value="{{ old('nome') }}" required />
+                        <div class="label hidden text-error" id="nome-error">
+                            <span class="label-text-alt">Nome é obrigatório.</span>
+                        </div>
+                    </label>
+
+                    {{-- Telemóvel --}}
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Telemóvel</span>
+                        </div>
+                        <input type="text" class="input input-bordered w-full" placeholder="Telemóvel"
+                               name="telemovel" id="telemovel" value="{{ old('telemovel') }}" pattern="^\d{9}$" required />
+                        <div class="label hidden text-error" id="telemovel-error">
+                            <span class="label-text-alt">Insira um número de 9 dígitos.</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="flex justify-end gap-2 mt-6">
+                    <button class="btn btn-accent" id="submitBtn" type="submit" disabled>Criar</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
 @endsection
