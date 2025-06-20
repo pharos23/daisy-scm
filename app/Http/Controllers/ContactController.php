@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    // Function to paginate
     public function index($request) {
         $contacts = Contact::query()->paginate();
         $perPage = $request->input('perPage', 8);
@@ -14,6 +15,7 @@ class ContactController extends Controller
         return view('contacts.index', compact('contacts'));
     }
 
+    // Function to search the database
     public function search(Request $request)
     {
         $search = $request->input('search');
@@ -26,6 +28,7 @@ class ContactController extends Controller
         return view('contacts.index', compact('contacts'));
     }
 
+    // Function to store the data in the database when creating a new entry
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -40,12 +43,14 @@ class ContactController extends Controller
         return back()->with('success', 'Contact created successfully');
     }
 
+    // Function to show the selected contact (dependent on the id)
     public function show($id)
     {
         $contact = Contact::find($id);
         return view('contacts.show', compact('contact'));
     }
 
+    // Function to update the entries in the "Pessoal" tab
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -65,6 +70,7 @@ class ContactController extends Controller
         return redirect()->back()->with('success', 'Save successful');
     }
 
+    // Function to update the entries in the "Ticketing" tab
     public function updateTicket(Request $request, $id)
     {
         $request->validate([
@@ -85,6 +91,7 @@ class ContactController extends Controller
 
     }
 
+    // Function to delete an entry
     public function destroy(Contact $contact)
     {
         $contact->delete();
