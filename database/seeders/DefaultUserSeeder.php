@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-
+// Seed the database with default users. We are adding users to the DB manually.
 class DefaultUserSeeder extends Seeder
 {
     /**

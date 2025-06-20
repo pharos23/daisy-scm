@@ -8,6 +8,7 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * With all the variables we want to create for the Users table.
      */
     public function up(): void
     {

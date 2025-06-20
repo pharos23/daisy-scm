@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
+// Seeding the database with default permissions, not used in our database. THIS FILE IS FOR TESTING ONLY.
 class RolePermissionSeeder extends Seeder
 {
     public function run()

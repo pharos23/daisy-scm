@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+// Factory to fill the Contacts table with fake data
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Contact>
  */

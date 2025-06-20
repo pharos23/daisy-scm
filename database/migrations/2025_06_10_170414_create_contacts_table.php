@@ -8,6 +8,7 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * With all the variables we want to create for the Contacts table.
      */
     public function up(): void
     {
@@ -25,7 +26,7 @@ return new class extends Migration
             $table->string('ticket_fse')->nullable();
             $table->string('iccid')->nullable();
             $table->string('equipamento')->nullable();
-            $table->boolean('serial_number')->default(false);
+            $table->string('serial_number')->nullable();
             $table->string('imei')->nullable();
             $table->text('obs')->nullable();
             $table->softDeletes();

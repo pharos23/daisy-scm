@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 
+// Seed the DB with the permissions we want.
 class PermissionSeeder extends Seeder
 {
     /**

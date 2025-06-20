@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class,
             DefaultUserSeeder::class,
-            Contact::factory()->count(20)->create(),
+            Contact::factory()->count(20)->create(), // Use the Contact Factory to create 20 users
         ]);
     }
 }
