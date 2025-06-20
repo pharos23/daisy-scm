@@ -8,17 +8,17 @@
             <div class="flex w-full justify-between">
                 {{-- Search and filter inputs --}}
                 <div class="flex gap-4 m-5">
-                    <input type="text" id="searchInput" placeholder="Search..." class="input input-bordered" />
+                    <input type="text" id="searchInput" placeholder="{{ __('Search') }}..." class="input input-bordered" />
 
                     <select id="filterLocal" class="select select-bordered">
-                        <option value="">All Locals</option>
+                        <option value="">{{ __('AllLocals') }}</option>
                         <option value="Hospital Prelada">Hospital Prelada</option>
                         <option value="Spec">Spec</option>
                         <option value="Conde de Ferreira">Conde de Ferreira</option>
                     </select>
 
                     <select id="filterGroup" class="select select-bordered">
-                        <option value="">All Groups</option>
+                        <option value="">{{ __('AllGroups') }}</option>
                         <option value="DSI">DSI</option>
                         <option value="OPS">OPS</option>
                         <option value="Transporte">Transporte</option>
@@ -35,14 +35,14 @@
 
                         <div class="btn-group">
                             <button type="submit" class="btn btn-success">
-                                Import
+                                {{ __('Import') }}
                             </button>
                         </div>
                     </form>
 
                     {{-- Export button --}}
                     <button class="btn btn-success" onclick="window.location.href='{{ route('contacts.export') }}'">
-                        Export
+                        {{ __('Export') }}
                     </button>
 
                     {{-- New Contact Button --}}
@@ -62,10 +62,10 @@
                 <table class="table table-zebra table-md w-full" id="contactsTable">
                     <thead class="bg-base-200 text-base-content">
                     <tr>
-                        <th>Local</th>
-                        <th>Grupo</th>
-                        <th>Nome</th>
-                        <th>Telemóvel</th>
+                        <th>{{ __('Local') }}</th>
+                        <th>{{ __('Group') }}</th>
+                        <th>{{ __('Name') }}</th>
+                        <th>{{ __('Cellphone') }}</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -79,7 +79,7 @@
                             <td>
                                 <button class="btn btn-sm btn-outline"
                                         onclick="window.location='{{ route('contacts.show', ['id' => $contact->id]) }}'">
-                                    Show
+                                    {{ __('More') }}
                                 </button>
                             </td>
                         </tr>

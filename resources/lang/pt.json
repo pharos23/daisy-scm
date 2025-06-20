@@ -1,4 +1,21 @@
 {
+    "Search": "Procura",
+    "AllLocals": "Todos os Locais",
+    "AllGroups": "Todos os Grupos",
+    "Import": "Importar",
+    "Export": "Exportar",
     "New": "Novo",
-    "Contact Us": "Contact Us"
+    "More": "Mais",
+    "Local": "Local",
+    "ChooseLocal": "Escolha o Local",
+    "Group": "Grupo",
+    "ChooseGroup": "Escolha o Grupo",
+    "Name": "Nome",
+    "Cellphone": "Telemóvel",
+    "Extension": "Extensão",
+    "Functions": "Funcionalidades",
+    "ActivationReactivation": "Ativação/Reativação",
+    "Deactivation": "Desativação",
+    "Equipment": "Equipamento",
+    "Observations": "Observações"
 }

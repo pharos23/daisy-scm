@@ -8,9 +8,9 @@
 
             {{-- Local --}}
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Local</span></div>
+                <div class="label"><span class="label-text">{{ __('Local') }}</span></div>
                 <select class="select select-bordered w-full" name="local" id="local" required>
-                    <option disabled {{ $contact->local ? '' : 'selected' }}>Escolha o Local</option>
+                    <option disabled {{ $contact->local ? '' : 'selected' }}>{{ __('ChooseLocal') }}</option>
                     <option {{ $contact->local === 'Hospital Prelada' ? 'selected' : '' }}>Hospital Prelada</option>
                     <option {{ $contact->local === 'Spec' ? 'selected' : '' }}>Spec</option>
                     <option {{ $contact->local === 'Conde de Ferreira' ? 'selected' : '' }}>Conde de Ferreira</option>
@@ -19,9 +19,9 @@
 
             {{-- Grupo --}}
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Grupo</span></div>
+                <div class="label"><span class="label-text">{{ __('Group') }}</span></div>
                 <select class="select select-bordered w-full" name="grupo" id="grupo" required>
-                    <option disabled {{ $contact->grupo ? '' : 'selected' }}>Escolha o grupo</option>
+                    <option disabled {{ $contact->grupo ? '' : 'selected' }}>{{ __('ChooseGroup') }}</option>
                     <option {{ $contact->grupo === 'DSI' ? 'selected' : '' }}>DSI</option>
                     <option {{ $contact->grupo === 'OPS' ? 'selected' : '' }}>OPS</option>
                     <option {{ $contact->grupo === 'Transporte' ? 'selected' : '' }}>Transporte</option>
@@ -30,42 +30,42 @@
 
             {{-- Nome --}}
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Nome</span></div>
+                <div class="label"><span class="label-text">{{ __('Name') }}</span></div>
                 <input type="text" name="nome" id="nome" value="{{ $contact->nome }}"
                        placeholder="Nome" class="input input-bordered w-full" required>
             </label>
 
             {{-- Telemóvel --}}
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Telemóvel</span></div>
+                <div class="label"><span class="label-text">{{ __('Cellphone') }}</span></div>
                 <input type="text" name="telemovel" id="telemovel" value="{{ $contact->telemovel }}"
                        placeholder="Telemóvel" class="input input-bordered w-full" required>
             </label>
 
             {{-- Extensão --}}
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Extensão</span></div>
+                <div class="label"><span class="label-text">{{ __('Extension') }}</span></div>
                 <input type="text" name="extensao" id="extensao" value="{{ $contact->extensao }}"
                        placeholder="Extensão" class="input input-bordered w-full">
             </label>
 
             {{-- Funcionalidades --}}
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Funcionalidades</span></div>
+                <div class="label"><span class="label-text">{{ __('Functions') }}</span></div>
                 <input type="text" name="funcionalidades" id="funcionalidades" value="{{ $contact->funcionalidades }}"
                        placeholder="Funcionalidades" class="input input-bordered w-full">
             </label>
 
             {{-- Ativação --}}
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Ativação/Reativação</span></div>
+                <div class="label"><span class="label-text">{{ __('ActivationReactivation') }}</span></div>
                 <input type="date" name="ativacao" id="ativacao" value="{{ $contact->ativacao }}"
                        class="input input-bordered w-full">
             </label>
 
             {{-- Desativação --}}
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Desativação</span></div>
+                <div class="label"><span class="label-text">{{ __('Deactivation') }}</span></div>
                 <input type="date" name="desativacao" id="desativacao" value="{{ $contact->desativacao }}"
                        class="input input-bordered w-full">
             </label>
@@ -77,49 +77,49 @@
             @php $readonly = 'readonly disabled'; @endphp
 
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Local</span></div>
+                <div class="label"><span class="label-text">{{ __('Local') }}</span></div>
                 <input type="text" name="local" id="local" value="{{ $contact->local }}"
                        placeholder="Local" class="input input-bordered w-full bg-base-200" {{ $readonly }}>
             </label>
 
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Grupo</span></div>
+                <div class="label"><span class="label-text">{{ __('Group') }}</span></div>
                 <input type="text" name="grupo" id="grupo" value="{{ $contact->grupo }}"
                        placeholder="Grupo" class="input input-bordered w-full bg-base-200" {{ $readonly }}>
             </label>
 
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Nome</span></div>
+                <div class="label"><span class="label-text">{{ __('Name') }}</span></div>
                 <input type="text" name="nome" id="nome" value="{{ $contact->nome }}"
                        placeholder="Nome" class="input input-bordered w-full bg-base-200" {{ $readonly }}>
             </label>
 
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Telemóvel</span></div>
+                <div class="label"><span class="label-text">{{ __('Cellphone') }}</span></div>
                 <input type="text" name="telemovel" id="telemovel" value="{{ $contact->telemovel }}"
                        placeholder="Telemóvel" class="input input-bordered w-full bg-base-200" {{ $readonly }}>
             </label>
 
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Extensão</span></div>
+                <div class="label"><span class="label-text">{{ __('Extension') }}</span></div>
                 <input type="text" name="extensao" id="extensao" value="{{ $contact->extensao }}"
                        placeholder="Extensão" class="input input-bordered w-full bg-base-200" {{ $readonly }}>
             </label>
 
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Funcionalidades</span></div>
+                <div class="label"><span class="label-text">{{ __('Functions') }}</span></div>
                 <input type="text" name="funcionalidades" id="funcionalidades" value="{{ $contact->funcionalidades }}"
                        placeholder="Funcionalidades" class="input input-bordered w-full bg-base-200" {{ $readonly }}>
             </label>
 
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Ativação/Reativação</span></div>
+                <div class="label"><span class="label-text">{{ __('ActivationReactivation') }}</span></div>
                 <input type="date" name="ativacao" id="ativacao" value="{{ $contact->ativacao }}"
                        class="input input-bordered w-full bg-base-200" {{ $readonly }}>
             </label>
 
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Desativação</span></div>
+                <div class="label"><span class="label-text">{{ __('Deactivation') }}</span></div>
                 <input type="date" name="desativacao" id="desativacao" value="{{ $contact->desativacao }}"
                        class="input input-bordered w-full bg-base-200" {{ $readonly }}>
             </label>

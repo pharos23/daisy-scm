@@ -1,4 +1,21 @@
 {
+    "Search": "Search",
+    "AllLocals": "All Locals",
+    "AllGroups": "All Groups",
+    "Import": "Import",
+    "Export": "Export",
     "New": "New",
-    "Contact Us": "Contact Us"
+    "More": "More",
+    "Local": "Local",
+    "ChooseLocal": "Choose Local",
+    "Group": "Group",
+    "ChooseGroup": "Choose Local",
+    "Name": "Name",
+    "Cellphone": "Cellphone",
+    "Extension": "Extension",
+    "Functions": "Functions",
+    "ActivationReactivation": "Activation/Reactivation",
+    "Deactivation": "Deactivation",
+    "Equipment": "Equipment",
+    "Observations": "Observations"
 }

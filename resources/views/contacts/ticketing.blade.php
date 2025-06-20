@@ -27,7 +27,7 @@
 
             {{-- Right Column --}}
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Equipamento</span></div>
+                <div class="label"><span class="label-text">{{ __('Equipment') }}</span></div>
                 <input type="text" name="equipamento" id="equipamento" value="{{ $contact->equipamento }}"
                        placeholder="Equipamento" class="input input-bordered w-full">
             </label>
@@ -49,7 +49,7 @@
         <div class="px-6 pb-6">
             <div class="form-control w-full">
                 <label class="label">
-                    <span class="label-text">Observações</span>
+                    <span class="label-text">{{ __('Observations') }}</span>
                 </label>
                 <textarea name="obs" id="obs"
                           placeholder="Observações"
@@ -79,7 +79,7 @@
             </label>
 
             <label class="form-control w-full">
-                <div class="label"><span class="label-text">Equipamento</span></div>
+                <div class="label"><span class="label-text">{{ __('Equipment') }}</span></div>
                 <input type="text" value="{{ $contact->equipamento }}" class="input input-bordered bg-base-200" {{ $readonly }}>
             </label>
 
@@ -97,7 +97,7 @@
         <div class="px-6 pb-6">
             <div class="form-control w-full">
                 <label class="label">
-                    <span class="label-text">Observações</span>
+                    <span class="label-text">{{ __('Observations') }}</span>
                 </label>
                 <textarea class="textarea textarea-bordered bg-base-200 w-full min-h-[10rem]" {{ $readonly }}>{{ old('obs', $contact->obs) }}</textarea>
             </div>
