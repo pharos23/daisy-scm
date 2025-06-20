@@ -97,8 +97,10 @@
                             <div class="flex justify-end gap-2">
                                 @if ($role->name != 'Super Admin')
                                     @can('edit-role')
-                                        <button class="btn btn-primary btn-sm"
-                                                onclick="openEditModal({{ $role->id }}, '{{ $role->name }}', @json($role->permissions->pluck('id')))">
+                                        <button class="btn btn-primary btn-sm open-edit-role"
+                                                data-id="{{ $role->id }}"
+                                                data-name="{{ $role->name }}"
+                                                data-permissions='@json($role->permissions->pluck('id'))'>
                                             Edit
                                         </button>
                                     @endcan
@@ -183,86 +185,4 @@
             </form>
         </div>
     </dialog>
-
-    {{-- Edit Role Modal Function --}}
-    <script>
-        const editModal = document.getElementById('modal_role_edit');
-        const editForm = document.getElementById('edit-role-form');
-        const nameInput = document.getElementById('edit-role-name');
-        const permissionsSelect = document.getElementById('edit-role-permissions');
-        const submitBtn = document.getElementById('edit-submit-btn');
-
-        function openEditModal(roleId, roleName, permissionIds) {
-            // Fill form values
-            nameInput.value = roleName;
-
-            // Reset all options
-            Array.from(permissionsSelect.options).forEach(opt => {
-                opt.selected = permissionIds.includes(parseInt(opt.value));
-            });
-
-            // Set action URL
-            editForm.action = `/roles/${roleId}`;
-
-            // Show modal
-            editModal.showModal();
-
-            // Validate immediately
-            validateEditForm();
-        }
-
-        function validateEditForm() {
-            const isNameValid = nameInput.value.trim() !== '';
-            const selectedPermissions = Array.from(permissionsSelect.selectedOptions);
-            const isPermissionsValid = selectedPermissions.length > 0;
-
-            document.getElementById('edit-name-error-label').classList.toggle('hidden', isNameValid);
-            nameInput.classList.toggle('input-error', !isNameValid);
-
-            document.getElementById('edit-permissions-error-label').classList.toggle('hidden', isPermissionsValid);
-            permissionsSelect.classList.toggle('select-error', !isPermissionsValid);
-
-            submitBtn.disabled = !(isNameValid && isPermissionsValid);
-        }
-
-        nameInput.addEventListener('input', validateEditForm);
-        permissionsSelect.addEventListener('change', validateEditForm);
-    </script>
-
-    {{-- Data Validation --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const nameInput = document.getElementById('name');
-            const permissionsSelect = document.getElementById('permissions');
-            const submitBtn = document.getElementById('submitBtn');
-
-            const nameError = document.getElementById('name-error-label');
-            const permissionsError = document.getElementById('permissions-error-label');
-
-            function validateName() {
-                const isValid = nameInput.value.trim().length > 0;
-                nameError.classList.toggle('hidden', isValid);
-                nameInput.classList.toggle('input-error', !isValid);
-                return isValid;
-            }
-
-            function validatePermissions() {
-                const selected = Array.from(permissionsSelect.options).filter(opt => opt.selected);
-                const isValid = selected.length > 0;
-                permissionsError.classList.toggle('hidden', isValid);
-                permissionsSelect.classList.toggle('select-error', !isValid);
-                return isValid;
-            }
-
-            function validateAll() {
-                const allValid = validateName() && validatePermissions();
-                submitBtn.disabled = !allValid;
-            }
-
-            nameInput.addEventListener('input', validateAll);
-            permissionsSelect.addEventListener('change', validateAll);
-
-            validateAll();
-        });
-    </script>
 @endsection

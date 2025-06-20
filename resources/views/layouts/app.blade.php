@@ -9,7 +9,7 @@
 
     <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
 
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen flex bg-base-100 relative">
 
@@ -105,79 +105,5 @@
             @endforeach
         @endif
     </toasts>
-
-    {{-- Toast Timer --}}
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const successToast = document.getElementById('toast-success');
-            const deletedToast = document.getElementById('toast-deleted');
-            const errorToasts = document.getElementsByClassName('error-alert');
-
-            if (successToast) {
-                setTimeout(() => {
-                    successToast.classList.add('opacity-0', 'transition', 'duration-300');
-                    setTimeout(() => successToast.remove(), 300);
-                }, 4000); // 4 seconds
-            }
-
-            if (deletedToast) {
-                setTimeout(() => {
-                    deletedToast.classList.add('opacity-0', 'transition', 'duration-300');
-                    setTimeout(() => deletedToast.remove(), 300);
-                }, 4000); // 4 seconds
-            }
-
-            if (errorToasts.length > 0) {
-                Array.from(errorToasts).forEach(toast => {
-                    setTimeout(() => {
-                        toast.classList.add('opacity-0', 'transition', 'duration-300');
-                        setTimeout(() => toast.remove(), 300);
-                    }, 4000); // 4 seconds
-                });
-            }
-        });
-    </script>
-
-    {{-- Sidebar Hover --}}
-    <script>
-        const sidebar = document.getElementById('sidebar');
-        const hoverZone = document.getElementById('hover-zone');
-
-        function showSidebar() {
-            if (window.innerWidth < 1024) {
-                sidebar.classList.remove('-translate-x-full');
-            }
-        }
-
-        function hideSidebar() {
-            if (window.innerWidth < 1024) {
-                sidebar.classList.add('-translate-x-full');
-            }
-        }
-
-        hoverZone.addEventListener('mouseenter', showSidebar);
-        sidebar.addEventListener('mouseleave', hideSidebar);
-    </script>
-
-    {{-- Theme Toggle --}}
-    <script>
-        const themeSwitcher = document.getElementById('theme-switcher');
-
-        function toggleTheme() {
-            const theme = themeSwitcher.checked ? 'dark' : 'cmyk';
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                document.documentElement.setAttribute('data-theme', savedTheme);
-                themeSwitcher.checked = (savedTheme === 'dark');
-            }
-        });
-
-        themeSwitcher.addEventListener('change', toggleTheme);
-    </script>
 </body>
 </html>
