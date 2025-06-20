@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\Request;
-
+// Controller for managing contacts. Create, edit, etc.
 class ContactController extends Controller
 {
     // Function to paginate

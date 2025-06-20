@@ -6,14 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-
+// Controller for managing the User Settings
 class SettingController extends Controller
 {
+    // Function to edit the user settings
     public function edit()
     {
-        return view('users.settings'); // Your blade file path
+        return view('users.settings'); // Returns to the users settings blade
     }
 
+    // Function to update the user settings
     public function update(Request $request)
     {
         $user = $request->user();
@@ -48,6 +50,6 @@ class SettingController extends Controller
 
         $user->save();
 
-        return redirect()->route('userSettings.edit')->with('success', 'Settings updated successfully.');
+        return redirect()->route('userSettings.edit')->with('success', 'Settings updated successfully.'); // Returns to the user settings with a success message, acts like a refresh
     }
 }
