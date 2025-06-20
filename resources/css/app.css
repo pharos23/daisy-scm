@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @plugin "daisyui" {
-    themes: cmyk --default, luxury --prefersdark;
+    themes: cmyk --default, luxury --prefersdark; /* Using DaisyUI themes, Cmyk for Light mode and Luxury for Dark mode */
 }
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+{{-- Home page for user. After logging in the user is redirected to this page --}}
 @section('content')
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
 
@@ -38,7 +38,7 @@
                     <div class="stat place-items-center">
                         <div class="stat-title">Role</div>
                         <div class="stat-value">{{ Auth::user()->getRoleNames()->first() }}</div>
-                        <div class="stat-desc">
+                        <div class="stat-desc"> {{-- Different message depending on the role the current user has --}}
                             @if(Auth::user()->hasRole('Super Admin'))
                                 Maybe important !
                             @elseif(Auth::user()->hasRole('Admin'))

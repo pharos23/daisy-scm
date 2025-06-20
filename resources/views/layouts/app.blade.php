@@ -1,4 +1,5 @@
 <!doctype html>
+{{-- Blade for the layout of the page --}}
 <html data-theme="" lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="min-h-screen">
 <head>
     <meta charset="utf-8">

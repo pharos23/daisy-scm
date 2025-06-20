@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+{{--  Blade to create roles --}}
 @section('content')
 
     <div class="row justify-content-center">

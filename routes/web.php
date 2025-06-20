@@ -9,7 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+// Routes to redirect the user around the page
 Auth::routes();
 
 Route::get('/', function () {

@@ -1,4 +1,5 @@
 <form action="{{ route('contacts.updateTicket', $contact->id) }}" method="POST" id="contact-form-ticket">
+    {{--  Blade to show the "Ticketing" tab of the selected contact --}}
     @csrf
     @method('PUT')
 
