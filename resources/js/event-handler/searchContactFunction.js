@@ -3,41 +3,35 @@ export function setupSearchContact() {
     const filterLocal = document.getElementById('filterLocal');
     const filterGroup = document.getElementById('filterGroup');
     const table = document.getElementById('contactsTable');
-    const tbody = table.querySelector('tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
 
-    function filterTable() {
+    // Function to trigger search and filter
+    function applyFilters() {
         const searchTerm = searchInput.value.toLowerCase();
         const localFilter = filterLocal.value;
         const groupFilter = filterGroup.value;
 
-        rows.forEach(row => {
-            const local = row.querySelector('.local').textContent.toLowerCase();
-            const group = row.querySelector('.group').textContent.toLowerCase();
-            const name = row.querySelector('.name').textContent.toLowerCase();
-            const phone = row.querySelector('.phone').textContent.toLowerCase();
+        // Create a query string with search term and filters
+        let queryString = `?search=${searchTerm}&local=${localFilter}&group=${groupFilter}`;
 
-            // Check search text matches any column (name, phone, local, group)
-            const matchesSearch =
-                name.includes(searchTerm) ||
-                phone.includes(searchTerm) ||
-                local.includes(searchTerm) ||
-                group.includes(searchTerm);
+        // Make the AJAX request
+        fetch(`/contacts${queryString}`)
+            .then(response => response.text())
+            .then(data => {
+                // Replace the table content with the new filtered data
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data, 'text/html');
+                const newTableBody = doc.querySelector('#contactsTable tbody');
+                table.querySelector('tbody').innerHTML = newTableBody.innerHTML;
 
-            // Check filters
-            const matchesLocal = !localFilter || local === localFilter.toLowerCase();
-            const matchesGroup = !groupFilter || group === groupFilter.toLowerCase();
-
-            if (matchesSearch && matchesLocal && matchesGroup) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
+                // Update pagination links (if needed)
+                const pagination = doc.querySelector('.pagination');
+                document.querySelector('.pagination').innerHTML = pagination.innerHTML;
+            })
+            .catch(error => console.error('Error fetching filtered contacts:', error));
     }
 
-    // Event listeners
-    searchInput.addEventListener('input', filterTable);
-    filterLocal.addEventListener('change', filterTable);
-    filterGroup.addEventListener('change', filterTable);
+    // Event listeners to trigger the filter function
+    searchInput.addEventListener('input', applyFilters);
+    filterLocal.addEventListener('change', applyFilters);
+    filterGroup.addEventListener('change', applyFilters);
 }
