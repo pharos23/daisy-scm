@@ -25,7 +25,9 @@
                     </select>
                 </div>
 
+                {{-- Buttons Section --}}
                 <buttons class="flex justify-end gap-4 m-5">
+                    {{-- Import button with select file field --}}
                     <form action="{{ route('contacts.import') }}" method="POST" enctype="multipart/form-data" class="flex items-center gap-4">
                         @csrf
 
@@ -38,18 +40,19 @@
                         </div>
                     </form>
 
+                    {{-- Export button --}}
                     <button class="btn btn-success" onclick="window.location.href='{{ route('contacts.export') }}'">
                         Export
                     </button>
 
-                    {{-- Botão para criar um novo contacto --}}
+                    {{-- New Contact Button --}}
                     @can('create-contact')
                         <button class="btn btn-primary place-items-center"
-                                onclick="modal_new.showModal()">Novo</button>
+                                onclick="modal_new.showModal()">{{ __('New') }}</button>
                     @endcan
                     @cannot('create-contact')
                         <button class="btn btn-primary place-items-center"
-                                disabled="disabled">New</button>
+                                disabled="disabled">{{ __('New') }}</button>
                     @endcannot
                 </buttons>
             </div>
@@ -93,7 +96,7 @@
         </div>
     </div>
 
-    {{-- Popup (modal) para a criação de um novo contacto --}}
+    {{-- New Contact Modal --}}
     <dialog id="modal_new" class="modal">
         <div class="modal-box w-full max-w-xl">
             <form method="dialog">
