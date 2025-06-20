@@ -98,7 +98,7 @@
                                 @if ($role->name != 'Super Admin')
                                     @can('edit-role')
                                         <button class="btn btn-primary btn-sm"
-                                                onclick="window.location='{{ route('roles.edit', $role->id) }}'">
+                                                onclick="openEditModal({{ $role->id }}, '{{ $role->name }}', @json($role->permissions->pluck('id')))">
                                             Edit
                                         </button>
                                     @endcan
@@ -134,6 +134,100 @@
             </div>
         </div>
     </div>
+
+    {{-- Edit Role Modal --}}
+    <dialog id="modal_role_edit" class="modal">
+        <div class="modal-box w-full max-w-xl">
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+
+            <h3 class="text-2xl font-semibold mb-4">Edit Role</h3>
+
+            <form method="POST" id="edit-role-form">
+                @csrf
+                @method("PUT")
+
+                <div class="grid grid-cols-1 gap-6 px-1">
+                    {{-- Role Name --}}
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Role Name</span>
+                        </div>
+                        <input type="text" class="input input-bordered w-full" name="name" id="edit-role-name" required />
+                        <div class="label hidden text-error" id="edit-name-error-label">
+                            <span class="label-text-alt" id="edit-name-error-text">This field is required.</span>
+                        </div>
+                    </label>
+
+                    {{-- Permissions --}}
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Permissions</span>
+                        </div>
+                        <select class="select select-bordered w-full min-h-50" multiple size="6"
+                                id="edit-role-permissions" name="permissions[]">
+                            @foreach ($permissions as $permission)
+                                <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                            @endforeach
+                        </select>
+                        <div class="label hidden text-error mt-2" id="edit-permissions-error-label">
+                            <span class="label-text-alt">Select at least one permission.</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="flex justify-end gap-2 mt-6">
+                    <button class="btn btn-accent" id="edit-submit-btn" type="submit" disabled>Update</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    {{-- Edit Role Modal Function --}}
+    <script>
+        const editModal = document.getElementById('modal_role_edit');
+        const editForm = document.getElementById('edit-role-form');
+        const nameInput = document.getElementById('edit-role-name');
+        const permissionsSelect = document.getElementById('edit-role-permissions');
+        const submitBtn = document.getElementById('edit-submit-btn');
+
+        function openEditModal(roleId, roleName, permissionIds) {
+            // Fill form values
+            nameInput.value = roleName;
+
+            // Reset all options
+            Array.from(permissionsSelect.options).forEach(opt => {
+                opt.selected = permissionIds.includes(parseInt(opt.value));
+            });
+
+            // Set action URL
+            editForm.action = `/roles/${roleId}`;
+
+            // Show modal
+            editModal.showModal();
+
+            // Validate immediately
+            validateEditForm();
+        }
+
+        function validateEditForm() {
+            const isNameValid = nameInput.value.trim() !== '';
+            const selectedPermissions = Array.from(permissionsSelect.selectedOptions);
+            const isPermissionsValid = selectedPermissions.length > 0;
+
+            document.getElementById('edit-name-error-label').classList.toggle('hidden', isNameValid);
+            nameInput.classList.toggle('input-error', !isNameValid);
+
+            document.getElementById('edit-permissions-error-label').classList.toggle('hidden', isPermissionsValid);
+            permissionsSelect.classList.toggle('select-error', !isPermissionsValid);
+
+            submitBtn.disabled = !(isNameValid && isPermissionsValid);
+        }
+
+        nameInput.addEventListener('input', validateEditForm);
+        permissionsSelect.addEventListener('change', validateEditForm);
+    </script>
 
     {{-- Data Validation --}}
     <script>

@@ -170,14 +170,26 @@
 
                                     @if ($isSuperAdmin)
                                         @if (Auth::user()->hasRole('Super Admin'))
-                                            <button class="btn btn-sm btn-primary"
-                                                    onclick="window.location='{{ route('users.edit', $user->id) }}'">Edit</button>
+                                            <button
+                                                class="btn btn-sm btn-primary open-edit-user"
+                                                data-id="{{ $user->id }}"
+                                                data-name="{{ $user->name }}"
+                                                data-email="{{ $user->email }}"
+                                                data-roles='@json($user->getRoleNames())'>
+                                                Edit
+                                            </button>
                                             <button class="btn btn-sm btn-error" disabled="disabled">Delete</button>
                                         @endif
                                     @else
                                         @can('edit-user')
-                                            <button class="btn btn-sm btn-primary"
-                                                    onclick="window.location='{{ route('users.edit', $user->id) }}'">Edit</button>
+                                            <button
+                                                class="btn btn-sm btn-primary open-edit-user"
+                                                data-id="{{ $user->id }}"
+                                                data-name="{{ $user->name }}"
+                                                data-email="{{ $user->email }}"
+                                                data-roles='@json($user->getRoleNames())'>
+                                                Edit
+                                            </button>
                                         @else
                                             <button class="btn btn-sm btn-primary" disabled="disabled">Edit</button>
                                         @endcan
@@ -242,6 +254,133 @@
             searchInput.addEventListener('input', filterTable);
             roleFilter.addEventListener('change', filterTable);
         });
+    </script>
+
+    {{-- Edit User Modal --}}
+    <dialog id="modal_user_edit" class="modal">
+        <div class="modal-box w-full max-w-2xl">
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+
+            <h3 class="text-2xl font-semibold mb-4">Edit User</h3>
+
+            <form method="POST" id="edit-user-form">
+                @csrf
+                @method("PUT")
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {{-- Name --}}
+                    <label class="form-control w-full">
+                        <div class="label"><span class="label-text">Name</span></div>
+                        <input type="text" name="name" id="edit-name" class="input input-bordered w-full" required />
+                        <div class="text-error text-sm hidden" id="edit-name-error">Invalid name.</div>
+                    </label>
+
+                    {{-- Email --}}
+                    <label class="form-control w-full">
+                        <div class="label"><span class="label-text">Email</span></div>
+                        <input type="email" name="email" id="edit-email" class="input input-bordered w-full" required />
+                        <div class="text-error text-sm hidden" id="edit-email-error">Invalid email.</div>
+                    </label>
+
+                    {{-- Password --}}
+                    <label class="form-control w-full">
+                        <div class="label"><span class="label-text">Password (leave blank to keep current)</span></div>
+                        <input type="password" name="password" id="edit-password" class="input input-bordered w-full" />
+                        <div class="text-error text-sm hidden" id="edit-password-error">Invalid password.</div>
+                    </label>
+
+                    {{-- Confirm Password --}}
+                    <label class="form-control w-full">
+                        <div class="label"><span class="label-text">Confirm Password</span></div>
+                        <input type="password" name="password_confirmation" id="edit-password-confirmation" class="input input-bordered w-full" />
+                        <div class="text-error text-sm hidden" id="edit-confirm-password-error">Passwords don't match.</div>
+                    </label>
+
+                    {{-- Roles --}}
+                    <div class="form-control w-full md:col-span-2">
+                        <div class="label"><span class="label-text">Roles</span></div>
+                        <select id="edit-roles" name="roles[]" class="select select-bordered w-full min-h-20" multiple required>
+                            @foreach ($roles as $role)
+                                @if ($role != 'Super Admin' || Auth::user()->hasRole('Super Admin'))
+                                    <option value="{{ $role }}">{{ $role }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        <div class="label hidden text-error" id="edit-roles-error">
+                            <span class="label-text-alt">Select at least one role.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-2 mt-6">
+                    <button type="submit" id="edit-submit-btn" class="btn btn-accent" disabled>Update</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    {{-- Edit User Modal Function --}}
+    <script>
+        document.querySelectorAll('.open-edit-user').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.id;
+                const name = btn.dataset.name;
+                const email = btn.dataset.email;
+                const roles = JSON.parse(btn.dataset.roles);
+
+                openEditUserModal(id, name, email, roles);
+            });
+        });
+
+
+        const editModal = document.getElementById('modal_user_edit');
+        const editForm = document.getElementById('edit-user-form');
+
+        const editName = document.getElementById('edit-name');
+        const editEmail = document.getElementById('edit-email');
+        const editPassword = document.getElementById('edit-password');
+        const editPasswordConfirm = document.getElementById('edit-password-confirmation');
+        const editRoles = document.getElementById('edit-roles');
+        const editSubmitBtn = document.getElementById('edit-submit-btn');
+
+        function openEditUserModal(id, name, email, roles) {
+            editForm.action = `/users/${id}`;
+            editName.value = name;
+            editEmail.value = email;
+            editPassword.value = '';
+            editPasswordConfirm.value = '';
+
+            Array.from(editRoles.options).forEach(opt => {
+                opt.selected = roles.includes(opt.value);
+            });
+
+            validateEditForm();
+            editModal.showModal();
+        }
+
+        function validateEditForm() {
+            const nameValid = editName.value.trim().length >= 3;
+            const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(editEmail.value);
+            const rolesValid = Array.from(editRoles.selectedOptions).length > 0;
+
+            const password = editPassword.value;
+            const passwordValid = password === '' || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password);
+            const confirmValid = password === editPasswordConfirm.value;
+
+            document.getElementById('edit-name-error').classList.toggle('hidden', nameValid);
+            document.getElementById('edit-email-error').classList.toggle('hidden', emailValid);
+            document.getElementById('edit-password-error').classList.toggle('hidden', passwordValid);
+            document.getElementById('edit-confirm-password-error').classList.toggle('hidden', confirmValid);
+            document.getElementById('edit-roles-error').classList.toggle('hidden', rolesValid);
+
+            editSubmitBtn.disabled = !(nameValid && emailValid && passwordValid && confirmValid && rolesValid);
+        }
+
+        [editName, editEmail, editPassword, editPasswordConfirm, editRoles].forEach(el =>
+            el.addEventListener('input', validateEditForm)
+        );
     </script>
 
     {{-- Validation Function --}}
