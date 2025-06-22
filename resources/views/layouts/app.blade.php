@@ -32,7 +32,7 @@
             <ul class="menu p-4 pt-10 text-base-content space-y-1">
                 <li><a href="{{ route('home') }}">Dashboard</a></li>
                 @can('view-contact')
-                    <li><a href="{{ route('contacts') }}">Contacts</a></li>
+                    <li><a href="{{ route('contacts.index') }}">Contacts</a></li>
                 @endcan
 
                 @hasanyrole(['Admin', 'Super Admin'])

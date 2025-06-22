@@ -51,7 +51,7 @@ Route::middleware([
     Route::group(['middleware' => ['permission:view-contact']], function () {
 
         Route::get('/contacts', [ContactController::class, 'index'])
-            ->name('contacts');
+            ->name('contacts.index');
 
         Route::get('/search', [ContactController::class, 'search'])
             ->name('contacts.search');
