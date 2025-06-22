@@ -50,35 +50,8 @@ Route::middleware([
 
     Route::group(['middleware' => ['permission:view-contact']], function () {
 
-        Route::get('/contacts', function (Request $request) {
-            $query = Contact::query();
-
-            // Apply search filter if there's a search term
-            if ($request->has('search') && $request->search) {
-                $query->where(function ($query) use ($request) {
-                    $query->where('nome', 'like', '%' . $request->search . '%')
-                        ->orWhere('telemovel', 'like', '%' . $request->search . '%')
-                        ->orWhere('local', 'like', '%' . $request->search . '%')
-                        ->orWhere('grupo', 'like', '%' . $request->search . '%');
-                });
-            }
-
-            // Apply local filter if it's provided
-            if ($request->has('local') && $request->local) {
-                $query->where('local', $request->local);
-            }
-
-            // Apply group filter if it's provided
-            if ($request->has('group') && $request->group) {
-                $query->where('grupo', $request->group);
-            }
-
-            // Paginate the results
-            $contacts = $query->paginate(8);
-
-            return view('contacts.index', ['contacts' => $contacts]);
-        })->name('contacts');
-
+        Route::get('/contacts', [ContactController::class, 'index'])
+            ->name('contacts');
 
         Route::get('/search', [ContactController::class, 'search'])
             ->name('contacts.search');
