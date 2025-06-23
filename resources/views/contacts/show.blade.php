@@ -38,7 +38,7 @@
                 @else
                     <button class="btn btn-accent" disabled="disabled">Save</button>
                 @endcan
-                <button class="btn btn-primary" onclick="window.location='{{ route('contacts') }}'">Back</button>
+                <button class="btn btn-primarcontactsy" onclick="window.location='{{ route('contacts.index') }}'">Back</button>
             </div>
         </div>
     </div>
