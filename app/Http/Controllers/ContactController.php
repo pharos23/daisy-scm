@@ -134,7 +134,7 @@ class ContactController extends Controller
     {
         $contact->delete();
 
-        return redirect()->route('contacts')
+        return redirect()->route('contacts.index')
             ->with('deleted', 'Contact deleted successfully');
     }
 
