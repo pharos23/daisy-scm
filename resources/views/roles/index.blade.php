@@ -1,6 +1,8 @@
 @extends('layouts.app')
 {{--  Blade to show and manage the roles --}}
 @section('content')
+    @vite('resources/js/pages/roles.js')
+
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">
 
