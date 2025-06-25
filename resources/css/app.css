@@ -4,6 +4,13 @@
     themes: cmyk --default, luxury --prefersdark; /* Using DaisyUI themes, Cmyk for Light mode and Luxury for Dark mode */
 }
 
+@plugin "daisyui/theme" {
+    name: "cmyk";
+    default: true;
+    --color-success: oklch(84% 0.238 128.85);
+    --color-success-content: black;
+}
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';

@@ -34,7 +34,7 @@
                     <button class="btn btn-error" disabled="disabled">Delete</button>
                 @endcan
                 @can('edit-contact')
-                    <button id="save-button" class="btn btn-accent" type="button">Save</button>
+                    <button id="save-button" class="btn btn-primary" type="button">Save</button>
                 @else
                     <button class="btn btn-accent" disabled="disabled">Save</button>
                 @endcan
