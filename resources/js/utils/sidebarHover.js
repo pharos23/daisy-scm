@@ -14,6 +14,6 @@ export function setupSidebarHover() {
         }
     }
 
-    hoverZone.addEventListener('mouseenter', showSidebar);
-    sidebar.addEventListener('mouseleave', hideSidebar);
+    hoverZone?.addEventListener('mouseenter', showSidebar);
+    sidebar?.addEventListener('mouseleave', hideSidebar);
 }

@@ -24,8 +24,6 @@
                lg:translate-x-0 lg:relative lg:z-auto lg:transform-none
                bg-base-200 border-r border-base-content/10 shadow-md
                h-full lg:h-screen overflow-y-auto flex flex-col justify-between"
-        onmouseenter="showSidebar()"
-        onmouseleave="hideSidebar()"
     >
         <div class="h-full flex flex-col justify-between">
             {{-- Navigation --}}
