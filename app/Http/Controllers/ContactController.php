@@ -14,11 +14,9 @@ class ContactController extends Controller
     // Function to paginate
     public function index(Request $request)
     {
-        // Start the query for the contacts
         $query = Contact::query();
 
-        // Apply search filter
-        if ($request->has('search') && $request->search != '') {
+        if ($request->filled('search')) {
             $searchTerm = $request->search;
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('nome', 'like', '%' . $searchTerm . '%')
@@ -28,28 +26,16 @@ class ContactController extends Controller
             });
         }
 
-        // Apply local filter
-        if ($request->has('local') && $request->local != '') {
+        if ($request->filled('local')) {
             $query->where('local', $request->local);
         }
 
-        // Apply group filter
-        if ($request->has('group') && $request->group != '') {
+        if ($request->filled('group')) {
             $query->where('grupo', $request->group);
         }
 
-        // Get paginated results
-        $contacts = $query->paginate(8);
+        $contacts = $query->paginate(8)->withQueryString();
 
-        // If the request is an AJAX request, return only the table body and pagination
-        if ($request->ajax()) {
-            return response()->json([
-                'table' => view('contacts.partials.table', compact('contacts'))->render(),
-                'pagination' => view('contacts.partials.pagination', compact('contacts'))->render(),
-            ]);
-        }
-
-        // Otherwise, return the full view
         return view('contacts.index', compact('contacts'));
     }
 
@@ -62,6 +48,11 @@ class ContactController extends Controller
             ->orWhere('nome', 'like', "%$search%")
             ->orWhere('telemovel', 'like', "%$search%")
             ->paginate(8);
+
+        if ($request->ajax()) {
+            return response()->view('contacts.index', compact('contacts'), 200)
+                ->header('X-Inertia', 'false');
+        }
 
         return view('contacts.index', compact('contacts'));
     }

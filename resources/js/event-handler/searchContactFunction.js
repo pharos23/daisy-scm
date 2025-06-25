@@ -3,35 +3,61 @@ export function setupSearchContact() {
     const filterLocal = document.getElementById('filterLocal');
     const filterGroup = document.getElementById('filterGroup');
     const table = document.getElementById('contactsTable');
+    const paginationContainer = document.querySelector('.pagination')?.parentElement;
 
-    // Function to trigger search and filter
-    function applyFilters() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const localFilter = filterLocal.value;
-        const groupFilter = filterGroup.value;
+    let searchTerm = '';
+    let localFilter = '';
+    let groupFilter = '';
 
-        // Create a query string with search term and filters
-        let queryString = `?search=${searchTerm}&local=${localFilter}&group=${groupFilter}`;
-
-        // Make the AJAX request
-        fetch(`/contacts${queryString}`)
-            .then(response => response.text())
-            .then(data => {
-                // Replace the table content with the new filtered data
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(data, 'text/html');
-                const newTableBody = doc.querySelector('#contactsTable tbody');
-                table.querySelector('tbody').innerHTML = newTableBody.innerHTML;
-
-                // Update pagination links (if needed)
-                const pagination = doc.querySelector('.pagination');
-                document.querySelector('.pagination').innerHTML = pagination.innerHTML;
-            })
-            .catch(error => console.error('Error fetching filtered contacts:', error));
+    function buildQuery(url = '/contacts') {
+        const fullUrl = new URL(url, window.location.origin);
+        fullUrl.searchParams.set('search', searchTerm);
+        fullUrl.searchParams.set('local', localFilter);
+        fullUrl.searchParams.set('group', groupFilter);
+        return fullUrl.toString();
     }
 
-    // Event listeners to trigger the filter function
+    function loadContacts(url = '/contacts') {
+        fetch(buildQuery(url))
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                // Get the new table and pagination
+                const newTbody = doc.querySelector('#contactsTable tbody');
+                const newPagination = doc.querySelector('.pagination')?.parentElement;
+
+                // Replace the old tbody and pagination
+                if (newTbody) {
+                    table.querySelector('tbody').innerHTML = newTbody.innerHTML;
+                }
+                if (newPagination && paginationContainer) {
+                    paginationContainer.innerHTML = newPagination.innerHTML;
+                }
+            })
+            .catch(error => console.error('Error loading contacts:', error));
+    }
+
+    // Apply filters
+    function applyFilters() {
+        searchTerm = searchInput.value;
+        localFilter = filterLocal.value;
+        groupFilter = filterGroup.value;
+        loadContacts();
+    }
+
+    // Bind input events
     searchInput.addEventListener('input', applyFilters);
     filterLocal.addEventListener('change', applyFilters);
     filterGroup.addEventListener('change', applyFilters);
+
+    // Delegate pagination link clicks
+    document.addEventListener('click', function (e) {
+        const link = e.target.closest('.pagination a');
+        if (link) {
+            e.preventDefault();
+            loadContacts(link.getAttribute('href'));
+        }
+    });
 }
