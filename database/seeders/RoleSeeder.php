@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+
 // Seeder for roles and permissions. Here we create the roles and assign the permissions to each role. THIS IS THE FILE WE ARE USING.
 class RoleSeeder extends Seeder
 {

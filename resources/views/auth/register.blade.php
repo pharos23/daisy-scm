@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{{-- Blade to register a new user --}}
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="">
 <head>
     <meta charset="utf-8">

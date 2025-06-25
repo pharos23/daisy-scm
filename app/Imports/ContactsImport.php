@@ -6,6 +6,7 @@ use App\Models\Contact;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
+// File to import excel files into the database
 class ContactsImport implements ToModel, WithHeadingRow
 {
     /**

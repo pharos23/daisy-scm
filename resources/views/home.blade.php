@@ -10,29 +10,6 @@
                 </div>
             @endif
 
-            {{--
-            {{ __('You are logged in!') }}
-
-            <p>This is your application dashboard.</p>
-            @canany(['create-role', 'edit-role', 'delete-role'])
-                <a class="btn btn-primary" href="{{ route('roles.index') }}">
-                    <i class="bi bi-person-fill-gear"></i> Manage Roles</a>
-            @endcanany
-            @canany(['create-user', 'edit-user', 'delete-user'])
-                <a class="btn btn-success" href="{{ route('users.index') }}">
-                    <i class="bi bi-people"></i> Manage Users</a>
-            @endcanany
-            @canany(['create-contact', 'edit-contact', 'delete-contact'])
-                <a class="btn btn-warning" href="{{ route('contacts') }}">
-                    <i class="bi bi-bag"></i> Manage Contacts</a>
-            @endcanany
-            @can(['view-product'])
-                <a class="btn btn-warning" href="{{ route('contacts') }}">
-                    <i class="bi bi-bag"></i> View Contacts</a>
-            @endcan
-            <p>&nbsp;</p>
-            --}}
-
             <div class="flex flex-wrap justify-center m-5">
                 <div class="stats shadow">
                     <div class="stat place-items-center">

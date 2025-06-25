@@ -1,3 +1,4 @@
+// Change the page theme
 export function setupThemeToggle() {
     const themeSwitcher = document.getElementById('theme-switcher');
 

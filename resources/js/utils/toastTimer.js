@@ -1,3 +1,4 @@
+// Timers for toast notifications
 export function setupToastTimer() {
     const successToast = document.getElementById('toast-success');
     const deletedToast = document.getElementById('toast-deleted');

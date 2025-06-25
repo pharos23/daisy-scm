@@ -1,3 +1,4 @@
+// If browser window is too small, show and hide the sidebar when the mouse hovers to the right
 export function setupSidebarHover() {
     const sidebar = document.getElementById('sidebar');
     const hoverZone = document.getElementById('hover-zone');

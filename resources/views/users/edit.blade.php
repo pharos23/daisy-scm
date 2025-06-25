@@ -1,5 +1,5 @@
 @extends('layouts.app')
-{{--  Blade to edit users --}}
+{{--  Blade to edit users. Not being used because of the modal --}}
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-8">
