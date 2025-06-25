@@ -1,24 +1,26 @@
 export function setupEditUserModal() {
-    document.querySelectorAll('.open-edit-user').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const id = btn.dataset.id;
-            const name = btn.dataset.name;
-            const email = btn.dataset.email;
-            const roles = JSON.parse(btn.dataset.roles);
-
-            openEditUserModal(id, name, email, roles);
-        });
-    });
-
+    const tableBody = document.getElementById('usersTable').querySelector('tbody'); // Parent element for user rows
     const editModal = document.getElementById('modal_user_edit');
     const editForm = document.getElementById('edit-user-form');
-
     const editName = document.getElementById('edit-name');
     const editEmail = document.getElementById('edit-email');
     const editPassword = document.getElementById('edit-password');
     const editPasswordConfirm = document.getElementById('edit-password-confirmation');
     const editRoles = document.getElementById('edit-roles');
     const editSubmitBtn = document.getElementById('edit-submit-btn');
+
+    // Event delegation for dynamically loaded "Edit" buttons
+    tableBody.addEventListener('click', (event) => {
+        if (event.target.classList.contains('open-edit-user')) {
+            const btn = event.target;
+            const id = btn.dataset.id;
+            const name = btn.dataset.name;
+            const email = btn.dataset.email;
+            const roles = JSON.parse(btn.dataset.roles);
+
+            openEditUserModal(id, name, email, roles);
+        }
+    });
 
     function openEditUserModal(id, name, email, roles) {
         editForm.action = `/users/${id}`;
