@@ -1,24 +1,57 @@
 export function setupSearchUser() {
     const searchInput = document.getElementById('userSearch');
     const roleFilter = document.getElementById('roleFilter');
-    const rows = document.querySelectorAll('#usersTable tbody tr');
+    const table = document.getElementById('usersTable');
+    const paginationContainer = document.querySelector('.pagination')?.parentElement;
 
-    function filterTable() {
-        const search = searchInput.value.toLowerCase();
-        const role = roleFilter.value.toLowerCase();
+    let searchTerm = '';
+    let role = '';
 
-        rows.forEach(row => {
-            const name = row.querySelector('.name')?.textContent.toLowerCase() ?? '';
-            const email = row.querySelector('.email')?.textContent.toLowerCase() ?? '';
-            const roles = row.querySelector('.roles')?.textContent.toLowerCase() ?? '';
-
-            const matchesSearch = name.includes(search) || email.includes(search);
-            const matchesRole = !role || roles.includes(role);
-
-            row.style.display = matchesSearch && matchesRole ? '' : 'none';
-        });
+    function buildQuery(url = '/users') {
+        const fullUrl = new URL(url, window.location.origin);
+        fullUrl.searchParams.set('search', searchTerm);
+        fullUrl.searchParams.set('role', role);
+        return fullUrl.toString();
     }
 
-    searchInput.addEventListener('input', filterTable);
-    roleFilter.addEventListener('change', filterTable);
+    function loadUsers(url = '/users') {
+        fetch(buildQuery(url))
+            .then(res => res.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                // Replace table content
+                const newTbody = doc.querySelector('#usersTable tbody');
+                const newPagination = doc.querySelector('.pagination')?.parentElement;
+
+                if (newTbody) {
+                    table.querySelector('tbody').innerHTML = newTbody.innerHTML;
+                }
+
+                if (newPagination && paginationContainer) {
+                    paginationContainer.innerHTML = newPagination.innerHTML;
+                }
+            })
+            .catch(err => console.error('Error loading users:', err));
+    }
+
+    function applyFilters() {
+        searchTerm = searchInput.value;
+        role = roleFilter.value;
+        loadUsers();
+    }
+
+    // Bind input events
+    searchInput.addEventListener('input', applyFilters);
+    roleFilter.addEventListener('change', applyFilters);
+
+    // Delegate pagination clicks
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('.pagination a');
+        if (link) {
+            e.preventDefault();
+            loadUsers(link.href);
+        }
+    });
 }

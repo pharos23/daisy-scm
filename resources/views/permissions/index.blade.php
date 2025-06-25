@@ -76,7 +76,9 @@
 
             {{-- Pagination --}}
             <div class="absolute bottom-0 center w-full p-5">
-                {{ $permissions->appends(request()->except('page'))->links() }}
+                <div class="pagination">
+                    {{ $permissions->appends(request()->except('page'))->links() }}
+                </div>
             </div>
         </div>
     </div>

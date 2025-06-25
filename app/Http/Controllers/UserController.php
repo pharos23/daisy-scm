@@ -28,10 +28,30 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
+        $query = User::query();
+
+        // Apply search
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        // Apply role filter
+        if ($request->filled('role')) {
+            $query->whereHas('roles', function ($q) use ($request) {
+                $q->where('name', $request->role);
+            });
+        }
+
+        $users = $query->latest('id')->paginate(8)->withQueryString();
+
         return view('users.index', [
-            'users' => User::latest('id')->paginate(8),
+            'users' => $users,
             'roles' => Role::pluck('name')->all()
         ]);
     }

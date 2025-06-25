@@ -21,7 +21,7 @@ class PermissionController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('perPage', 8); // default 8
+        $perPage = $request->input('perPage', 8);
         $search = $request->input('search');
 
         $query = Permission::query();
@@ -30,7 +30,7 @@ class PermissionController extends Controller
             $query->where('name', 'like', '%' . $search . '%');
         }
 
-        $permissions = $query->orderBy('name')->paginate($perPage);
+        $permissions = $query->orderBy('name')->paginate($perPage)->withQueryString();
 
         return view('permissions.index', compact('permissions'));
     }

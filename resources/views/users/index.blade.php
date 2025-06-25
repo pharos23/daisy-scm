@@ -223,7 +223,9 @@
 
             {{-- Pagination --}}
             <div class="absolute bottom-0 center w-full p-5">
-                {{ $users->links() }}
+                <div class="pagination">
+                    {{ $users->links() }}
+                </div>
             </div>
         </div>
     </div>
