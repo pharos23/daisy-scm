@@ -1,89 +1,105 @@
 @extends('layouts.app')
-{{--  Blade to show the user settings --}}
+{{-- Blade to show user settings --}}
 @section('content')
-    <div class="bg-base size-full flex justify-center items-center max-h-screen">
-        <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative p-6">
-            <form method="POST" action="{{ route('userSettings.update') }}" class="p-6 mx-8 max-w-[600px] w-full h-full overflow-auto">
-                @csrf
-                @method('PUT')
+    <div class="bg-base min-h-screen flex justify-center items-center">
+        <div class="card w-full max-w-2xl bg-base-200 shadow-xl border border-base-content/5">
+            <div class="card-body">
+                <h2 class="card-title text-2xl">Account Settings</h2>
 
-                {{-- Username Display (readonly) --}}
-                <fieldset class="mb-6">
-                    <legend class="text-lg font-semibold mb-2">Username</legend>
-                    <div class="input input-bordered bg-base-200 cursor-not-allowed" tabindex="-1" aria-disabled="true">
-                        {{ Auth::user()->name }}
+                <form method="POST" action="{{ route('userSettings.update') }}" class="space-y-6">
+                    @csrf
+                    @method('PUT')
+
+                    {{-- Username (read-only) --}}
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text font-semibold">Username</span>
+                        </label>
+                        <div class="badge badge-outline p-4 text-base-content bg-base-100 select-none ml-1">
+                            {{ Auth::user()->username }}
+                        </div>
                     </div>
-                </fieldset>
 
-                {{-- Email --}}
-                <fieldset class="mb-6">
-                    <legend class="text-lg font-semibold mb-2">Email</legend>
-                    <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="mail@site.com"
-                        value="{{ old('email', Auth::user()->email) }}"
-                        required
-                        class="input input-bordered w-full @error('email') input-error @enderror"
-                        title="Please enter a valid email address"
-                        autocomplete="email"
-                    />
-                    @error('email')
-                    <p class="text-error mt-1 text-sm">{{ $message }}</p>
-                    @enderror
-                </fieldset>
+                    {{-- Name --}}
+                    <div class="form-control">
+                        <label for="name" class="label">
+                            <span class="label-text font-semibold">Name</span>
+                        </label>
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            value="{{ old('name', Auth::user()->name) }}"
+                            class="input input-bordered w-full @error('name') input-error @enderror"
+                            placeholder="Your full name"
+                            required
+                        />
+                        @error('name')
+                        <span class="text-error text-sm mt-1">{{ $message }}</span>
+                        @enderror
+                    </div>
 
-                {{-- Password --}}
-                <fieldset class="mb-6">
-                    <legend class="text-lg font-semibold mb-2">Change Password</legend>
+                    {{-- Password Change --}}
+                    <div class="divider">Change Password</div>
 
-                    <input
-                        id="current_password"
-                        name="current_password"
-                        type="password"
-                        placeholder="Current Password"
-                        minlength="8"
-                        class="input input-bordered w-full mb-3 @error('current_password') input-error @enderror"
-                        title="Please enter your current password (min 8 characters)"
-                        autocomplete="current-password"
-                        {{-- Note: 'required' not enforced because password change is optional --}}
-                    />
-                    @error('current_password')
-                    <p class="text-error mt-1 text-sm">{{ $message }}</p>
-                    @enderror
+                    <div class="form-control">
+                        <label for="current_password" class="label">
+                            <span class="label-text font-semibold">Current Password</span>
+                        </label>
+                        <input
+                            id="current_password"
+                            name="current_password"
+                            type="password"
+                            class="input input-bordered w-full @error('current_password') input-error @enderror"
+                            placeholder="Current password"
+                            autocomplete="current-password"
+                        />
+                        @error('current_password')
+                        <span class="text-error text-sm mt-1">{{ $message }}</span>
+                        @enderror
+                    </div>
 
-                    <input
-                        id="new_password"
-                        name="new_password"
-                        type="password"
-                        placeholder="New Password"
-                        minlength="8"
-                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                        title="Must be at least 8 characters and include a number, a lowercase letter, and an uppercase letter"
-                        class="input input-bordered w-full mb-3 @error('new_password') input-error @enderror"
-                        autocomplete="new-password"
-                    />
-                    @error('new_password')
-                    <p class="text-error mt-1 text-sm">{{ $message }}</p>
-                    @enderror
+                    <div class="form-control">
+                        <label for="new_password" class="label">
+                            <span class="label-text font-semibold">New Password</span>
+                        </label>
+                        <input
+                            id="new_password"
+                            name="new_password"
+                            type="password"
+                            class="input input-bordered w-full @error('new_password') input-error @enderror"
+                            placeholder="New password"
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                            title="At least 8 characters, with number, lowercase and uppercase"
+                            autocomplete="new-password"
+                        />
+                        @error('new_password')
+                        <span class="text-error text-sm mt-1">{{ $message }}</span>
+                        @enderror
+                    </div>
 
-                    <input
-                        id="new_password_confirmation"
-                        name="new_password_confirmation"
-                        type="password"
-                        placeholder="Confirm New Password"
-                        minlength="8"
-                        class="input input-bordered w-full @error('new_password_confirmation') input-error @enderror"
-                        autocomplete="new-password"
-                    />
-                    @error('new_password_confirmation')
-                    <p class="text-error mt-1 text-sm">{{ $message }}</p>
-                    @enderror
-                </fieldset>
+                    <div class="form-control">
+                        <label for="new_password_confirmation" class="label">
+                            <span class="label-text font-semibold">Confirm New Password</span>
+                        </label>
+                        <input
+                            id="new_password_confirmation"
+                            name="new_password_confirmation"
+                            type="password"
+                            class="input input-bordered w-full @error('new_password_confirmation') input-error @enderror"
+                            placeholder="Repeat new password"
+                            autocomplete="new-password"
+                        />
+                        @error('new_password_confirmation')
+                        <span class="text-error text-sm mt-1">{{ $message }}</span>
+                        @enderror
+                    </div>
 
-                <button type="submit" class="btn btn-primary w-full">Save Changes</button>
-            </form>
+                    <div class="card-actions justify-end pt-4">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 @endsection

@@ -22,9 +22,10 @@ class SettingController extends Controller
 
         // Validate input
         $validated = $request->validate([
-            'email' => [
+            'name' => [
                 'required',
-                'email',
+                'string',
+                'max:255',
                 Rule::unique('users')->ignore($user->id),
             ],
             'current_password' => ['nullable', 'required_with:new_password', 'string', 'min:8'],
@@ -33,9 +34,9 @@ class SettingController extends Controller
             'new_password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, and one number.',
         ]);
 
-        // Update email if changed
-        if ($user->email !== $validated['email']) {
-            $user->email = $validated['email'];
+        // Update name if changed
+        if ($user->name !== $validated['name']) {
+            $user->name = $validated['name'];
         }
 
         // Handle password change if provided
