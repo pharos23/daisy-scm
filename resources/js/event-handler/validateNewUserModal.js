@@ -1,13 +1,13 @@
 export function setupValidateNewUserModal() {
     const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
+    const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
     const passwordConfirmInput = document.getElementById('password_confirmation');
     const rolesSelect = document.getElementById('roles');
     const submitBtn = document.getElementById('submitBtn');
 
     const nameError = document.getElementById('name-error');
-    const emailError = document.getElementById('email-error');
+    const usernameError = document.getElementById('username-error');
     const passwordError = document.getElementById('password-error');
     const confirmPasswordError = document.getElementById('confirm-password-error');
     const rolesError = document.getElementById('roles-error');
@@ -19,10 +19,10 @@ export function setupValidateNewUserModal() {
         return isValid;
     }
 
-    function validateEmail() {
-        const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
-        emailError.classList.toggle('hidden', isValid);
-        emailInput.classList.toggle('input-error', !isValid);
+    function validateUsername() {
+        const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(usernameInput.value);
+        usernameError.classList.toggle('hidden', isValid);
+        usernameInput.classList.toggle('input-error', !isValid);
         return isValid;
     }
 
@@ -52,7 +52,7 @@ export function setupValidateNewUserModal() {
     function validateAll() {
         const allValid = [
             validateName(),
-            validateEmail(),
+            validateUsername(),
             validatePassword(),
             validatePasswordConfirmation(),
             validateRoles()
@@ -62,7 +62,7 @@ export function setupValidateNewUserModal() {
     }
 
     nameInput.addEventListener('input', validateAll);
-    emailInput.addEventListener('input', validateAll);
+    usernameInput.addEventListener('input', validateAll);
     passwordInput.addEventListener('input', validateAll);
     passwordConfirmInput.addEventListener('input', validateAll);
     rolesSelect.addEventListener('change', validateAll);

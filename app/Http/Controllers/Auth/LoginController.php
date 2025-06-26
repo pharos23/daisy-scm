@@ -39,6 +39,11 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
+    protected function username()
+    {
+        return 'username';
+    }
+
     protected function logout(Request $request)
     {
         $this->guard()->logout();

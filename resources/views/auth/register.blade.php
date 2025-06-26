@@ -39,20 +39,19 @@
             @enderror
         </div>
 
-        {{-- Email --}}
+        {{-- Username --}}
         <div>
-            <label for="email" class="label">
-                <span class="label-text">{{ __('Email Address') }}</span>
+            <label for="username" class="label">
+                <span class="label-text">{{ __('Username') }}</span>
             </label>
             <input
-                id="email"
-                type="email"
-                name="email"
-                value="{{ old('email') }}"
+                id="username"
+                name="username"
+                value="{{ old('username') }}"
                 required
-                class="input input-bordered w-full @error('email') input-error @enderror"
+                class="input input-bordered w-full @error('username') input-error @enderror"
             >
-            @error('email')
+            @error('username')
             <p class="text-error text-sm mt-1">{{ $message }}</p>
             @enderror
         </div>

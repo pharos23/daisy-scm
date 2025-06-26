@@ -11,24 +11,17 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 
-// Controller for managing users
 class UserController extends Controller
 {
-    /**
-     * Instantiate a new UserController instance.
-     */
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:create-user|edit-user|delete-user', ['only' => ['index','show']]);
-        $this->middleware('permission:create-user', ['only' => ['create','store']]);
-        $this->middleware('permission:edit-user', ['only' => ['edit','update']]);
+        $this->middleware('permission:create-user|edit-user|delete-user', ['only' => ['index', 'show']]);
+        $this->middleware('permission:create-user', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit-user', ['only' => ['edit', 'update']]);
         $this->middleware('permission:delete-user', ['only' => ['destroy']]);
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request): View
     {
         $query = User::query();
@@ -37,8 +30,8 @@ class UserController extends Controller
         if ($request->filled('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%");
+                $q->where('username', 'like', "%{$search}%")
+                    ->orWhere('name', 'like', "%{$search}%");
             });
         }
 
@@ -60,17 +53,13 @@ class UserController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
-        $users = User::where('local', 'like', "%$search%")
+        $users = User::where('username', 'like', "%$search%")
             ->orWhere('name', 'like', "%$search%")
-            ->orWhere('email', 'like', "%$search%")
             ->paginate(8);
 
         return view('users.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(): View
     {
         return view('users.create', [
@@ -78,9 +67,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreUserRequest $request): RedirectResponse
     {
         $input = $request->all();
@@ -93,22 +79,15 @@ class UserController extends Controller
             ->withSuccess('New user is added successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(User $user): RedirectResponse
     {
         return redirect()->route('users.index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(User $user): View
     {
-        // Check Only Super Admin can update his own Profile
-        if ($user->hasRole('Super Admin')){
-            if($user->id != auth()->user()->id){
+        if ($user->hasRole('Super Admin')) {
+            if ($user->id !== auth()->id()) {
                 abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSIONS');
             }
         }
@@ -120,40 +99,32 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         $input = $request->all();
 
-        if(!empty($request->password)){
+        if (!empty($request->password)) {
             $input['password'] = Hash::make($request->password);
-        }else{
+        } else {
             $input = $request->except('password');
         }
 
         $user->update($input);
-
         $user->syncRoles($request->roles);
 
         return redirect()->back()
             ->withSuccess('User is updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(User $user): RedirectResponse
     {
-        // About if user is Super Admin or User ID belongs to Auth User
-        if ($user->hasRole('Super Admin') || $user->id == auth()->user()->id)
-        {
+        if ($user->hasRole('Super Admin') || $user->id === auth()->id()) {
             abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSIONS');
         }
 
         $user->syncRoles([]);
         $user->delete();
+
         return redirect()->route('users.index')
             ->withSuccess('User is deleted successfully.');
     }

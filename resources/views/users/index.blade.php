@@ -10,7 +10,7 @@
             <div class="flex w-full justify-between">
                 {{-- Search + Role Filter --}}
                 <div class="flex gap-4 m-5">
-                    <input type="text" id="userSearch" placeholder="Search by name or email" class="input input-bordered w-full max-w-xs" />
+                    <input type="text" id="userSearch" placeholder="Search by name or username" class="input input-bordered w-full max-w-xs" />
 
                     <select id="roleFilter" class="select select-bordered max-w-xs">
                         <option value="">All Roles</option>
@@ -59,18 +59,21 @@
                             </label>
 
 
-                            {{-- Email --}}
+                            {{-- Username --}}
                             <label class="form-control w-full">
                                 <div class="label">
-                                    <span class="label-text">Email</span>
+                                    <span class="label-text">Username</span>
                                 </div>
                                 <div class="flex flex-col space-y-1">
-                                    <input type="email" id="email" name="email"
+                                    <input type="text" id="username" name="username"
                                            class="input input-bordered w-full"
-                                           placeholder="mail@example.com"
+                                           placeholder="e.g., johndoe123"
+                                           pattern="[A-Za-z][A-Za-z0-9\-]*"
+                                           minlength="3" maxlength="30"
+                                           title="Only letters, numbers or dash"
                                            required />
-                                    <div class="text-error text-sm hidden" id="email-error">
-                                        Please enter a valid email address.
+                                    <div class="text-error text-sm hidden" id="username-error">
+                                        Username must be at least 3 characters (letters, numbers or dashes).
                                     </div>
                                 </div>
                             </label>
@@ -146,7 +149,7 @@
                     <tr>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Email</th>
+                        <th>Username</th>
                         <th>Roles</th>
                         <th></th>
                     </tr>
@@ -156,7 +159,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td class="name">{{ $user->name }}</td>
-                            <td class="email">{{ $user->email }}</td>
+                            <td class="username">{{ $user->username }}</td>
                             <td class="roles">
                                 <ul>
                                     @forelse ($user->getRoleNames() as $role)
@@ -176,7 +179,7 @@
                                                 class="btn btn-sm btn-primary open-edit-user"
                                                 data-id="{{ $user->id }}"
                                                 data-name="{{ $user->name }}"
-                                                data-email="{{ $user->email }}"
+                                                data-username="{{ $user->username }}"
                                                 data-roles='@json($user->getRoleNames())'>
                                                 Edit
                                             </button>
@@ -188,7 +191,7 @@
                                                 class="btn btn-sm btn-primary open-edit-user"
                                                 data-id="{{ $user->id }}"
                                                 data-name="{{ $user->name }}"
-                                                data-email="{{ $user->email }}"
+                                                data-username="{{ $user->username }}"
                                                 data-roles='@json($user->getRoleNames())'>
                                                 Edit
                                             </button>
@@ -253,11 +256,11 @@
                         <div class="text-error text-sm hidden" id="edit-name-error">Invalid name.</div>
                     </label>
 
-                    {{-- Email --}}
+                    {{-- Username --}}
                     <label class="form-control w-full">
-                        <div class="label"><span class="label-text">Email</span></div>
-                        <input type="email" name="email" id="edit-email" class="input input-bordered w-full" required />
-                        <div class="text-error text-sm hidden" id="edit-email-error">Invalid email.</div>
+                        <div class="label"><span class="label-text">Username</span></div>
+                        <input name="username" id="edit-username" class="input input-bordered w-full" required />
+                        <div class="text-error text-sm hidden" id="edit-username-error">Invalid username.</div>
                     </label>
 
                     {{-- Password --}}

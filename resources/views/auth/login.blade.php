@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{{-- Blade to login with a user email and password --}}
+{{-- Blade to login with a user username and password --}}
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="">
 <head>
     <meta charset="utf-8">
@@ -20,21 +20,20 @@
     <form method="POST" action="{{ route('login') }}" class="space-y-4">
         @csrf
 
-        {{-- Email --}}
+        {{-- Username --}}
         <div>
-            <label for="email" class="label">
-                <span class="label-text">{{ __('Email Address') }}</span>
+            <label for="username" class="label">
+                <span class="label-text">{{ __('Username') }}</span>
             </label>
             <input
-                id="email"
-                type="email"
-                name="email"
-                value="{{ old('email') }}"
+                id="username"
+                name="username"
+                value="{{ old('username') }}"
                 required
                 autofocus
-                class="input input-bordered w-full @error('email') input-error @enderror"
+                class="input input-bordered w-full @error('username') input-error @enderror"
             >
-            @error('email')
+            @error('username')
             <p class="text-error text-sm mt-1">{{ $message }}</p>
             @enderror
         </div>

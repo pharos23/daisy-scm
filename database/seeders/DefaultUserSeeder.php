@@ -16,8 +16,8 @@ class DefaultUserSeeder extends Seeder
     {
         // Creating Super Admin User
         $superAdmin = User::create([
-            'name' => 'SuperAdmin',
-            'email' => 'super@local.lan',
+            'name' => 'Super Admin',
+            'username' => 'superadmin',
             'password' => Hash::make('SuperAdmin123'),
         ]);
         $superAdmin->assignRole('Super Admin');
@@ -25,23 +25,23 @@ class DefaultUserSeeder extends Seeder
         // Creating Admin User
         $admin = User::create([
             'name' => 'Admin',
-            'email' => 'admin@local.lan',
+            'username' => 'admin',
             'password' => Hash::make('Admin123')
         ]);
         $admin->assignRole('Admin');
 
         // Creating Contact Manager User
         $productManager = User::create([
-            'name' => 'ContactManager',
-            'email' => 'contact@local.lan',
+            'name' => 'Contact Manager',
+            'username' => 'contactmanager',
             'password' => Hash::make('ContactManager123')
         ]);
         $productManager->assignRole('Contact Manager');
 
         // Creating Application User
         $user = User::create([
-            'name' => 'NormalUser',
-            'email' => 'user@local.lan',
+            'name' => 'Normal User',
+            'username' => 'user1',
             'password' => Hash::make('NormalUser123')
         ]);
         $user->assignRole('User');
