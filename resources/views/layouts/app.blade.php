@@ -53,9 +53,9 @@
 
                     <a href="{{ route('userSettings.edit') }}" class="btn btn-ghost btn-sm w-full text-left">{{ __('Settings') }}</a>
                     <a href="{{ route('logout') }}"
-                       onclick="event.preventDefault(); if (confirm('Are you sure you want to logout?')) document.getElementById('logout-form').submit();"
+                       onclick="event.preventDefault(); if (confirm('{{ __('Are you sure you want to logout?') }}')) document.getElementById('logout-form').submit();"
                        class="btn btn-ghost btn-sm w-full text-left">
-                        Logout
+                        {{ __('Logout') }}
                     </a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">

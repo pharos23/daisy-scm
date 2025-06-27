@@ -10,10 +10,10 @@
             <div class="flex w-full justify-between">
                 {{-- Search + Role Filter --}}
                 <div class="flex gap-4 m-5">
-                    <input type="text" id="userSearch" placeholder="Search by name or username" class="input input-bordered w-full max-w-xs" />
+                    <input type="text" id="userSearch" placeholder={{ __('Search by name or username') }} class="input input-bordered w-full max-w-xs" />
 
                     <select id="roleFilter" class="select select-bordered max-w-xs">
-                        <option value="">All Roles</option>
+                        <option value="">{{ __('All Roles') }}</option>
                         @foreach($roles as $role) {{-- Ensure $roles = Role::pluck('name') or similar --}}
                         <option value="{{ $role }}">{{ $role }}</option>
                         @endforeach
@@ -22,7 +22,7 @@
 
                 {{-- Botão para criar um novo user --}}
                 @can('create-user')
-                    <button class="btn btn-primary place-items-center m-5" onclick="modal_user.showModal()">New</button>
+                    <button class="btn btn-primary place-items-center m-5" onclick="modal_user.showModal()">{{ __('New') }}</button>
                 @endcan
             </div>
 
@@ -42,18 +42,18 @@
                             {{-- Name --}}
                             <label class="form-control w-full">
                                 <div class="label">
-                                    <span class="label-text">Name</span>
+                                    <span class="label-text">{{__("Name")}}</span>
                                 </div>
                                 <div class="flex flex-col space-y-1">
                                     <input type="text" id="name" name="name"
                                            class="input input-bordered w-full"
-                                           placeholder="e.g., johndoe"
+                                           placeholder="ex: john doe"
                                            pattern="[A-Za-z][A-Za-z0-9\-]*"
                                            minlength="3" maxlength="30"
                                            title="Only letters, numbers or dash"
                                            required />
                                     <div class="text-error text-sm hidden" id="name-error">
-                                        Name must be at least 3 characters (letters, numbers or dashes).
+                                        {{__("User req")}}
                                     </div>
                                 </div>
                             </label>
@@ -67,13 +67,13 @@
                                 <div class="flex flex-col space-y-1">
                                     <input type="text" id="username" name="username"
                                            class="input input-bordered w-full"
-                                           placeholder="e.g., johndoe123"
+                                           placeholder="ex: johndoe123"
                                            pattern="[A-Za-z][A-Za-z0-9\-]*"
                                            minlength="3" maxlength="30"
                                            title="Only letters, numbers or dash"
                                            required />
                                     <div class="text-error text-sm hidden" id="username-error">
-                                        Username must be at least 3 characters (letters, numbers or dashes).
+                                        {{__("User req")}}
                                     </div>
                                 </div>
                             </label>
@@ -92,7 +92,7 @@
                                            title="Must include number, lowercase and uppercase letter"
                                            required />
                                     <div class="text-error text-sm hidden" id="password-error">
-                                        Password must be at least 8 characters with a number, lowercase and uppercase letter.
+                                        {{__("Password req")}}
                                     </div>
                                 </div>
                             </label>
@@ -100,7 +100,7 @@
                             {{-- Confirm Password --}}
                             <label class="form-control w-full">
                                 <div class="label">
-                                    <span class="label-text">Confirm Password</span>
+                                    <span class="label-text">{{__("Confirm Password")}}</span>
                                 </div>
                                 <div class="flex flex-col space-y-1">
                                     <input type="password" id="password_confirmation" name="password_confirmation"
@@ -109,7 +109,7 @@
                                            minlength="8"
                                            required />
                                     <div class="text-error text-sm hidden" id="confirm-password-error">
-                                        Passwords do not match.
+                                        {{__("Passwords do not match")}}
                                     </div>
                                 </div>
                             </label>
@@ -118,7 +118,7 @@
                             {{-- Roles --}}
                             <div class="form-control w-full md:col-span-2">
                                 <div class="label">
-                                    <span class="label-text">Roles</span>
+                                    <span class="label-text">{{ __('Roles') }}</span>
                                 </div>
                                 <select id="roles" name="roles[]" class="select select-bordered w-full min-h-20" multiple required>
                                     @forelse ($roles as $role)
@@ -130,13 +130,13 @@
                                     @endforelse
                                 </select>
                                 <div class="label hidden text-error" id="roles-error">
-                                    <span class="label-text-alt">Select at least one role.</span>
+                                    <span class="label-text-alt">{{__("Select at least one role")}}</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="flex justify-end gap-2 mt-6">
-                            <button class="btn btn-accent" id="submitBtn" disabled type="submit">Create</button>
+                            <button class="btn btn-accent" id="submitBtn" disabled type="submit">{{ __('Criar') }}</button>
                         </div>
                     </form>
                 </div>
@@ -148,9 +148,9 @@
                     <thead class="bg-base-200 text-base-content">
                     <tr>
                         <th>#</th>
-                        <th>Name</th>
+                        <th>{{__("Name")}}</th>
                         <th>Username</th>
-                        <th>Roles</th>
+                        <th>{{__("Roles")}}</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -165,7 +165,7 @@
                                     @forelse ($user->getRoleNames() as $role)
                                         <div class="badge badge-outline">{{ $role }}</div>
                                     @empty
-                                        <li class="text-gray-400 italic">No role</li>
+                                        <li class="text-gray-400 italic">{{__("No role")}}</li>
                                     @endforelse
                                 </ul>
                             </td>
@@ -181,9 +181,9 @@
                                                 data-name="{{ $user->name }}"
                                                 data-username="{{ $user->username }}"
                                                 data-roles='@json($user->getRoleNames())'>
-                                                Edit
+                                                {{__("Edit")}}
                                             </button>
-                                            <button class="btn btn-sm btn-error" disabled="disabled">Delete</button>
+                                            <button class="btn btn-sm btn-error" disabled="disabled">{{__("Delete")}}</button>
                                         @endif
                                     @else
                                         @can('edit-user')
@@ -193,24 +193,24 @@
                                                 data-name="{{ $user->name }}"
                                                 data-username="{{ $user->username }}"
                                                 data-roles='@json($user->getRoleNames())'>
-                                                Edit
+                                                {{__("Edit")}}
                                             </button>
                                         @else
-                                            <button class="btn btn-sm btn-primary" disabled="disabled">Edit</button>
+                                            <button class="btn btn-sm btn-primary" disabled="disabled">{{__("Edit")}}</button>
                                         @endcan
 
                                         @can('delete-user')
                                             @if (Auth::user()->id !== $user->id)
-                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Delete this user?');">
+                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ __('Delete this user?') }}');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn btn-sm btn-error">Delete</button>
+                                                    <button class="btn btn-sm btn-error">{{__("Delete")}}</button>
                                                 </form>
                                                 @else
-                                                    <button class="btn btn-sm btn-error" disabled="disabled">Delete</button>
+                                                    <button class="btn btn-sm btn-error" disabled="disabled">{{__("Delete")}}</button>
                                             @endif
                                             @else
-                                                <button class="btn btn-sm btn-error" disabled="disabled">Delete</button>
+                                                <button class="btn btn-sm btn-error" disabled="disabled">{{__("Delete")}}</button>
                                         @endcan
                                     @endif
                                 </div>
@@ -242,7 +242,7 @@
                 <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             </form>
 
-            <h3 class="text-2xl font-semibold mb-4">Edit User</h3>
+            <h3 class="text-2xl font-semibold mb-4">{{__("Edit")}} {{__("User")}}</h3>
 
             <form method="POST" id="edit-user-form">
                 @csrf
@@ -251,35 +251,35 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {{-- Name --}}
                     <label class="form-control w-full">
-                        <div class="label"><span class="label-text">Name</span></div>
+                        <div class="label"><span class="label-text">{{__("Name")}}</span></div>
                         <input type="text" name="name" id="edit-name" class="input input-bordered w-full" required />
-                        <div class="text-error text-sm hidden" id="edit-name-error">Invalid name.</div>
+                        <div class="text-error text-sm hidden" id="edit-name-error">{{__("Invalid name")}}</div>
                     </label>
 
                     {{-- Username --}}
                     <label class="form-control w-full">
                         <div class="label"><span class="label-text">Username</span></div>
                         <input name="username" id="edit-username" class="input input-bordered w-full" required />
-                        <div class="text-error text-sm hidden" id="edit-username-error">Invalid username.</div>
+                        <div class="text-error text-sm hidden" id="edit-username-error">{{__("Invalid username")}}</div>
                     </label>
 
                     {{-- Password --}}
                     <label class="form-control w-full">
-                        <div class="label"><span class="label-text">Password (leave blank to keep current)</span></div>
+                        <div class="label"><span class="label-text">Password {{__("leave blank to keep current")}}</span></div>
                         <input type="password" name="password" id="edit-password" class="input input-bordered w-full" />
-                        <div class="text-error text-sm hidden" id="edit-password-error">Invalid password.</div>
+                        <div class="text-error text-sm hidden" id="edit-password-error">{{__("Invalid password")}}</div>
                     </label>
 
                     {{-- Confirm Password --}}
                     <label class="form-control w-full">
-                        <div class="label"><span class="label-text">Confirm Password</span></div>
+                        <div class="label"><span class="label-text">{{__("Confirm Password")}}</span></div>
                         <input type="password" name="password_confirmation" id="edit-password-confirmation" class="input input-bordered w-full" />
-                        <div class="text-error text-sm hidden" id="edit-confirm-password-error">Passwords don't match.</div>
+                        <div class="text-error text-sm hidden" id="edit-confirm-password-error">{{__("Passwords do not match")}}</div>
                     </label>
 
                     {{-- Roles --}}
                     <div class="form-control w-full md:col-span-2">
-                        <div class="label"><span class="label-text">Roles</span></div>
+                        <div class="label"><span class="label-text">{{__("Roles")}}</span></div>
                         <select id="edit-roles" name="roles[]" class="select select-bordered w-full min-h-20" multiple required>
                             @foreach ($roles as $role)
                                 @if ($role != 'Super Admin' || Auth::user()->hasRole('Super Admin'))
@@ -288,13 +288,13 @@
                             @endforeach
                         </select>
                         <div class="label hidden text-error" id="edit-roles-error">
-                            <span class="label-text-alt">Select at least one role.</span>
+                            <span class="label-text-alt">{{__("Select at least one role")}}</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex justify-end gap-2 mt-6">
-                    <button type="submit" id="edit-submit-btn" class="btn btn-accent" disabled>Update</button>
+                    <button type="submit" id="edit-submit-btn" class="btn btn-accent" disabled>{{__("Update")}}</button>
                 </div>
             </form>
         </div>
