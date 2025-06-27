@@ -15,7 +15,7 @@
         >
 
             {{-- Tabs --}}
-            <div class="tabs tabs-boxed mb-4">
+            <div class="tabs tabs-border mb-4">
                 @if($isAdmin)
                     <button
                         class="tab"

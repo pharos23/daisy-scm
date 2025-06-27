@@ -5,7 +5,7 @@
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">
 
             {{-- Tabs --}}
-            <div class="tabs tabs-border">
+            <div class="tabs tabs-border m-5">
                 <input type="radio" name="dataTabs" class="tab" aria-label="Pessoal" checked="checked" />
                 <div class="tab-content bg-base-200 p-10">
                     @include('contacts.pessoal')
