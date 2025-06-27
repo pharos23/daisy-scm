@@ -54,7 +54,7 @@ class PermissionController extends Controller
 
         \Spatie\Permission\Models\Permission::create(['name' => $validated['name']]);
 
-        return redirect()->route('permissions.index')->with('success', 'Permission created successfully.');
+        return redirect()->route('permissions.index')->with('success', __('Permission') .' '. __('createda successfully'));
     }
 
     /**
@@ -94,6 +94,6 @@ class PermissionController extends Controller
 
         $permission->delete();
 
-        return redirect()->route('permissions.index')->with('success', 'Permission deleted successfully.');
+        return redirect()->route('permissions.index')->with('success', __('Permission').' '. __('deleteda successfully'));
     }
 }

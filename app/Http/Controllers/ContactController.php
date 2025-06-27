@@ -69,7 +69,7 @@ class ContactController extends Controller
 
         Contact::create($validated);
 
-        return back()->with('success', 'Contact created successfully');
+        return back()->with('success', __('Contact') . ' ' . __('created successfully'));
     }
 
     // Function to show the selected contact (dependent on the id)
@@ -96,7 +96,7 @@ class ContactController extends Controller
         $contact = Contact::find($id);
         $contact->update($request->all());
 
-        return redirect()->back()->with('success', 'Save successful');
+        return redirect()->back()->with('success', __('Save successful'));
     }
 
     // Function to update the entries in the "Ticketing" tab
@@ -115,7 +115,7 @@ class ContactController extends Controller
         $contact = Contact::find($id);
         $contact->update($request->all());
 
-        return redirect()->back()->with('success', 'Save successful')
+        return redirect()->back()->with('success', __('Save successful'))
             ->with('activeTab', 'ticketing');
 
     }
@@ -126,7 +126,7 @@ class ContactController extends Controller
         $contact->delete();
 
         return redirect()->route('contacts.index')
-            ->with('deleted', 'Contact deleted successfully');
+            ->with('deleted', __('Contact') . ' ' . __('deleted successfully'));
     }
 
     public function export()
@@ -142,7 +142,7 @@ class ContactController extends Controller
 
         Excel::import(new ContactsImport, $request->file('file'));
 
-        return back()->with('success', 'Contacts imported successfully.');
+        return back()->with('success', __('Contacts') . ' ' . __('imported successfully'));
     }
 
 }

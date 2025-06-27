@@ -21,8 +21,8 @@
             <div class="flex gap-4 m-5 absolute bottom-5 right-5">
                 @can('delete-contact')
                     <button class="btn btn-error" type="submit"
-                            onclick="if(confirm('Tem a certeza que deseja apagar este contacto?')) document.getElementById('delete-form-{{ $contact->id }}').submit()"
-                    >Delete
+                            onclick="if(confirm('Tem a certeza que deseja apagar este contacto?')) document.getElementById('delete-form-{{ $contact->id }}').submit()">
+                        {{__("Delete")}}
                     </button>
 
                     <form id="delete-form-{{ $contact->id }}"
@@ -31,14 +31,14 @@
                         @method('DELETE')
                     </form>
                 @else
-                    <button class="btn btn-error" disabled="disabled">Delete</button>
+                    <button class="btn btn-error" disabled="disabled">{{__("Delete")}}</button>
                 @endcan
                 @can('edit-contact')
-                    <button id="save-button" class="btn btn-primary" type="button">Save</button>
+                    <button id="save-button" class="btn btn-primary" type="button">{{__("Save")}}</button>
                 @else
                     <button class="btn btn-accent" disabled="disabled">Save</button>
                 @endcan
-                <button class="btn btn-primarcontactsy" onclick="window.location='{{ route('contacts.index') }}'">Back</button>
+                <button class="btn btn-primarcontactsy" onclick="window.location='{{ route('contacts.index') }}'">{{__("Back")}}</button>
             </div>
         </div>
     </div>

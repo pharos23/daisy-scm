@@ -31,7 +31,7 @@ class SettingController extends Controller
             'current_password' => ['nullable', 'required_with:new_password', 'string', 'min:8'],
             'new_password' => ['nullable', 'string', 'min:8', 'confirmed', 'regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).+$/'],
         ], [
-            'new_password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, and one number.',
+            'new_password.regex' => __('Password req'),
         ]);
 
         // Update name if changed
@@ -43,7 +43,7 @@ class SettingController extends Controller
         if (!empty($validated['new_password'])) {
             // Check current password is correct
             if (!Hash::check($validated['current_password'], $user->password)) {
-                return back()->withErrors(['current_password' => 'Current password is incorrect'])->withInput();
+                return back()->withErrors(['current_password' => __('Current password is incorrect')])->withInput();
             }
 
             $user->password = Hash::make($validated['new_password']);
@@ -51,6 +51,6 @@ class SettingController extends Controller
 
         $user->save();
 
-        return redirect()->route('userSettings.edit')->with('success', 'Settings updated successfully.'); // Returns to the user settings with a success message, acts like a refresh
+        return redirect()->route('userSettings.edit')->with('success', __('Settings') .' '. __('updated successfully')); // Returns to the user settings with a success message, acts like a refresh
     }
 }

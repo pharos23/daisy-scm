@@ -110,7 +110,7 @@
                                     @can('delete-role')
                                         @if (!Auth::user()->hasRole($role->name))
                                             <form action="{{ route('roles.destroy', $role->id) }}" method="POST"
-                                                  onsubmit="return confirm('Do you want to delete this role?');">
+                                                  onsubmit="return confirm('{{ __('Delete this role?') }}');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-error btn-sm">{{__("Delete")}}</button>

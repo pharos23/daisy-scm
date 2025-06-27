@@ -26,6 +26,6 @@ class LoginController extends Controller
             return redirect('/contacts'); // If the Login was successful redirects to the contacts page
         }
 
-        return back()->withErrors(['email' => 'Invalid credentials']); // If the Login failed, show the error message
+        return back()->withErrors(['email' => __("Invalid credentials")]); // If the Login failed, show the error message
     }
 }
