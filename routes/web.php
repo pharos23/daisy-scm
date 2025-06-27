@@ -39,7 +39,7 @@ Route::middleware([
 
         Route::get('/admin', function () {
             return view('users.admin');
-        })->name('admin.dashboard');
+        })->name('users.admin');
     });
 
     Route::middleware(['auth'])->group(function () {
