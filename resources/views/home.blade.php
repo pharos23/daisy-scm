@@ -29,14 +29,7 @@
                         :class="{ 'tab-active': activeTab === 'contact' }"
                         @click="activeTab = 'contact'"
                     >
-                        Contacts
-                    </button>
-                @else
-                    <button
-                        class="tab"
-                        :class="{ 'tab-active': activeTab === 'contact' }"
-                        @click="activeTab = 'contact'"
-                    >
+                        {{__("Contacts")}}
                     </button>
                 @endif
             </div>

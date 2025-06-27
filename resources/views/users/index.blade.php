@@ -33,7 +33,7 @@
                         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
 
-                    <h3 class="text-2xl font-semibold mb-4">Create New User</h3>
+                    <h3 class="text-2xl font-semibold mb-4">{{__("Create")}} {{__("New")}} {{__("User")}}</h3>
 
                     <form action="{{ route('users.store') }}" method="POST" id="user-form">
                         @csrf

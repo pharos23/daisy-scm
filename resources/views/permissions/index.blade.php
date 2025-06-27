@@ -9,11 +9,11 @@
             {{-- Table Heading --}}
             <div class="flex w-full justify-between">
                 {{-- Search Bar --}}
-                <input type="text" id="permissionSearch" placeholder="Search permission..." class="input input-bordered w-full max-w-xs m-5" />
+                <input type="text" id="permissionSearch" placeholder="{{__("Search permission")}}" class="input input-bordered w-full max-w-xs m-5" />
 
                 {{-- Button for creating a new permission --}}
                 @can('create-permission')
-                    <button class="btn btn-primary place-items-center m-5" onclick="modal_permission.showModal()">New</button>
+                    <button class="btn btn-primary place-items-center m-5" onclick="modal_permission.showModal()">{{__("New")}}</button>
                 @endcan
 
                 {{-- Modal for creating a new permission --}}
@@ -23,23 +23,23 @@
                             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                         </form>
 
-                        <h3 class="text-2xl font-semibold mb-4">Create New Permission</h3>
+                        <h3 class="text-2xl font-semibold mb-4">{{__("Create")}} {{__("Newa")}} {{__("Permission")}}</h3>
 
                         <form action="{{ route('permissions.store') }}" method="POST">
                             @csrf
 
                             <label class="form-control w-full">
                                 <div class="label">
-                                    <span class="label-text">Permission Name</span>
+                                    <span class="label-text">{{__("Name")}}</span>
                                 </div>
-                                <input type="text" class="input input-bordered w-full" name="name" id="permission-name" placeholder="e.g., edit-user" required />
+                                <input type="text" class="input input-bordered w-full" name="name" id="permission-name" placeholder="ex: edit-user" required />
                                 <div class="label hidden text-error" id="permission-error-label">
-                                    <span class="label-text-alt">This field is required.</span>
+                                    <span class="label-text-alt">{{__("This field is required")}}</span>
                                 </div>
                             </label>
 
                             <div class="flex justify-end gap-2 mt-6">
-                                <button class="btn btn-accent" id="permission-submit" type="submit" disabled>Create</button>
+                                <button class="btn btn-accent" id="permission-submit" type="submit" disabled>{{__("Create")}}</button>
                             </div>
                         </form>
                     </div>
@@ -51,7 +51,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
+                    <th>{{__("Name")}}</th>
                     <th class="text-right"></th>
                 </tr>
                 </thead>
@@ -62,16 +62,17 @@
                         <td class="permission-name">{{ $permission->name }}</td>
                         <td class="text-right">
                             @can('delete-permission')
-                                <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST" onsubmit="return confirm('Delete this permission?');" style="display: inline;">
+                                <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST" onsubmit="return confirm('{{ __('Delete this permission?') }}');"
+                                      style="display: inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-error">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-error">{{__("Delete")}}</button>
                                 </form>
                             @endcan
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="3" class="text-center">No permissions found.</td></tr>
+                    <tr><td colspan="3" class="text-center">{{__("No permissions found")}}</td></tr>
                 @endforelse
                 </tbody>
             </table>

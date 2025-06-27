@@ -4,7 +4,7 @@
     <div class="bg-base min-h-screen flex justify-center items-center">
         <div class="card w-full max-w-2xl bg-base-200 shadow-xl border border-base-content/5">
             <div class="card-body">
-                <h2 class="card-title text-2xl">Account Settings</h2>
+                <h2 class="card-title text-2xl">{{__("Account Settings")}}</h2>
 
                 <form method="POST" action="{{ route('userSettings.update') }}" class="space-y-6">
                     @csrf
@@ -23,7 +23,7 @@
                     {{-- Name --}}
                     <div class="form-control">
                         <label for="name" class="label">
-                            <span class="label-text font-semibold">Name</span>
+                            <span class="label-text font-semibold">{{__("Name")}}</span>
                         </label>
                         <input
                             id="name"
@@ -31,7 +31,7 @@
                             type="text"
                             value="{{ old('name', Auth::user()->name) }}"
                             class="input input-bordered w-full @error('name') input-error @enderror"
-                            placeholder="Your full name"
+                            placeholder={{__("Name")}}
                             required
                         />
                         @error('name')
@@ -40,18 +40,18 @@
                     </div>
 
                     {{-- Password Change --}}
-                    <div class="divider">Change Password</div>
+                    <div class="divider">{{__("Change Password")}}</div>
 
                     <div class="form-control">
                         <label for="current_password" class="label">
-                            <span class="label-text font-semibold">Current Password</span>
+                            <span class="label-text font-semibold">{{__("Current Password")}}</span>
                         </label>
                         <input
                             id="current_password"
                             name="current_password"
                             type="password"
                             class="input input-bordered w-full @error('current_password') input-error @enderror"
-                            placeholder="Current password"
+                            placeholder={{__("Current Password")}}
                             autocomplete="current-password"
                         />
                         @error('current_password')
@@ -61,16 +61,16 @@
 
                     <div class="form-control">
                         <label for="new_password" class="label">
-                            <span class="label-text font-semibold">New Password</span>
+                            <span class="label-text font-semibold">{{__("New Password")}}</span>
                         </label>
                         <input
                             id="new_password"
                             name="new_password"
                             type="password"
                             class="input input-bordered w-full @error('new_password') input-error @enderror"
-                            placeholder="New password"
+                            placeholder={{__("New password")}}
                             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                            title="At least 8 characters, with number, lowercase and uppercase"
+                            title={{__("Password req")}}
                             autocomplete="new-password"
                         />
                         @error('new_password')
@@ -80,14 +80,14 @@
 
                     <div class="form-control">
                         <label for="new_password_confirmation" class="label">
-                            <span class="label-text font-semibold">Confirm New Password</span>
+                            <span class="label-text font-semibold">{{__("Confirm New Password")}}</span>
                         </label>
                         <input
                             id="new_password_confirmation"
                             name="new_password_confirmation"
                             type="password"
                             class="input input-bordered w-full @error('new_password_confirmation') input-error @enderror"
-                            placeholder="Repeat new password"
+                            placeholder={{__("Confirm New Password")}}
                             autocomplete="new-password"
                         />
                         @error('new_password_confirmation')
@@ -96,7 +96,7 @@
                     </div>
 
                     <div class="card-actions justify-end pt-4">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="submit" class="btn btn-primary">{{__("Update")}}</button>
                     </div>
                 </form>
             </div>

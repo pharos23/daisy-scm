@@ -14,7 +14,7 @@
                 @endcan
                 --}}
                 @can('create-user')
-                    <button class="btn btn-primary place-items-center m-5" onclick="modal_role.showModal()">New</button>
+                    <button class="btn btn-primary place-items-center m-5" onclick="modal_role.showModal()">{{__("New")}}</button>
                 @endcan
 
                 {{-- Popup (modal) para a criação de uma nova role --}}
@@ -24,7 +24,7 @@
                             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                         </form>
 
-                        <h3 class="text-2xl font-semibold mb-4">Create New Role</h3>
+                        <h3 class="text-2xl font-semibold mb-4">{{__("Create")}} {{__("New")}} {{__("Role")}}</h3>
 
                         <form action="{{ route('roles.store') }}" method="POST" id="role-form">
                             @csrf
@@ -33,19 +33,19 @@
                                 {{-- Role Name --}}
                                 <label class="form-control w-full">
                                     <div class="label">
-                                        <span class="label-text">Role Name</span>
+                                        <span class="label-text">{{__("Name")}}</span>
                                     </div>
-                                    <input type="text" class="input input-bordered w-full" placeholder="e.g., Manager"
+                                    <input type="text" class="input input-bordered w-full" placeholder="ex: Manager"
                                            name="name" id="name" required />
                                     <div class="label hidden text-error" id="name-error-label">
-                                        <span class="label-text-alt" id="name-error-text">This field is required.</span>
+                                        <span class="label-text-alt" id="name-error-text">{{__("This field is required")}}</span>
                                     </div>
                                 </label>
 
                                 {{-- Permissions --}}
                                 <label class="form-control w-full">
                                     <div class="label">
-                                        <span class="label-text">Permissions</span>
+                                        <span class="label-text">{{__("Permissions")}}</span>
                                     </div>
                                     <select class="select select-bordered w-full min-h-50" multiple size="6"
                                             aria-label="Permissions" id="permissions" name="permissions[]">
@@ -54,11 +54,11 @@
                                                 {{ $permission->name }}
                                             </option>
                                         @empty
-                                            <option disabled>No permissions available</option>
+                                            <option disabled>{{__("No permissions available")}}</option>
                                         @endforelse
                                     </select>
                                     <div class="label hidden text-error mt-2" id="permissions-error-label">
-                                        <span class="label-text-alt" id="permissions-error-text">Select at least one permission.</span>
+                                        <span class="label-text-alt" id="permissions-error-text">{{__("Select at least one permission")}}</span>
                                     </div>
                                 </label>
                             </div>
@@ -76,9 +76,9 @@
                 <table class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th scope="col">S#</th>
-                    <th scope="col" style="max-width:100px;">Role Name</th>
-                    <th scope="col">Permissions</th>
+                    <th scope="col">#</th>
+                    <th scope="col" style="max-width:100px;">{{__("Name")}}</th>
+                    <th scope="col">{{__("Permissions")}}</th>
                     <th scope="col" style="width: 250px;"></th>
                 </tr>
                 </thead>
@@ -103,7 +103,7 @@
                                                 data-id="{{ $role->id }}"
                                                 data-name="{{ $role->name }}"
                                                 data-permissions='@json($role->permissions->pluck('id'))'>
-                                            Edit
+                                            {{__("Edit")}}
                                         </button>
                                     @endcan
 
@@ -113,7 +113,7 @@
                                                   onsubmit="return confirm('Do you want to delete this role?');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-error btn-sm">Delete</button>
+                                                <button type="submit" class="btn btn-error btn-sm">{{__("Delete")}}</button>
                                             </form>
                                         @endif
                                     @endcan
@@ -124,7 +124,7 @@
                 @empty
                     <td colspan="3">
                     <span class="text-danger">
-                        <strong>No Role Found!</strong>
+                        <strong>{{__("No Role")}}</strong>
                     </span>
                     </td>
                 @endforelse
@@ -146,7 +146,7 @@
                 <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             </form>
 
-            <h3 class="text-2xl font-semibold mb-4">Edit Role</h3>
+            <h3 class="text-2xl font-semibold mb-4">{{__("Edit")}} {{__("Role")}}</h3>
 
             <form method="POST" id="edit-role-form">
                 @csrf
@@ -156,18 +156,18 @@
                     {{-- Role Name --}}
                     <label class="form-control w-full">
                         <div class="label">
-                            <span class="label-text">Role Name</span>
+                            <span class="label-text">{{__("Name")}}</span>
                         </div>
                         <input type="text" class="input input-bordered w-full" name="name" id="edit-role-name" required />
                         <div class="label hidden text-error" id="edit-name-error-label">
-                            <span class="label-text-alt" id="edit-name-error-text">This field is required.</span>
+                            <span class="label-text-alt" id="edit-name-error-text">{{__("This field is required")}}</span>
                         </div>
                     </label>
 
                     {{-- Permissions --}}
                     <label class="form-control w-full">
                         <div class="label">
-                            <span class="label-text">Permissions</span>
+                            <span class="label-text">{{__("Permissions")}}</span>
                         </div>
                         <select class="select select-bordered w-full min-h-50" multiple size="6"
                                 id="edit-role-permissions" name="permissions[]">
@@ -176,13 +176,13 @@
                             @endforeach
                         </select>
                         <div class="label hidden text-error mt-2" id="edit-permissions-error-label">
-                            <span class="label-text-alt">Select at least one permission.</span>
+                            <span class="label-text-alt">{{__("Select at least one permission")}}</span>
                         </div>
                     </label>
                 </div>
 
                 <div class="flex justify-end gap-2 mt-6">
-                    <button class="btn btn-accent" id="edit-submit-btn" type="submit" disabled>Update</button>
+                    <button class="btn btn-accent" id="edit-submit-btn" type="submit" disabled>{{__("Update")}}</button>
                 </div>
             </form>
         </div>
