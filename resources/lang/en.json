@@ -17,5 +17,11 @@
     "ActivationReactivation": "Activation/Reactivation",
     "Deactivation": "Deactivation",
     "Equipment": "Equipment",
-    "Observations": "Observations"
+    "Observations": "Observations",
+    "Contacts": "Contacts",
+    "Dashboard": "Dashboard",
+    "Manage Users": "Manage Users",
+    "Manage Roles": "Manage Roles",
+    "Manage Permissions": "Manage Permissions",
+    "Settings": "Settings"
 }

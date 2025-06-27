@@ -17,5 +17,11 @@
     "ActivationReactivation": "Ativação/Reativação",
     "Deactivation": "Desativação",
     "Equipment": "Equipamento",
-    "Observations": "Observações"
+    "Observations": "Observações",
+    "Contacts": "Contactos",
+    "Dashboard": "Painel de Controlo",
+    "Manage Users": "Gerir Utilizadores",
+    "Manage Roles": "Gerir Cargos",
+    "Manage Permissions": "Gerir Permissões",
+    "Settings": "Definições"
 }

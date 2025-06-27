@@ -28,16 +28,16 @@
         <div class="h-full flex flex-col justify-between">
             {{-- Navigation --}}
             <ul class="menu p-4 pt-10 text-base-content space-y-1">
-                <li><a href="{{ route('home') }}">Dashboard</a></li>
+                <li><a href="{{ route('home') }}">{{ __('Dashboard') }}</a></li>
                 @can('view-contact')
-                    <li><a href="{{ route('contacts.index') }}">Contacts</a></li>
+                    <li><a href="{{ route('contacts.index') }}">{{ __('Contacts') }}</a></li>
                 @endcan
 
                 @hasanyrole(['Admin', 'Super Admin'])
                 <div class="divider">Admin</div>
-                <li><a href="{{ route('users.index') }}">Manage Users</a></li>
-                <li><a href="{{ route('roles.index') }}">Manage Roles</a></li>
-                <li><a href="{{ route('permissions.index') }}">Manage Permissions</a></li>
+                <li><a href="{{ route('users.index') }}">{{ __('Manage Users') }}</a></li>
+                <li><a href="{{ route('roles.index') }}">{{ __('Manage Roles') }}</a></li>
+                <li><a href="{{ route('permissions.index') }}">{{ __('Manage Permissions') }}</a></li>
                 @endhasanyrole
             </ul>
 
@@ -51,7 +51,7 @@
                         </div>
                     </div>
 
-                    <a href="{{ route('userSettings.edit') }}" class="btn btn-ghost btn-sm w-full text-left">Settings</a>
+                    <a href="{{ route('userSettings.edit') }}" class="btn btn-ghost btn-sm w-full text-left">{{ __('Settings') }}</a>
                     <a href="{{ route('logout') }}"
                        onclick="event.preventDefault(); if (confirm('Are you sure you want to logout?')) document.getElementById('logout-form').submit();"
                        class="btn btn-ghost btn-sm w-full text-left">

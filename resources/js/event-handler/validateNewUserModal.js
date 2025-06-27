@@ -20,7 +20,7 @@ export function setupValidateNewUserModal() {
     }
 
     function validateUsername() {
-        const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(usernameInput.value);
+        const isValid = 3 && /^[A-Za-z][A-Za-z0-9\-]*$/.test(usernameInput.value);
         usernameError.classList.toggle('hidden', isValid);
         usernameInput.classList.toggle('input-error', !isValid);
         return isValid;
