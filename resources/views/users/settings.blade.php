@@ -68,7 +68,7 @@
                             name="new_password"
                             type="password"
                             class="input input-bordered w-full @error('new_password') input-error @enderror"
-                            placeholder={{__("New password")}}
+                            placeholder="{{__('Newa')}} {{__('password')}}"
                             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                             title={{__("Password req")}}
                             autocomplete="new-password"

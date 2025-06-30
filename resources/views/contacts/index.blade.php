@@ -10,7 +10,7 @@
             <div class="flex w-full justify-between">
                 {{-- Search and filter inputs --}}
                 <div class="flex gap-4 m-5">
-                    <input type="text" id="searchInput" placeholder="{{ __('Search') }}..." class="input input-bordered" />
+                    <input type="text" id="searchInput" placeholder="{{ __('Search') }} {{ __('Contacts') }}..." class="input input-bordered" />
 
                     <select id="filterLocal" class="select select-bordered">
                         <option value="">{{ __('AllLocals') }}</option>

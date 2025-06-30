@@ -10,7 +10,7 @@
             <div class="flex w-full justify-between">
                 {{-- Search + Role Filter --}}
                 <div class="flex gap-4 m-5">
-                    <input type="text" id="userSearch" placeholder={{ __('Search by name or username') }} class="input input-bordered w-full max-w-xs" />
+                    <input type="text" id="userSearch" placeholder="{{ __('Search') }} {{ __('Users') }}..." class="input input-bordered w-full max-w-xs" />
 
                     <select id="roleFilter" class="select select-bordered max-w-xs">
                         <option value="">{{ __('All Roles') }}</option>
@@ -265,15 +265,15 @@
 
                     {{-- Password --}}
                     <label class="form-control w-full">
-                        <div class="label"><span class="label-text">Password {{__("leave blank to keep current")}}</span></div>
-                        <input type="password" name="password" id="edit-password" class="input input-bordered w-full" />
+                        <div class="label"><span class="label-text">Password</span></div>
+                        <input type="password" name="password" id="edit-password" placeholder="{{__("leave blank to keep current")}}" class="input input-bordered w-full" />
                         <div class="text-error text-sm hidden" id="edit-password-error">{{__("Invalid password")}}</div>
                     </label>
 
                     {{-- Confirm Password --}}
                     <label class="form-control w-full">
                         <div class="label"><span class="label-text">{{__("Confirm Password")}}</span></div>
-                        <input type="password" name="password_confirmation" id="edit-password-confirmation" class="input input-bordered w-full" />
+                        <input type="password" name="password_confirmation" id="edit-password-confirmation" placeholder="{{__("leave blank to keep current")}}" class="input input-bordered w-full" />
                         <div class="text-error text-sm hidden" id="edit-confirm-password-error">{{__("Passwords do not match")}}</div>
                     </label>
 

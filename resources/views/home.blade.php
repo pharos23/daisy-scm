@@ -46,14 +46,14 @@
                         </div>
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("News")}} {{__("Users")}}</div>
-                            <div class="stat-value text-accent">
+                            <div class="stat-value text-primary">
                                 {{ \App\Models\User::whereBetween('created_at', [now()->startOfMonth(), now()->endOfDay()])->count() }}
                             </div>
                             <div class="stat-desc">{{__("This month")}}</div>
                         </div>
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("Roles")}}</div>
-                            <div class="stat-value text-secondary">
+                            <div class="stat-value text-primary">
                                 {{ \Spatie\Permission\Models\Role::count() }}
                             </div>
                             <div class="stat-desc">{{__("Available")}}</div>
@@ -120,7 +120,7 @@
                     </div>
                     <div class="stat shadow place-items-center">
                         <div class="stat-title">{{__("News")}} {{__("Contacts")}}</div>
-                        <div class="stat-value text-accent">
+                        <div class="stat-value text-primary">
                             {{ DB::table('contacts')
                                 ->whereBetween('created_at', [now()->startOfMonth(), now()->endOfDay()])
                                 ->count() }}
@@ -129,7 +129,7 @@
                     </div>
                     <div class="stat shadow place-items-center">
                         <div class="stat-title">{{__("Groups")}}</div>
-                        <div class="stat-value text-secondary">
+                        <div class="stat-value text-primary ">
                             {{ DB::table('contacts')->distinct('grupo')->count('grupo') }}
                         </div>
                         <div class="stat-desc">{{__("Active groups")}}</div>
