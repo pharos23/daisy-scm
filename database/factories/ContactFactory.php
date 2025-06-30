@@ -24,7 +24,7 @@ class ContactFactory extends Factory
             'nome' => $this->faker->name,
             'telemovel' => $this->faker->numerify('9########'),
             'extensao' => $this->faker->optional()->numerify('####'),
-            'funcionalidades' => $this->faker->sentence,
+            'funcionalidades' => $this->faker->text(20),
             'ativacao' => $this->faker->date(),
             'desativacao' => $this->faker->optional()->date(),
             'ticket_scmp' => $this->faker->optional()->bothify('TSCMP-####'),
