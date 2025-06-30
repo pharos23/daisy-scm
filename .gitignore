@@ -22,3 +22,8 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/static-build.Dockerfile
+
+**/caddy
+frankenphp
+frankenphp-worker.php
