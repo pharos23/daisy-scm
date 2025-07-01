@@ -12,7 +12,7 @@ export function setupThemeToggle() {
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
             document.documentElement.setAttribute('data-theme', savedTheme);
-            themeSwitcher.checked = (savedTheme === 'dark');
+            themeSwitcher.checked = (savedTheme === 'luxury');
         }
     });
 
