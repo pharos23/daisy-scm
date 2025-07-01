@@ -40,6 +40,18 @@ Route::middleware([
         Route::get('/admin', function () {
             return view('users.admin');
         })->name('users.admin');
+
+        Route::post('/deploy', function () {
+            abort_unless(auth()->check() && auth()->user()->isAdmin(), 403);
+
+            // run powershell deploy script
+            $output = shell_exec('powershell.exe -ExecutionPolicy Bypass -File "C:\daisy-scm\deploy.ps1" 2>&1');
+
+            return response()->json([
+                'status' => 'success',
+                'output' => $output,
+            ]);
+        });
     });
 
     Route::middleware(['auth'])->group(function () {
