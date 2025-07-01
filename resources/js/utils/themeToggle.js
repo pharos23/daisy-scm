@@ -3,7 +3,7 @@ export function setupThemeToggle() {
     const themeSwitcher = document.getElementById('theme-switcher');
 
     function toggleTheme() {
-        const theme = themeSwitcher.checked ? 'dark' : 'cmyk';
+        const theme = themeSwitcher.checked ? 'luxury' : 'cmyk';
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
     }
