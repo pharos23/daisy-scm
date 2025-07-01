@@ -77,14 +77,6 @@
             </button>
         </div>
 
-        @if (Route::has('password.request'))
-            <div class="text-center mt-3">
-                <a class="link link-hover text-sm" href="{{ route('password.request') }}">
-                    {{ __('Forgot Your Password?') }}
-                </a>
-            </div>
-        @endif
-
         @if (Route::has('register'))
             <div class="text-center mt-3">
                 <a class="btn btn-outline btn-sm mt-2" href="{{ route('register') }}">
