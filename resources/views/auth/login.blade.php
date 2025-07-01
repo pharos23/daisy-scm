@@ -1,3 +1,6 @@
+@php
+    App::setLocale(session('locale', config('app.locale')));
+@endphp
 <!DOCTYPE html>
 {{-- Blade to login with a user username and password --}}
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="">
@@ -76,14 +79,6 @@
                 {{ __('Login') }}
             </button>
         </div>
-
-        @if (Route::has('password.request'))
-            <div class="text-center mt-3">
-                <a class="link link-hover text-sm" href="{{ route('password.request') }}">
-                    {{ __('Forgot Your Password?') }}
-                </a>
-            </div>
-        @endif
 
         @if (Route::has('register'))
             <div class="text-center mt-3">

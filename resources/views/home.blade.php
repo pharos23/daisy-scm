@@ -111,7 +111,7 @@
                 <div class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="stat shadow place-items-center">
-                            <div class="stat-title">{{__("Total Contacts")}}</div>
+                            <div class="stat-title">{{__("Total")}} {{__("Contacts")}}</div>
                             <div class="stat-value text-primary">{{ DB::table('contacts')->count() }}</div>
                             <div class="stat-desc">{{__("All time")}}</div>
                         </div>
