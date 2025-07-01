@@ -98,7 +98,7 @@
                     <div class="flex justify-end gap-4 mt-8">
                         <form method="POST" action="{{ url('/deploy') }}">
                             @csrf
-                            <button type="submit" class="btn btn-primary">Update Code</button>
+                            <button type="submit" class="btn btn-primary">{{__("Update")}} App</button>
                         </form>
 
                         <a href="{{ route('users.index') }}" class="btn btn-primary">{{__("Manage")}} {{__("Users")}}</a>

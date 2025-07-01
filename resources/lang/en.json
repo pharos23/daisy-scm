@@ -10,6 +10,7 @@
     "Are you sure you want to logout?": "Are you sure you want to logout?",
     "Available": "Available",
     "Back": "Back",
+    "CAN NOT DELETE SELF ASSIGNED ROLE": "CAN NOT DELETE SELF ASSIGNED ROLE",
     "Cellphone": "Cellphone",
     "Change Password": "Change Password",
     "ChooseGroup": "Choose Local",
@@ -83,6 +84,8 @@
     "Select at least one permission": "Select at least 1 permission",
     "Select at least one role": "Select at least 1 role",
     "Settings": "Settings",
+    "SUPER ADMIN ROLE CAN NOT BE EDITED": "SUPER ADMIN ROLE CAN NOT BE EDITED",
+    "SUPER ADMIN ROLE CAN NOT BE DELETED": "SUPER ADMIN ROLE CAN NOT BE DELETED",
     "This field is required": "This field is required",
     "This month": "This month",
     "Total": "Total",
@@ -90,6 +93,7 @@
     "Update": "Update",
     "updated successfully": "updated successfully",
     "User": "User",
+    "USER DOES NOT HAVE THE RIGHT PERMISSIONS": "USER DOES NOT HAVE THE RIGHT PERMISSIONS",
     "User req": "Username must be at least 3 characters (letters, numbers or dashes)",
     "Users": "Users"
 }

@@ -88,7 +88,7 @@ class UserController extends Controller
     {
         if ($user->hasRole('Super Admin')) {
             if ($user->id !== auth()->id()) {
-                abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSIONS');
+                abort(403, __('USER DOES NOT HAVE THE RIGHT PERMISSIONS'));
             }
         }
 
@@ -119,7 +119,7 @@ class UserController extends Controller
     public function destroy(User $user): RedirectResponse
     {
         if ($user->hasRole('Super Admin') || $user->id === auth()->id()) {
-            abort(403, 'USER DOES NOT HAVE THE RIGHT PERMISSIONS');
+            abort(403,  __('USER DOES NOT HAVE THE RIGHT PERMISSIONS'));
         }
 
         $user->syncRoles([]);

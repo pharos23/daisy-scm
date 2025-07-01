@@ -10,6 +10,7 @@
     "Are you sure you want to logout?": "Tem a certeza que prentende terminar a sessão?",
     "Available": "Disponiveis",
     "Back": "Voltar",
+    "CAN NOT DELETE SELF ASSIGNED ROLE": "NÃO PODE APAGAR O CARGO QUE ESTÁ ATUALMENTE ATRIBUIDO A ESTE UTILIZADOR",
     "Cellphone": "Telemóvel",
     "Change Password": "Mudar Password",
     "ChooseGroup": "Escolha o Grupo",
@@ -83,6 +84,8 @@
     "Select at least one permission": "Escolha pelo menos 1 permissão",
     "Select at least one role": "Escolha pelo menos 1 cargo",
     "Settings": "Definições",
+    "SUPER ADMIN ROLE CAN NOT BE EDITED": "NÃO PODE EDITAR O CARGO DE SUPER ADMIN",
+    "SUPER ADMIN ROLE CAN NOT BE DELETED": "NÃO PODE APAGAR O CARGO DE SUPER ADMIN",
     "This field is required": "Este campo é obrigatório",
     "This month": "Este mês",
     "Total": "Total de",
@@ -90,6 +93,7 @@
     "Update": "Atualizar",
     "updated successfully": "atualizado com sucesso",
     "User": "Utilizador",
+    "USER DOES NOT HAVE THE RIGHT PERMISSIONS": "O UTILIZADOR NÃO TEM PERMISSÃO",
     "User req": "O Username deve conter pelo menos 3 caracteres (Letras, Números ou Traços -)",
     "Users": "Utilizadores"
 }
