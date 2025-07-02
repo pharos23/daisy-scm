@@ -30,6 +30,7 @@
                 {{-- Buttons Section --}}
                 <buttons class="flex justify-end gap-4 m-5">
                     {{-- Import button with select file field --}}
+                    @hasanyrole('admin|superadmin')
                     <form action="{{ route('contacts.import') }}" method="POST" enctype="multipart/form-data" class="flex items-center gap-4">
                         @csrf
 
@@ -46,6 +47,7 @@
                     <button class="btn btn-success" onclick="window.location.href='{{ route('contacts.export') }}'">
                         {{ __('Export') }}
                     </button>
+                    @endhasanyrole
 
                     {{-- New Contact Button --}}
                     @can('create-contact')
