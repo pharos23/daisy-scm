@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DeployController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -41,16 +42,8 @@ Route::middleware([
             return view('users.admin');
         })->name('users.admin');
 
-        Route::post('/deploy', function () {
-
-            // run powershell deploy script
-            $output = shell_exec('powershell.exe -ExecutionPolicy Bypass -File "C:\daisy-scm\deploy.ps1" 2>&1');
-
-            return response()->json([
-                'status' => 'success',
-                'output' => $output,
-            ]);
-        });
+        Route::post('/deploy', [DeployController::class, 'deploy'])
+            ->name('deploy');
     });
 
     Route::middleware(['auth'])->group(function () {
