@@ -3,6 +3,11 @@
 @section('content')
     @vite('resources/js/pages/contacts.js')
 
+    @php
+        $isAdmin = Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin');
+        $activeTab = request()->query('tab', $isAdmin ? 'admin' : 'contact');
+    @endphp
+
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">
 
@@ -30,6 +35,7 @@
                 {{-- Buttons Section --}}
                 <buttons class="flex justify-end gap-4 m-5">
                     {{-- Import button with select file field --}}
+                    @if ($isAdmin)
                     <form action="{{ route('contacts.import') }}" method="POST" enctype="multipart/form-data" class="flex items-center gap-4">
                         @csrf
 
@@ -46,6 +52,7 @@
                     <button class="btn btn-success" onclick="window.location.href='{{ route('contacts.export') }}'">
                         {{ __('Export') }}
                     </button>
+                    @endif
 
                     {{-- New Contact Button --}}
                     @can('create-contact')
