@@ -4,7 +4,7 @@ import { setupValidateNewUserModal } from '../event-handler/validateNewUserModal
 import { setupEditUserModal } from '../event-handler/editUserModal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    setupSearchUser()
+    setupSearchUser();
     setupValidateNewUserModal();
     setupEditUserModal();
 });

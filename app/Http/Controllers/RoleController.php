@@ -98,7 +98,7 @@ class RoleController extends Controller
         $role->syncPermissions($permissions);
 
         return redirect()->back()
-            ->withSuccess(__('Role') .' '. __('updated successfully'));
+            ->withSuccess(__('Role') .' '. __('Updated successfully'));
     }
 
     /**

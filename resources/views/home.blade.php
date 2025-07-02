@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    @vite('resources/js/pages/home.js')
+
     @php
         $isAdmin = Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin');
         $activeTab = request()->query('tab', $isAdmin ? 'admin' : 'contact');
@@ -96,9 +98,17 @@
                     </div>
 
                     <div class="flex justify-end gap-4 mt-8">
-                        <form action="{{ route('deploy') }}" method="POST" onsubmit="return confirm('Are you sure you want to update the code?');">
+                        <form
+                            action="{{ route('deploy') }}"
+                            method="POST"
+                            id="deployForm"
+                            data-confirm-message="{{ __('UpdateConfirm') }}"
+                        >
                             @csrf
-                            <button type="submit" class="btn btn-danger">{{ __('Update') }} App</button>
+                            <button type="submit" id="deployBtn" class="btn btn-warning">
+                                <span id="deployText">{{ __('UpdateCode') }}</span>
+                                <span id="deploySpinner" class="loading loading-spinner hidden"></span>
+                            </button>
                         </form>
 
                         <a href="{{ route('users.index') }}" class="btn btn-primary">{{__("Manage")}} {{__("Users")}}</a>

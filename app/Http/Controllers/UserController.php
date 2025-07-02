@@ -113,7 +113,7 @@ class UserController extends Controller
         $user->syncRoles($request->roles);
 
         return redirect()->back()
-            ->withSuccess(__('User') . ' ' . __('updated successfully'));
+            ->withSuccess(__('User') . ' ' . __('Updated successfully'));
     }
 
     public function destroy(User $user): RedirectResponse

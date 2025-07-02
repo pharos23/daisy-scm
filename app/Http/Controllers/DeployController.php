@@ -31,10 +31,10 @@ class DeployController extends Controller
             $this->runCommand(['php', 'artisan', 'route:cache'], $baseDir);
             $this->runCommand(['php', 'artisan', 'view:cache'], $baseDir);
 
-            return back()->with('status', 'Deployment complete.');
+            return back()->with('success', __('Updated successfully'));
 
         } catch (ProcessFailedException $e) {
-            return back()->with('error', 'Deployment failed: ' . $e->getMessage());
+            return back()->with('error', 'Update failed: ' . $e->getMessage());
         }
     }
 
