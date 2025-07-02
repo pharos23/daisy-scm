@@ -4,7 +4,7 @@ rpc:
 http:
   address: 192.168.4.85:8000
   workers:
-    command: "php ./artisan octane:start --server=roadrunner --workers=4 --max-requests=500"
+    command: "php roadrunner.php"
     relay: "pipes"
     pool:
       numWorkers: 4
@@ -16,4 +16,3 @@ http:
 logs:
   mode: production
   level: error
-
