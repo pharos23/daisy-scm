@@ -1,6 +1,3 @@
-@php
-    App::setLocale(session('locale', config('app.locale')));
-@endphp
 <!DOCTYPE html>
 {{-- Blade to login with a user username and password --}}
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="">

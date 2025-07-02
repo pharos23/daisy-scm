@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // Routes to redirect the user around the page
-Auth::routes();
-
 Route::middleware([
     DetectBrowserLocale::class,
 ])->group(function () {
+
+    Auth::routes();
 
     Route::get('/', function () {
         return redirect()->route('login');
