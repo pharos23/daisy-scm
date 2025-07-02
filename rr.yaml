@@ -2,7 +2,7 @@ rpc:
   listen: tcp://127.0.0.1:6001
 
 http:
-  address: 0.0.0.0:8080
+  address: 192.168.4.85:8000
   workers:
     command: "php ./artisan octane:start --server=roadrunner --workers=4 --max-requests=500"
     relay: "pipes"
