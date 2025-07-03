@@ -1,5 +1,6 @@
 @extends('layouts.app')
 {{--  Blade to show both tabs of the selected contact and buttons to Save, Delete and Back --}}
+<title>{{ __('Contacts') }}</title>
 @section('content')
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">

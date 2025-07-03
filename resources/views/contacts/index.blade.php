@@ -1,4 +1,5 @@
 @extends('layouts.app')
+<title>{{ __('Contacts') }}</title>
 
 @section('content')
     @vite('resources/js/pages/contacts.js')

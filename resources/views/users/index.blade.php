@@ -1,5 +1,6 @@
 @extends('layouts.app')
 {{--  Blade to show all the users --}}
+<title>{{ __('Users') }}</title>
 @section('content')
     @vite('resources/js/pages/users.js')
 

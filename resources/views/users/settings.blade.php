@@ -1,5 +1,6 @@
 @extends('layouts.app')
 {{-- Blade to show user settings --}}
+<title>{{ __('Settings') }}</title>
 @section('content')
     <div class="bg-base min-h-screen flex justify-center items-center">
         <div class="card w-full max-w-2xl bg-base-200 shadow-xl border border-base-content/5">

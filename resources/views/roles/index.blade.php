@@ -1,5 +1,6 @@
 @extends('layouts.app')
 {{--  Blade to show and manage the roles --}}
+<title>{{ __('Roles') }}</title>
 @section('content')
     @vite('resources/js/pages/roles.js')
 

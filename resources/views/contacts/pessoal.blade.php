@@ -1,5 +1,6 @@
 <form action="{{ route('contacts.update', $contact->id) }}" method="POST" id="contact-form">
     {{--  Blade to show the "Pessoal" tab of the selected contact --}}
+    <title>{{ __('Contacts') }}</title>
     @csrf
     @method('PUT')
 

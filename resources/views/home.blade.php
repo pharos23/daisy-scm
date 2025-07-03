@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<title>{{ __('Dashboard') }}</title>
 @section('content')
     @vite('resources/js/pages/home.js')
 
