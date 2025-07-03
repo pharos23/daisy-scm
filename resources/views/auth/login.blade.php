@@ -10,9 +10,17 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- Styles --}}
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/pages/login.js'])
 </head>
-<body class="min-h-screen bg-base-200 flex items-center justify-center">
+<body class="min-h-screen bg-base-200 flex items-center justify-center relative">
+
+<div class="flex justify-center absolute top-0 left-0 m-5">
+    <label class="toggle text-base-content">
+        <input type="checkbox" value="synthwave" id="theme-switcher" class="theme-controller" />
+        <svg aria-label="sun" xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></g></svg>
+        <svg aria-label="moon" xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor"><path d="M12 3a6 6 0 009 9 9 9 0 11-9-9Z"/></g></svg>
+    </label>
+</div>
 
 <div class="w-full max-w-md p-8 shadow-lg rounded-box bg-base-100">
     <h1 class="text-2xl font-bold text-center mb-6">{{ __('Login') }}</h1>
@@ -86,27 +94,5 @@
         @endif
     </form>
 </div>
-
-{{-- Theme Toggle Script --}}
-<script>
-    const themeSwitcher = document.getElementById('theme-switcher');
-
-    function toggleTheme() {
-        const theme = themeSwitcher.checked ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            themeSwitcher.checked = (savedTheme === 'dark');
-        }
-    });
-
-    themeSwitcher.addEventListener('change', toggleTheme);
-</script>
-
 </body>
 </html>
