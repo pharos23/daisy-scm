@@ -38,10 +38,6 @@ Route::middleware([
             'index', 'store', 'destroy'
         ]);
 
-        Route::get('/admin', function () {
-            return view('users.admin');
-        })->name('users.admin');
-
         Route::post('/deploy', [DeployController::class, 'deploy'])
             ->name('deploy');
     });
@@ -55,9 +51,6 @@ Route::middleware([
 
         Route::get('/contacts', [ContactController::class, 'index'])
             ->name('contacts.index');
-
-        Route::get('/search', [ContactController::class, 'search'])
-            ->name('contacts.search');
 
         Route::put('/create', [ContactController::class, 'store'])
             ->middleware('permission:create-contact')

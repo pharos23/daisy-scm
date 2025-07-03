@@ -40,7 +40,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        abort(404);
     }
 
     /**
@@ -70,7 +70,7 @@ class PermissionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        abort(404);
     }
 
     /**

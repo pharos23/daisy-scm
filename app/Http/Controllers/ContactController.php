@@ -42,19 +42,7 @@ class ContactController extends Controller
     // Function to search the database
     public function search(Request $request)
     {
-        $search = $request->input('search');
-        $contacts = Contact::where('local', 'like', "%$search%")
-            ->orWhere('grupo', 'like', "%$search%")
-            ->orWhere('nome', 'like', "%$search%")
-            ->orWhere('telemovel', 'like', "%$search%")
-            ->paginate(8);
-
-        if ($request->ajax()) {
-            return response()->view('contacts.index', compact('contacts'), 200)
-                ->header('X-Inertia', 'false');
-        }
-
-        return view('contacts.index', compact('contacts'));
+        //
     }
 
     // Function to store the data in the database when creating a new entry

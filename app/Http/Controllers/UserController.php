@@ -52,19 +52,12 @@ class UserController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->input('search');
-        $users = User::where('username', 'like', "%$search%")
-            ->orWhere('name', 'like', "%$search%")
-            ->paginate(8);
-
-        return view('users.index', compact('users'));
+        //
     }
 
     public function create(): View
     {
-        return view('users.create', [
-            'roles' => Role::pluck('name')->all()
-        ]);
+        abort(404);
     }
 
     public function store(StoreUserRequest $request): RedirectResponse
@@ -86,17 +79,7 @@ class UserController extends Controller
 
     public function edit(User $user): View
     {
-        if ($user->hasRole('Super Admin')) {
-            if ($user->id !== auth()->id()) {
-                abort(403, __('USER DOES NOT HAVE THE RIGHT PERMISSIONS'));
-            }
-        }
-
-        return view('users.edit', [
-            'user' => $user,
-            'roles' => Role::pluck('name')->all(),
-            'userRoles' => $user->roles->pluck('name')->all()
-        ]);
+        abort(404);
     }
 
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
