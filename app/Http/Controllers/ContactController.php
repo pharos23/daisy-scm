@@ -49,9 +49,9 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'local' => ['required', 'string', 'max:20'],
-            'grupo' => ['nullable', 'string', 'max:20'],
-            'nome' => ['required', 'string', 'max:20'],
+            'local' => ['required', 'string'],
+            'grupo' => ['nullable', 'string'],
+            'nome' => ['required', 'string', 'max:30'],
             'telemovel' => ['required'],
         ]);
 
@@ -71,12 +71,12 @@ class ContactController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'local' => ['required', 'string', 'max:20'],
-            'grupo' => ['nullable', 'string', 'max:20'],
-            'nome' => ['required', 'string', 'max:20'],
+            'local' => ['required', 'string'],
+            'grupo' => ['nullable', 'string'],
+            'nome' => ['required', 'string', 'max:30'],
             'telemovel' => ['required'],
             'extensao' => ['nullable', 'string', 'max:20'],
-            'funcionalidades' => ['nullable', 'string', 'max:20'],
+            'funcionalidades' => ['nullable', 'string', 'max:50'],
             'ativacao' => ['nullable', 'string', 'max:20'],
             'desativacao' => ['nullable', 'string', 'max:20'],
         ]);
@@ -93,10 +93,10 @@ class ContactController extends Controller
         $request->validate([
             'ticket_scmp' => ['nullable', 'string', 'max:20'],
             'ticket_fse' => ['nullable', 'string', 'max:20'],
-            'iccid' => ['nullable', 'string', 'max:20'],
-            'equipamento' => ['nullable', 'string', 'max:20'],
+            'iccid' => ['nullable', 'string', 'max:22'],
+            'equipamento' => ['nullable', 'string', 'max:25'],
             'serial_number' => ['nullable', 'string', 'max:20'],
-            'imei' => ['nullable', 'string', 'max:20'],
+            'imei' => ['nullable', 'string', 'max:15'],
             'obs' => ['nullable', 'string', 'max:255'],
         ]);
 

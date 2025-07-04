@@ -5,12 +5,12 @@ namespace App\Exports;
 use App\Models\Contact;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class ContactsExport implements FromCollection, WithHeadings
+class ContactsExport implements FromCollection, WithHeadings, WithMapping, WithColumnFormatting
 {
-    /**
-     * @return \Illuminate\Support\Collection
-     */
     public function collection()
     {
         return Contact::select([
@@ -50,6 +50,34 @@ class ContactsExport implements FromCollection, WithHeadings
             'Serial Number',
             'IMEI',
             'Observações'
+        ];
+    }
+
+    public function map($row): array
+    {
+        return [
+            $row->local,
+            $row->grupo,
+            $row->nome,
+            $row->telemovel,
+            $row->extensao,
+            $row->funcionalidades,
+            $row->ativacao,
+            $row->desativacao,
+            $row->ticket_scmp,
+            $row->ticket_fse,
+            $row->iccid,
+            $row->equipamento,
+            $row->serial_number,
+            "'" . $row->imei, // Prefix with apostrophe to preserve format
+            $row->obs,
+        ];
+    }
+
+    public function columnFormats(): array
+    {
+        return [
+            'N' => NumberFormat::FORMAT_TEXT, // Column N = 14th column = IMEI
         ];
     }
 }
