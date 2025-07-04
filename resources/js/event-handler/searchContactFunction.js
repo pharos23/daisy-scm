@@ -2,18 +2,23 @@ export function setupSearchContact() {
     const searchInput = document.getElementById('searchInput');
     const filterLocal = document.getElementById('filterLocal');
     const filterGroup = document.getElementById('filterGroup');
+    const filterTrashed = document.getElementById('filterTrashed');
     const table = document.getElementById('contactsTable');
     const paginationContainer = document.querySelector('.pagination')?.parentElement;
 
     let searchTerm = '';
     let localFilter = '';
     let groupFilter = '';
+    let withTrashed = false;
 
     function buildQuery(url = '/contacts') {
         const fullUrl = new URL(url, window.location.origin);
         fullUrl.searchParams.set('search', searchTerm);
         fullUrl.searchParams.set('local', localFilter);
         fullUrl.searchParams.set('group', groupFilter);
+        if (withTrashed) {
+            fullUrl.searchParams.set('with_trashed', '1');
+        }
         return fullUrl.toString();
     }
 
@@ -24,11 +29,9 @@ export function setupSearchContact() {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
 
-                // Get the new table and pagination
                 const newTbody = doc.querySelector('#contactsTable tbody');
                 const newPagination = doc.querySelector('.pagination')?.parentElement;
 
-                // Replace the old tbody and pagination
                 if (newTbody) {
                     table.querySelector('tbody').innerHTML = newTbody.innerHTML;
                 }
@@ -39,24 +42,27 @@ export function setupSearchContact() {
             .catch(error => console.error('Error loading contacts:', error));
     }
 
-    // Apply filters
     function applyFilters() {
+        withTrashed = filterTrashed ? filterTrashed.checked : false;
         searchTerm = searchInput.value;
         localFilter = filterLocal.value;
         groupFilter = filterGroup.value;
         loadContacts();
     }
 
-    // Bind input events
     searchInput.addEventListener('input', applyFilters);
     filterLocal.addEventListener('change', applyFilters);
     filterGroup.addEventListener('change', applyFilters);
 
-    // Delegate pagination link clicks
+    if (filterTrashed) {
+        filterTrashed.addEventListener('change', applyFilters);
+    }
+
     document.addEventListener('click', function (e) {
         const link = e.target.closest('.pagination a');
         if (link) {
             e.preventDefault();
+            withTrashed = filterTrashed ? filterTrashed.checked : false;
             loadContacts(link.getAttribute('href'));
         }
     });

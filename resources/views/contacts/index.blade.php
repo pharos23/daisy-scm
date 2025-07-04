@@ -33,6 +33,17 @@
                     </select>
                 </div>
 
+                @if ($isAdmin)
+                    <label class="inline-flex items-center mb-2">
+                        <input
+                            type="checkbox"
+                            id="filterTrashed"
+                            class="checkbox checkbox-primary"
+                        >
+                        <span class="ml-2">Show deleted</span>
+                    </label>
+                @endif
+
                 {{-- Buttons Section --}}
                 <buttons class="flex justify-end gap-4 m-5">
                     {{-- Import button with select file field --}}

@@ -16,6 +16,15 @@ class ContactController extends Controller
     {
         $query = Contact::query();
 
+        // only show soft-deleted if checkbox is checked
+        if (
+            $request->boolean('with_trashed') &&
+            in_array(auth()->user()?->role, ['admin', 'super_admin'])
+        ) {
+            $query->onlyTrashed();
+        }
+
+        // search filter
         if ($request->filled('search')) {
             $searchTerm = $request->search;
             $query->where(function ($q) use ($searchTerm) {
@@ -26,10 +35,12 @@ class ContactController extends Controller
             });
         }
 
+        // local filter
         if ($request->filled('local')) {
             $query->where('local', $request->local);
         }
 
+        // group filter
         if ($request->filled('group')) {
             $query->where('grupo', $request->group);
         }
@@ -38,6 +49,7 @@ class ContactController extends Controller
 
         return view('contacts.index', compact('contacts'));
     }
+
 
     // Function to search the database
     public function search(Request $request)

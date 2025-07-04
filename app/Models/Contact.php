@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 // Contact Model. To make the desired data for each entry in the Contact table
 class Contact extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     // These are the variables we want in our database
     protected $fillable = [
         'local',
