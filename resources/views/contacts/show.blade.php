@@ -2,6 +2,11 @@
 {{--  Blade to show both tabs of the selected contact and buttons to Save, Delete and Back --}}
 <title>{{ __('Contacts') }}</title>
 @section('content')
+
+    @php
+        $query = request()->only(['page', 'search', 'filterLocal', 'filterGroup']);
+    @endphp
+
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">
 
@@ -39,7 +44,10 @@
                 @else
                     <button class="btn btn-accent" disabled="disabled">Save</button>
                 @endcan
-                <button class="btn btn-primary" onclick="window.location='{{ route('contacts.index') }}'">{{__("Back")}}</button>
+                    <button class="btn btn-primary"
+                            onclick="window.location='{{ route('contacts.index') }}?{{ http_build_query(request()->all()) }}'">
+                        {{__("Back")}}
+                    </button>
             </div>
         </div>
     </div>

@@ -7,6 +7,7 @@
     @php
         $isAdmin = Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin');
         $activeTab = request()->query('tab', $isAdmin ? 'admin' : 'contact');
+        $query = request()->only(['page', 'search', 'filterLocal', 'filterGroup']);
     @endphp
 
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
@@ -16,7 +17,7 @@
             <div class="flex w-full justify-between">
                 {{-- Search and filter inputs --}}
                 <div class="flex gap-4 m-5">
-                    <input type="text" id="searchInput" placeholder="{{ __('Search') }} {{ __('Contacts') }}..." class="input input-bordered" />
+                    <input type="text" id="searchInput" placeholder="{{ __('Search') }} {{ __('Contacts') }}..." class="input input-bordered"  value="{{ request('search') }}"/>
 
                     <select id="filterLocal" class="select select-bordered">
                         <option value="">{{ __('AllLocals') }}</option>
@@ -31,18 +32,15 @@
                         <option value="OPS">OPS</option>
                         <option value="Transporte">Transporte</option>
                     </select>
-                </div>
 
-                @if ($isAdmin)
-                    <label class="inline-flex items-center mb-2">
-                        <input
-                            type="checkbox"
-                            id="filterTrashed"
-                            class="checkbox checkbox-primary"
-                        >
-                        <span class="ml-2">Show deleted</span>
-                    </label>
-                @endif
+                    @if ($isAdmin)
+                        <select id="filterDeleted" class="select select-bordered">
+                            <option value="active">{{ __('Active') }}</option>
+                            <option value="deleted">{{ __('Deleted') }}</option>
+                            <option value="all">{{ __('All') }}</option>
+                        </select>
+                    @endif
+                </div>
 
                 {{-- Buttons Section --}}
                 <buttons class="flex justify-end gap-4 m-5">
@@ -98,8 +96,11 @@
                             <td class="name">{{ $contact->nome }}</td>
                             <td class="phone">{{ $contact->telemovel }}</td>
                             <td>
+                                @php
+                                    $query = request()->only(['page', 'search', 'filterLocal', 'filterGroup']);
+                                @endphp
                                 <button class="btn btn-sm btn-outline"
-                                        onclick="window.location='{{ route('contacts.show', ['id' => $contact->id]) }}'">
+                                        onclick="window.location='{{ route('contacts.show', ['id' => $contact->id]) }}?{{ http_build_query($query) }}'">
                                     {{ __('More') }}
                                 </button>
                             </td>

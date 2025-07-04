@@ -16,12 +16,24 @@ class ContactController extends Controller
     {
         $query = Contact::query();
 
-        // only show soft-deleted if checkbox is checked
+        $deletedFilter = $request->query('deleted', 'active');
+
         if (
-            $request->boolean('with_trashed') &&
-            in_array(auth()->user()?->role, ['admin', 'super_admin'])
+            auth()->user()->hasRole('Admin')
+            || auth()->user()->hasRole('Super Admin')
         ) {
-            $query->onlyTrashed();
+            switch ($deletedFilter) {
+                case 'deleted':
+                    $query->onlyTrashed();
+                    break;
+                case 'all':
+                    $query->withTrashed();
+                    break;
+                case 'active':
+                default:
+                    // nothing
+                    break;
+            }
         }
 
         // search filter
