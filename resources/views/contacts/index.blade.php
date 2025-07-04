@@ -4,12 +4,6 @@
 @section('content')
     @vite('resources/js/pages/contacts.js')
 
-    @php
-        $isAdmin = Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin');
-        $activeTab = request()->query('tab', $isAdmin ? 'admin' : 'contact');
-        $query = request()->only(['page', 'search', 'filterLocal', 'filterGroup']);
-    @endphp
-
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">
 

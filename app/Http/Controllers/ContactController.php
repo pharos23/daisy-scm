@@ -6,6 +6,7 @@ use App\Exports\ContactsExport;
 use App\Imports\ContactsImport;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 // Controller for managing contacts. Create, edit, etc.
@@ -58,8 +59,11 @@ class ContactController extends Controller
         }
 
         $contacts = $query->paginate(8)->withQueryString();
+        $isAdmin = Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin');
+        $activeTab = request()->query('tab', $isAdmin ? 'admin' : 'contact');
+        $query = request()->only(['page', 'search', 'filterLocal', 'filterGroup']);
 
-        return view('contacts.index', compact('contacts'));
+        return view('contacts.index', compact('contacts', 'isAdmin', 'activeTab', 'query'));
     }
 
 
