@@ -1,9 +1,10 @@
-<?php
+<?php /** @noinspection ALL */
 
 namespace Database\Factories;
 
 use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 // Factory to fill the Contacts table with fake data
 /**
@@ -21,17 +22,17 @@ class ContactFactory extends Factory
         return [
             'local' => $this->faker->randomElement($locals),
             'grupo' => $this->faker->randomElement($grupos),
-            'nome' => $this->faker->name,
+            'nome' => Str::limit($this->faker->name, 30),
             'telemovel' => $this->faker->numerify('9########'),
             'extensao' => $this->faker->optional()->numerify('####'),
-            'funcionalidades' => $this->faker->text(50),
+            'funcionalidades' => $this->faker->text(30),
             'ativacao' => $this->faker->date(),
             'desativacao' => $this->faker->optional()->date(),
-            'ticket_scmp' => $this->faker->optional()->bothify('TSCMP-####'),
-            'ticket_fse' => $this->faker->optional()->bothify('TFSE-####'),
-            'iccid' => $this->faker->optional()->numerify('89####################'),
-            'equipamento' => $this->faker->word,
-            'serial_number' => $this->faker->bothify('SN-#####'),
+            'ticket_scmp' => $this->faker->optional()->bothify('####'),
+            'ticket_fse' => $this->faker->optional()->bothify('####'),
+            'iccid' => $this->faker->optional()->numerify('89###################'),
+            'equipamento' => Str::limit($this->faker->word, 30),
+            'serial_number' => $this->faker->bothify('###########'),
             'imei' => $this->faker->optional()->numerify('###############'),
             'obs' => $this->faker->optional()->sentence,
         ];
