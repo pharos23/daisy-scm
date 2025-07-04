@@ -7,6 +7,7 @@
     @php
         $isAdmin = Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin');
         $activeTab = request()->query('tab', $isAdmin ? 'admin' : 'contact');
+        $query = request()->only(['page', 'search', 'filterLocal', 'filterGroup']);
     @endphp
 
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
@@ -16,7 +17,7 @@
             <div class="flex w-full justify-between">
                 {{-- Search and filter inputs --}}
                 <div class="flex gap-4 m-5">
-                    <input type="text" id="searchInput" placeholder="{{ __('Search') }} {{ __('Contacts') }}..." class="input input-bordered" />
+                    <input type="text" id="searchInput" placeholder="{{ __('Search') }} {{ __('Contacts') }}..." class="input input-bordered"  value="{{ request('search') }}"/>
 
                     <select id="filterLocal" class="select select-bordered">
                         <option value="">{{ __('AllLocals') }}</option>
@@ -98,8 +99,11 @@
                             <td class="name">{{ $contact->nome }}</td>
                             <td class="phone">{{ $contact->telemovel }}</td>
                             <td>
+                                @php
+                                    $query = request()->only(['page', 'search', 'filterLocal', 'filterGroup']);
+                                @endphp
                                 <button class="btn btn-sm btn-outline"
-                                        onclick="window.location='{{ route('contacts.show', ['id' => $contact->id]) }}'">
+                                        onclick="window.location='{{ route('contacts.show', ['id' => $contact->id]) }}?{{ http_build_query($query) }}'">
                                     {{ __('More') }}
                                 </button>
                             </td>

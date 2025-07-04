@@ -53,7 +53,7 @@
                         </div>
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("Top Role")}}</div>
-                            <div class="stat-value">
+                            <div class="stat-value text-primary">
                                 {{
                                     DB::table('model_has_roles')
                                         ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
