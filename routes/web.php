@@ -14,7 +14,12 @@ use Illuminate\Support\Facades\Route;
 
 // Routes to redirect the user around the page
 
-Auth::routes();
+Auth::routes(['register' => false]);
+
+// Block /register with a 404
+Route::get('/register', function () {
+    abort(404);
+})->name('register');
 
 Route::get('/', function () {
     return redirect()->route('login');
