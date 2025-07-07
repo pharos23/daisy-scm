@@ -1,5 +1,5 @@
 export function setupEditUserModal() {
-    const tableBody = document.getElementById('usersTable').querySelector('tbody'); // Parent element for user rows
+    const tableBody = document.getElementById('usersTable').querySelector('tbody');
     const editModal = document.getElementById('modal_user_edit');
     const editForm = document.getElementById('edit-user-form');
     const editName = document.getElementById('edit-name');
@@ -8,6 +8,7 @@ export function setupEditUserModal() {
     const editPasswordConfirm = document.getElementById('edit-password-confirmation');
     const editRoles = document.getElementById('edit-roles');
     const editSubmitBtn = document.getElementById('edit-submit-btn');
+    const editForcePasswordChange = document.getElementById('edit-force-password-change');
 
     // Event delegation for dynamically loaded "Edit" buttons
     tableBody.addEventListener('click', (event) => {
@@ -17,12 +18,13 @@ export function setupEditUserModal() {
             const name = btn.dataset.name;
             const username = btn.dataset.username;
             const roles = JSON.parse(btn.dataset.roles);
+            const forcePasswordChange = btn.dataset.forcePasswordChange === 'true'
 
-            openEditUserModal(id, name, username, roles);
+            openEditUserModal(id, name, username, roles, forcePasswordChange);
         }
     });
 
-    function openEditUserModal(id, name, username, roles) {
+    function openEditUserModal(id, name, username, roles, forcePasswordChange) {
         editForm.action = `/users/${id}`;
         editName.value = name;
         editUsername.value = username;
@@ -32,6 +34,8 @@ export function setupEditUserModal() {
         Array.from(editRoles.options).forEach(opt => {
             opt.selected = roles.includes(opt.value);
         });
+
+        editForcePasswordChange.checked = forcePasswordChange;
 
         validateEditForm();
         editModal.showModal();
