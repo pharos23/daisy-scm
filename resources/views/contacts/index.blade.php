@@ -15,23 +15,23 @@
 
                     <select id="filterLocal" class="select select-bordered">
                         <option value="">{{ __('AllLocals') }}</option>
-                        <option value="Hospital Prelada">Hospital Prelada</option>
-                        <option value="Spec">Spec</option>
-                        <option value="Conde de Ferreira">Conde de Ferreira</option>
+                        <option value="Hospital Prelada" {{ request('local') == 'Hospital Prelada' ? 'selected' : '' }}>Hospital Prelada</option>
+                        <option value="Spec" {{ request('local') == 'Spec' ? 'selected' : '' }}>Spec</option>
+                        <option value="Conde de Ferreira" {{ request('local') == 'Conde de Ferreira' ? 'selected' : '' }}>Conde de Ferreira</option>
                     </select>
 
                     <select id="filterGroup" class="select select-bordered">
                         <option value="">{{ __('AllGroups') }}</option>
-                        <option value="DSI">DSI</option>
-                        <option value="OPS">OPS</option>
-                        <option value="Transporte">Transporte</option>
+                        <option value="DSI" {{ request('group') == 'DSI' ? 'selected' : '' }}>DSI</option>
+                        <option value="OPS" {{ request('group') == 'OPS' ? 'selected' : '' }}>OPS</option>
+                        <option value="Transporte" {{ request('group') == 'Transporte' ? 'selected' : '' }}>Transporte</option>
                     </select>
 
                     @if ($isAdmin)
                         <select id="filterDeleted" class="select select-bordered">
-                            <option value="active">{{ __('Active') }}</option>
-                            <option value="deleted">{{ __('Deleted') }}</option>
-                            <option value="all">{{ __('All') }}</option>
+                            <option value="active" {{ request('deleted') == 'active' ? 'selected' : '' }}>{{ __('Active') }}</option>
+                            <option value="deleted" {{ request('deleted') == 'deleted' ? 'selected' : '' }}>{{ __('Deleted') }}</option>
+                            <option value="all" {{ request('deleted') == 'all' ? 'selected' : '' }}>{{ __('All') }}</option>
                         </select>
                     @endif
                 </div>
@@ -91,8 +91,9 @@
                             <td class="phone">{{ $contact->telemovel }}</td>
                             <td>
                                 @php
-                                    $query = request()->only(['page', 'search', 'filterLocal', 'filterGroup']);
+                                    $query = request()->all(); // This only works if the filters are IN THE URL
                                 @endphp
+
                                 <button class="btn btn-sm btn-outline"
                                         onclick="window.location='{{ route('contacts.show', ['id' => $contact->id]) }}?{{ http_build_query($query) }}'">
                                     {{ __('More') }}
@@ -108,9 +109,10 @@
             {{-- Pagination --}}
             <div class="absolute bottom-0 center w-full p-5">
                 <div class="pagination">
-                    {{ $contacts->appends(request()->except('page'))->links() }}
+                    {{ $contacts->withQueryString()->links() }}
                 </div>
             </div>
+
 
         </div>
     </div>

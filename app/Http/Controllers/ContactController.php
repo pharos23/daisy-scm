@@ -19,25 +19,6 @@ class ContactController extends Controller
 
         $deletedFilter = $request->query('deleted', 'active');
 
-        if (
-            auth()->user()->hasRole('Admin')
-            || auth()->user()->hasRole('Super Admin')
-        ) {
-            switch ($deletedFilter) {
-                case 'deleted':
-                    $query->onlyTrashed();
-                    break;
-                case 'all':
-                    $query->withTrashed();
-                    break;
-                case 'active':
-                default:
-                    // nothing
-                    break;
-            }
-        }
-
-        // search filter
         if ($request->filled('search')) {
             $searchTerm = $request->search;
             $query->where(function ($q) use ($searchTerm) {
@@ -48,23 +29,37 @@ class ContactController extends Controller
             });
         }
 
-        // local filter
         if ($request->filled('local')) {
             $query->where('local', $request->local);
         }
 
-        // group filter
         if ($request->filled('group')) {
             $query->where('grupo', $request->group);
         }
 
-        $contacts = $query->paginate(8)->withQueryString();
-        $isAdmin = Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin');
-        $activeTab = request()->query('tab', $isAdmin ? 'admin' : 'contact');
-        $query = request()->only(['page', 'search', 'filterLocal', 'filterGroup']);
+        if (auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Super Admin')) {
+            switch ($deletedFilter) {
+                case 'deleted':
+                    $query->onlyTrashed();
+                    break;
+                case 'all':
+                    $query->withTrashed();
+                    break;
+                case 'active':
+                default:
+                    break;
+            }
+        }
 
-        return view('contacts.index', compact('contacts', 'isAdmin', 'activeTab', 'query'));
+        $contacts = $query->paginate(8)->withQueryString();
+
+        // Check if the user is an admin
+        $isAdmin = Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin');
+
+        return view('contacts.index', compact('contacts', 'isAdmin')); // Pass $isAdmin to the view
     }
+
+
 
 
     // Function to search the database
