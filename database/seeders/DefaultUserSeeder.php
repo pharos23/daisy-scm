@@ -30,19 +30,11 @@ class DefaultUserSeeder extends Seeder
         ]);
         $admin->assignRole('Admin');
 
-        // Creating Contact Manager User
-        $productManager = User::create([
-            'name' => 'Contact Manager',
-            'username' => 'contactmanager',
-            'password' => Hash::make('ContactManager123')
-        ]);
-        $productManager->assignRole('Contact Manager');
-
         // Creating Application User
         $user = User::create([
-            'name' => 'Normal User',
+            'name' => 'User',
             'username' => 'user1',
-            'password' => Hash::make('NormalUser123')
+            'password' => Hash::make('User123')
         ]);
         $user->assignRole('User');
     }

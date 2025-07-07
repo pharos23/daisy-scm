@@ -12,12 +12,12 @@
 
             {{-- Tabs --}}
             <div class="tabs tabs-border m-5">
-                <input type="radio" name="dataTabs" class="tab" aria-label="Pessoal" checked="checked" />
+                <input type="radio" name="dataTabs" class="tab" aria-label="Contacto" checked="checked" />
                 <div class="tab-content bg-base-200 p-10">
                     @include('contacts.pessoal')
                 </div>
 
-                <input type="radio" name="dataTabs" class="tab" aria-label="Ticketing" />
+                <input type="radio" name="dataTabs" class="tab" aria-label="Equipamento" />
                 <div class="tab-content bg-base-200 p-10">
                     @include('contacts.ticketing')
                 </div>
