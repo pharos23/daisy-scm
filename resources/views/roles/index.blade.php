@@ -5,10 +5,6 @@
 @section('content')
     @vite('resources/js/pages/roles.js')
 
-    <script>
-        window.translations = @json($translations);
-    </script>
-
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
         <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">
 
@@ -91,4 +87,8 @@
     {{-- Include Modals --}}
     @include('roles.partials.modal-create')
     @include('roles.partials.modal-edit')
+
+    <script>
+        window.translations = @json($translations);
+    </script>
 @endsection
