@@ -82,7 +82,7 @@
         {{-- Submit --}}
         <div class="form-control mt-4">
             <button type="submit" class="btn btn-primary w-full">
-                {{ __('Update Password') }}
+                {{ __('Update') }} Password
             </button>
         </div>
     </form>

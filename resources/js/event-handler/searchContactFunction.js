@@ -76,14 +76,6 @@ export function setupSearchContact() {
             e.preventDefault();
             let href = link.getAttribute('href');
 
-            console.log('Current filter values on pagination click:');
-            console.log({
-                searchInput: searchInput?.value,
-                filterLocal: filterLocal?.value,
-                filterGroup: filterGroup?.value,
-                filterDeleted: filterDeleted?.value,
-            });
-
             const url = new URL(href, window.location.origin);
             url.searchParams.set('local', filterLocal?.value || '');
             url.searchParams.set('group', filterGroup?.value || '');
