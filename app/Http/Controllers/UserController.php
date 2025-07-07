@@ -65,12 +65,16 @@ class UserController extends Controller
         $input = $request->all();
         $input['password'] = Hash::make($request->password);
 
+        // If the checkbox is not present, default to true
+        $input['force_password_change'] = $request->boolean('force_password_change');
+
         $user = User::create($input);
         $user->assignRole($request->roles);
 
         return redirect()->route('users.index')
             ->withSuccess(__('User') . ' ' . __('created successfully'));
     }
+
 
     public function show(User $user): RedirectResponse
     {
@@ -86,10 +90,15 @@ class UserController extends Controller
     {
         $input = $request->all();
 
+        // Convert checkbox to boolean once
+        $input['force_password_change'] = $request->boolean('force_password_change');
+
         if (!empty($request->password)) {
             $input['password'] = Hash::make($request->password);
         } else {
             $input = $request->except('password');
+            // even if password is blank, still allow forcing password change
+            $input['force_password_change'] = $request->boolean('force_password_change');
         }
 
         $user->update($input);

@@ -136,6 +136,21 @@
                             </div>
                         </div>
 
+                        {{-- Force password change on first login --}}
+                        <label class="form-control w-full md:col-span-2">
+                            <div class="label">
+                                <span class="label-text">{{ __('Force user to change password on first login') }}</span>
+                            </div>
+                            <input type="hidden" name="force_password_change" value="0" />
+                            <input
+                                type="checkbox"
+                                name="force_password_change"
+                                class="checkbox"
+                                checked
+                                value="1"
+                            />
+                        </label>
+
                         <div class="flex justify-end gap-2 mt-6">
                             <button class="btn btn-accent" id="submitBtn" disabled type="submit">{{ __('Criar') }}</button>
                         </div>
@@ -193,8 +208,10 @@
                                                 data-id="{{ $user->id }}"
                                                 data-name="{{ $user->name }}"
                                                 data-username="{{ $user->username }}"
-                                                data-roles='@json($user->getRoleNames())'>
-                                                {{__("Edit")}}
+                                                data-roles='@json($user->getRoleNames())'
+                                                data-force-password-change="{{ $user->force_password_change ? 'true' : 'false' }}"
+                                            >
+                                                {{ __("Edit") }}
                                             </button>
                                         @else
                                             <button class="btn btn-sm btn-primary" disabled="disabled">{{__("Edit")}}</button>
@@ -293,6 +310,21 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- Force password change --}}
+                <label class="form-control w-full md:col-span-2">
+                    <div class="label">
+                        <span class="label-text">{{ __('Force user to change password on next login') }}</span>
+                    </div>
+                    <input type="hidden" name="force_password_change" value="0" />
+                    <input
+                        type="checkbox"
+                        name="force_password_change"
+                        id="edit-force-password-change"
+                        class="checkbox"
+                        value="1"
+                    />
+                </label>
 
                 <div class="flex justify-end gap-2 mt-6">
                     <button type="submit" id="edit-submit-btn" class="btn btn-accent" disabled>{{__("Update")}}</button>
