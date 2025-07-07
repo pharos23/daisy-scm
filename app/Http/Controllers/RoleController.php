@@ -25,9 +25,14 @@ class RoleController extends Controller
      */
     public function index(): View
     {
+        $translations = [
+            'validation.invalid_role_name' => __('validation.invalid_role_name')
+        ];
+
         return view('roles.index', [
             'roles' => Role::with('permissions')->orderBy('id', 'DESC')->paginate(8),
-            'permissions' => Permission::get()
+            'permissions' => Permission::get(),
+            'translations' => $translations
         ]);
     }
 

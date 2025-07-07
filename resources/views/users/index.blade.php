@@ -138,7 +138,7 @@
 
                         {{-- Force password change on first login --}}
                         <label class="form-control w-full md:col-span-2">
-                            <div class="label mt-4">
+                            <div class="label">
                                 <span class="label-text">{{ __('Force user to change password on first login') }}</span>
                             </div>
                             <input type="hidden" name="force_password_change" value="0" />
@@ -313,7 +313,7 @@
 
                 {{-- Force password change --}}
                 <label class="form-control w-full md:col-span-2">
-                    <div class="label mt-4">
+                    <div class="label">
                         <span class="label-text">{{ __('Force user to change password on next login') }}</span>
                     </div>
                     <input type="hidden" name="force_password_change" value="0" />

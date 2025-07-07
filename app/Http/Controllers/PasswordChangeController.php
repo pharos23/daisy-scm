@@ -16,12 +16,17 @@ class PasswordChangeController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'password' => ['required', 'min:8', 'confirmed'],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed', 'regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).+$/'],
+        ], [
+            'password.required' => __('password_required'),
+            'password.min' => __('password_min'),
+            'password.confirmed' => __('password_confirmed'),
+            'password.regex' => __('password_strength'),
         ]);
 
         $user = $request->user();
 
-        // Check if new password is the same as the current one
+        // Check if the new password is the same as the current one
         if (Hash::check($request->password, $user->password)) {
             // Throw validation error
             throw ValidationException::withMessages([

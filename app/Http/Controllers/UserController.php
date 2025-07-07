@@ -44,9 +44,26 @@ class UserController extends Controller
 
         $users = $query->latest('id')->paginate(8)->withQueryString();
 
+        $translations = [
+            "validation.passwords_do_not_match" => __("validation.passwords_do_not_match"),
+            "validation.password_strength" => __("validation.password_strength"),
+            "validation.username_required" => __("validation.username_required"),
+            "validation.password_required" => __("validation.password_required"),
+            "validation.name_required" => __("validation.name_required"),
+            "validation.select_at_least_one_role" => __("validation.select_at_least_one_role"),
+            "users.delete_confirm" => __("users.delete_confirm"),
+            "validation.invalid_username" => __("validation.invalid_username"),
+            "validation.invalid_name" => __("validation.invalid_name"),
+            "validation.invalid_password" => __("validation.invalid_password"),
+            "validation.leave_blank" => __("validation.leave_blank"),
+            "validation.force_password_change" => __("validation.force_password_change"),
+            "validation.force_password_change_next" => __("validation.force_password_change_next")
+        ];
+
         return view('users.index', [
             'users' => $users,
-            'roles' => Role::pluck('name')->all()
+            'roles' => Role::pluck('name')->all(),
+            'translations' => $translations,
         ]);
     }
 

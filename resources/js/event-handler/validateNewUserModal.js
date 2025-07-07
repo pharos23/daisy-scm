@@ -12,15 +12,19 @@ export function setupValidateNewUserModal() {
     const confirmPasswordError = document.getElementById('confirm-password-error');
     const rolesError = document.getElementById('roles-error');
 
+    const t = window.translations;
+
     function validateName() {
-        const isValid = nameInput.value.trim().length >= 3 && /^[A-Za-z][A-Za-z0-9\-]*$/.test(nameInput.value);
+        const isValid = /^[A-Za-zÀ-ÿ' -]{3,50}$/.test(nameInput.value.trim());
+        nameError.textContent = isValid ? "" : t['validation.invalid_name'];
         nameError.classList.toggle('hidden', isValid);
         nameInput.classList.toggle('input-error', !isValid);
         return isValid;
     }
 
     function validateUsername() {
-        const isValid = 3 && /^[A-Za-z][A-Za-z0-9\-]*$/.test(usernameInput.value);
+        const isValid = usernameInput.value.trim().length >= 3 && /^[A-Za-z][A-Za-z0-9\-]*$/.test(usernameInput.value);
+        usernameError.textContent = isValid ? "" : t['validation.invalid_username'];
         usernameError.classList.toggle('hidden', isValid);
         usernameInput.classList.toggle('input-error', !isValid);
         return isValid;
@@ -29,6 +33,7 @@ export function setupValidateNewUserModal() {
     function validatePassword() {
         const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
         const isValid = pattern.test(passwordInput.value);
+        passwordError.textContent = isValid ? "" : t['validation.password_strength'];
         passwordError.classList.toggle('hidden', isValid);
         passwordInput.classList.toggle('input-error', !isValid);
         return isValid;
@@ -36,6 +41,7 @@ export function setupValidateNewUserModal() {
 
     function validatePasswordConfirmation() {
         const isValid = passwordConfirmInput.value === passwordInput.value && passwordConfirmInput.value.length > 0;
+        confirmPasswordError.textContent = isValid ? "" : t['validation.passwords_do_not_match'];
         confirmPasswordError.classList.toggle('hidden', isValid);
         passwordConfirmInput.classList.toggle('input-error', !isValid);
         return isValid;
@@ -44,6 +50,7 @@ export function setupValidateNewUserModal() {
     function validateRoles() {
         const selected = Array.from(rolesSelect.options).filter(opt => opt.selected);
         const isValid = selected.length > 0;
+        rolesError.textContent = isValid ? "" : t['validation.select_at_least_one_role'];
         rolesError.classList.toggle('hidden', isValid);
         rolesSelect.classList.toggle('select-error', !isValid);
         return isValid;

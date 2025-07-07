@@ -25,13 +25,16 @@ class SettingController extends Controller
             'name' => [
                 'required',
                 'string',
-                'max:255',
+                'max:30',
                 Rule::unique('users')->ignore($user->id),
             ],
-            'current_password' => ['nullable', 'required_with:new_password', 'string', 'min:8'],
+            'current_password' => ['nullable', 'required_with:new_password', 'string'],
             'new_password' => ['nullable', 'string', 'min:8', 'confirmed', 'regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).+$/'],
         ], [
-            'new_password.regex' => __('Password req'),
+            'new_password.required' => __('validation.password_required'),
+            'new_password.min' => __('validation.password_min'),
+            'new_password.confirmed' => __('validation.password_confirmed'),
+            'new_password.regex' => __('validation.password_strength'),
         ]);
 
         // Update name if changed

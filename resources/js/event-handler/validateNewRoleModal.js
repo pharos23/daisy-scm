@@ -5,9 +5,11 @@ export function setupValidateNewRoleModal() {
 
     const nameError = document.getElementById('name-error-label');
     const permissionsError = document.getElementById('permissions-error-label');
+    const nameErrorText = document.getElementById('name-error-text');
 
     function validateName() {
-        const isValid = nameInput.value.trim().length > 0;
+        const isValid = /^[A-Za-zÀ-ÿ0-9 _-]{3,30}$/.test(nameInput.value.trim());
+        nameErrorText.textContent = isValid ? "" : window.translations['validation.invalid_role_name'];
         nameError.classList.toggle('hidden', isValid);
         nameInput.classList.toggle('input-error', !isValid);
         return isValid;
@@ -28,6 +30,5 @@ export function setupValidateNewRoleModal() {
 
     nameInput.addEventListener('input', validateAll);
     permissionsSelect.addEventListener('change', validateAll);
-
     validateAll();
 }

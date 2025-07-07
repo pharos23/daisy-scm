@@ -10,7 +10,8 @@ export function setupEditUserModal() {
     const editSubmitBtn = document.getElementById('edit-submit-btn');
     const editForcePasswordChange = document.getElementById('edit-force-password-change');
 
-    // Event delegation for dynamically loaded "Edit" buttons
+    const t = window.translations;
+
     tableBody.addEventListener('click', (event) => {
         if (event.target.classList.contains('open-edit-user')) {
             const btn = event.target;
@@ -18,7 +19,7 @@ export function setupEditUserModal() {
             const name = btn.dataset.name;
             const username = btn.dataset.username;
             const roles = JSON.parse(btn.dataset.roles);
-            const forcePasswordChange = btn.dataset.forcePasswordChange === 'true'
+            const forcePasswordChange = btn.dataset.forcePasswordChange === 'true';
 
             openEditUserModal(id, name, username, roles, forcePasswordChange);
         }
@@ -42,13 +43,19 @@ export function setupEditUserModal() {
     }
 
     function validateEditForm() {
-        const nameValid = editName.value.trim().length >= 3;
+        const nameValid = /^[A-Za-zÀ-ÿ' -]{3,50}$/.test(editName.value.trim());
         const usernameValid = /^[A-Za-z][A-Za-z0-9\-]{2,29}$/.test(editUsername.value);
         const rolesValid = Array.from(editRoles.selectedOptions).length > 0;
 
         const password = editPassword.value;
         const passwordValid = password === '' || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password);
         const confirmValid = password === editPasswordConfirm.value;
+
+        document.getElementById('edit-name-error').textContent = nameValid ? "" : t['validation.invalid_name'];
+        document.getElementById('edit-username-error').textContent = usernameValid ? "" : t['validation.invalid_username'];
+        document.getElementById('edit-password-error').textContent = passwordValid ? "" : t['validation.password_strength'];
+        document.getElementById('edit-confirm-password-error').textContent = confirmValid ? "" : t['validation.passwords_do_not_match'];
+        document.getElementById('edit-roles-error').textContent = rolesValid ? "" : t['validation.select_at_least_one_role'];
 
         document.getElementById('edit-name-error').classList.toggle('hidden', nameValid);
         document.getElementById('edit-username-error').classList.toggle('hidden', usernameValid);
