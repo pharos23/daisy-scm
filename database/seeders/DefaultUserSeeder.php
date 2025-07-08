@@ -33,7 +33,7 @@ class DefaultUserSeeder extends Seeder
         // Creating Application User
         $user = User::create([
             'name' => 'User',
-            'username' => 'user1',
+            'username' => 'user',
             'password' => Hash::make('User123')
         ]);
         $user->assignRole('User');
