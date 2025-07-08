@@ -32,7 +32,11 @@ class PermissionController extends Controller
 
         $permissions = $query->orderBy('name')->paginate($perPage)->withQueryString();
 
-        return view('permissions.index', compact('permissions'));
+        $translations = [
+            "validation.invalid_permission_name" => __("validation.invalid_permission_name"),
+        ];
+
+        return view('permissions.index', compact('permissions', 'translations'));
     }
 
     /**

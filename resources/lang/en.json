@@ -59,6 +59,7 @@
     "Most assigned": "Most assigned",
     "Name": "Name",
     "New": "New",
+    "New Contact": "New Contact",
     "New Contacts": "New Contacts",
     "New Password": "New Password",
     "New Users": "New Users",
@@ -111,5 +112,7 @@
     "validation.leave_blank": "Leave blank to keep current password.",
     "validation.force_password_change": "Force user to change password on first login.",
     "validation.force_password_change_next": "Force user to change password on next login.",
-    "validation.invalid_role_name": "The role name must be 3–30 characters and can include letters, numbers, spaces, hyphens, or underscores."
+    "validation.invalid_role_name": "The role name must be 3–30 characters and can include letters, numbers, spaces, hyphens, or underscores.",
+    "validation.invalid_permission_name" : "The permission name must be 3–30 characters and can include letters, numbers, dashes, or underscores.",
+    "validation.invalid_cellphone": "Please enter a valid 9-digit phone number."
 }

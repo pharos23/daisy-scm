@@ -18,7 +18,9 @@
                     <input type="text" class="input input-bordered w-full" placeholder="ex: Manager"
                            name="name" id="name" required />
                     <div class="label hidden text-error" id="name-error-label">
-                        <span class="label-text-alt" id="name-error-text">{{ __('This field is required') }}</span>
+                        <span class="label-text-alt text-sm break-words whitespace-normal" id="name-error-text">
+                            {{ __('This field is required') }}
+                        </span>
                     </div>
                 </label>
 

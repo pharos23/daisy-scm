@@ -7,7 +7,6 @@ export function setupEditRoleModal() {
 
     const nameError = document.getElementById('edit-name-error-label');
     const nameErrorText = document.getElementById('edit-name-error-text');
-    const permissionsError = document.getElementById('edit-permissions-error-label');
 
     document.querySelectorAll('.open-edit-role').forEach(button => {
         button.addEventListener('click', () => {
@@ -32,17 +31,13 @@ export function setupEditRoleModal() {
 
     function validateEditForm() {
         const isValidName = /^[A-Za-zÀ-ÿ0-9 _-]{3,30}$/.test(nameInput.value.trim());
-        const selectedPermissions = Array.from(permissionsSelect.selectedOptions);
-        const isPermissionsValid = selectedPermissions.length > 0;
 
-        nameErrorText.textContent = isValidName ? "" : window.translations['validation.invalid_role_name'];
+        nameErrorText.textContent = isValidName ? "" : window.translations?.validation?.invalid_role_name || "Invalid role name";
         nameError.classList.toggle('hidden', isValidName);
         nameInput.classList.toggle('input-error', !isValidName);
 
-        permissionsError.classList.toggle('hidden', isPermissionsValid);
-        permissionsSelect.classList.toggle('select-error', !isPermissionsValid);
-
-        submitBtn.disabled = !(isValidName && isPermissionsValid);
+        // Permissions are now optional — no validation needed
+        submitBtn.disabled = !isValidName;
     }
 
     nameInput.addEventListener('input', validateEditForm);

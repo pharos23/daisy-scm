@@ -56,7 +56,12 @@ class ContactController extends Controller
         // Check if the user is an admin
         $isAdmin = Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin');
 
-        return view('contacts.index', compact('contacts', 'isAdmin')); // Pass $isAdmin to the view
+        $translations = [
+            "validation.name_required" => __('validation.name_required'),
+            "validation.invalid_cellphone" => __('validation.invalid_cellphone')
+        ];
+
+        return view('contacts.index', compact('contacts', 'isAdmin', 'translations'));
     }
 
 

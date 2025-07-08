@@ -18,11 +18,13 @@
                     </div>
                     <input type="text" class="input input-bordered w-full" name="name" id="edit-role-name" required />
                     <div class="label hidden text-error" id="edit-name-error-label">
-                        <span class="label-text-alt" id="edit-name-error-text">{{ __('This field is required') }}</span>
+                        <span class="label-text-alt text-sm break-words whitespace-normal" id="edit-name-error-text">
+                            {{ __('This field is required') }}
+                        </span>
                     </div>
                 </label>
 
-                {{-- Permissions --}}
+                {{-- Permissions (now optional) --}}
                 <label class="form-control w-full">
                     <div class="label">
                         <span class="label-text">{{ __('Permissions') }}</span>
@@ -33,9 +35,6 @@
                             <option value="{{ $permission->id }}">{{ $permission->name }}</option>
                         @endforeach
                     </select>
-                    <div class="label hidden text-error mt-2" id="edit-permissions-error-label">
-                        <span class="label-text-alt">{{ __('Select at least one permission') }}</span>
-                    </div>
                 </label>
             </div>
 

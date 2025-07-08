@@ -15,35 +15,6 @@
                 @can('create-permission')
                     <button class="btn btn-primary place-items-center m-5" onclick="modal_permission.showModal()">{{__("New")}}</button>
                 @endcan
-
-                {{-- Modal for creating a new permission --}}
-                <dialog id="modal_permission" class="modal">
-                    <div class="modal-box w-full max-w-xl">
-                        <form method="dialog">
-                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                        </form>
-
-                        <h3 class="text-2xl font-semibold mb-4">{{__("Create")}} {{__("Newa")}} {{__("Permission")}}</h3>
-
-                        <form action="{{ route('permissions.store') }}" method="POST">
-                            @csrf
-
-                            <label class="form-control w-full">
-                                <div class="label">
-                                    <span class="label-text">{{__("Name")}}</span>
-                                </div>
-                                <input type="text" class="input input-bordered w-full" name="name" id="permission-name" placeholder="ex: edit-user" required />
-                                <div class="label hidden text-error" id="permission-error-label">
-                                    <span class="label-text-alt">{{__("This field is required")}}</span>
-                                </div>
-                            </label>
-
-                            <div class="flex justify-end gap-2 mt-6">
-                                <button class="btn btn-accent" id="permission-submit" type="submit" disabled>{{__("Create")}}</button>
-                            </div>
-                        </form>
-                    </div>
-                </dialog>
             </div>
 
             {{-- Table --}}
@@ -62,7 +33,7 @@
                         <td class="permission-name">{{ $permission->name }}</td>
                         <td class="text-right">
                             @can('delete-permission')
-                                <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST" onsubmit="return confirm('{{ __('Delete this permission?') }}');"
+                                <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST" onsubmit="return confirm('{{ __('permissions.delete_confirm') }}');"
                                       style="display: inline;">
                                     @csrf
                                     @method('DELETE')
@@ -85,4 +56,10 @@
             </div>
         </div>
     </div>
+
+    @include('permissions.partials.permission-create')
+
+    <script>
+        window.translations = @json($translations);
+    </script>
 @endsection

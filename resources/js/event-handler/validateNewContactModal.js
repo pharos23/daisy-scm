@@ -16,19 +16,42 @@ export function setupValidateNewContactModal() {
         telemovel: document.getElementById('telemovel-error')
     };
 
-    function validateField(field, errorElement, validatorFn) {
+    function setErrorText(errorElement, key) {
+        const span = errorElement.querySelector('span');
+        if (span && window.translations?.[key]) {
+            span.textContent = window.translations[key];
+        }
+    }
+
+    function validateField(field, errorElement, validatorFn, translationKey) {
         const isValid = validatorFn(field);
         field.classList.toggle('input-error', !isValid);
         errorElement.classList.toggle('hidden', isValid);
+        if (!isValid && translationKey) setErrorText(errorElement, translationKey);
         return isValid;
     }
 
     function validateForm() {
-        const isLocalValid = validateField(fields.local, errors.local, f => f.value !== 'Escolha o Local');
-        const isGrupoValid = validateField(fields.grupo, errors.grupo, f => f.value !== 'Escolha o grupo');
+        // Validate text inputs normally
         const isNomeValid = validateField(fields.nome, errors.nome, f => f.value.trim().length > 0);
         const isTelemovelValid = validateField(fields.telemovel, errors.telemovel, f => /^\d{9}$/.test(f.value));
-        submitBtn.disabled = !(isLocalValid && isGrupoValid && isNomeValid && isTelemovelValid);
+
+        // Only validate selects if text inputs are valid (soft reminder logic)
+        const shouldValidateSelects = isNomeValid && isTelemovelValid;
+
+        // Check if selects have a valid selection (not placeholder)
+        const isLocalValid = fields.local.value !== '' && fields.local.selectedIndex !== 0;
+        const isGrupoValid = fields.grupo.value !== '' && fields.grupo.selectedIndex !== 0;
+
+        // Show errors on selects only if other fields are valid
+        errors.local.classList.toggle('hidden', isLocalValid || !shouldValidateSelects);
+        fields.local.classList.toggle('input-error', !isLocalValid && shouldValidateSelects);
+
+        errors.grupo.classList.toggle('hidden', isGrupoValid || !shouldValidateSelects);
+        fields.grupo.classList.toggle('input-error', !isGrupoValid && shouldValidateSelects);
+
+        // Enable submit only if all fields are valid
+        submitBtn.disabled = !(isNomeValid && isTelemovelValid && isLocalValid && isGrupoValid);
     }
 
     Object.values(fields).forEach(field => {

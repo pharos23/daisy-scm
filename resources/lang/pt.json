@@ -59,6 +59,7 @@
     "Most assigned": "Mais atribuído",
     "Name": "Nome",
     "New": "Novo",
+    "New Contact": "Novo Contacto",
     "New Contacts": "Novos Contactos",
     "New Password": "Nova Password",
     "New Users": "Novos Utilizadores",
@@ -110,5 +111,7 @@
     "validation.leave_blank": "Deixe em branco para manter a atual.",
     "validation.force_password_change": "Forçar alteração de palavra-passe no primeiro login.",
     "validation.force_password_change_next": "Forçar alteração de palavra-passe no próximo login.",
-    "validation.invalid_role_name": "O nome do papel deve ter entre 3 e 30 caracteres e pode incluir letras, números, espaços, hífens ou underscores."
+    "validation.invalid_role_name": "O nome do papel deve ter entre 3 e 30 caracteres e pode incluir letras, números, espaços, hífens ou underscores.",
+    "validation.invalid_permission_name" : "O nome da permissão deve ter entre 3 e 30 caracteres e pode incluir letras, números, traços ou underscores.",
+    "validation.invalid_cellphone": "Please enter a valid 9-digit phone number."
 }
