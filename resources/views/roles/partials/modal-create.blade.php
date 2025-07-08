@@ -4,7 +4,7 @@
             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         </form>
 
-        <h3 class="text-2xl font-semibold mb-4">{{ __('Create Role') }}</h3>
+        <h3 class="text-2xl font-semibold mb-4">{{ __('Create') }} {{ __('New') }} {{ __('Role') }}</h3>
 
         <form action="{{ route('roles.store') }}" method="POST" id="role-form">
             @csrf

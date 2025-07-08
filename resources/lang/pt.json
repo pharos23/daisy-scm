@@ -1,7 +1,9 @@
 {
     "Account Settings": "Definições da Conta",
+    "Active": "Ativo",
     "ActivationReactivation": "Ativação/Reativação",
     "Active groups": "Grupos ativos",
+    "All": "Todos",
     "AllGroups": "Todos os Grupos",
     "AllLocals": "Todos os Locais",
     "All Roles": "Todos os Cargos",
@@ -28,6 +30,7 @@
     "Dashboard": "Painel de Controlo",
     "Deactivation": "Desativação",
     "Delete": "Apagar",
+    "Deleted": "Desativado",
     "deleted successfully": "apagado com sucesso",
     "deleteda successfully": "apagada com sucesso",
     "Delete this permission?": "Apagar esta permissão?",
@@ -37,6 +40,7 @@
     "Equipment": "Equipamento",
     "Export": "Exportar",
     "Extension": "Extensão",
+    "Force user to change password on first login": "Forçar utilizador a mudar a password no primeiro login",
     "Force user to change password on next login": "Forçar utilizador a mudar a password no próximo login",
     "Functions": "Funcionalidades",
     "Group": "Grupo",
@@ -104,14 +108,14 @@
     "validation.username_required": "O nome de utilizador é obrigatório.",
     "validation.password_required": "A palavra-passe é obrigatória.",
     "validation.name_required": "O nome é obrigatório.",
-    "validation.select_at_least_one_role": "Selecione pelo menos um papel.",
+    "validation.select_at_least_one_role": "Selecione pelo menos um cargo.",
     "validation.invalid_username": "Formato de nome de utilizador inválido.",
     "validation.invalid_name": "O nome deve ter entre 3 e 50 letras e pode conter espaços, hífens e apóstrofos",
     "validation.invalid_password": "Formato de palavra-passe inválido.",
     "validation.leave_blank": "Deixe em branco para manter a atual.",
     "validation.force_password_change": "Forçar alteração de palavra-passe no primeiro login.",
     "validation.force_password_change_next": "Forçar alteração de palavra-passe no próximo login.",
-    "validation.invalid_role_name": "O nome do papel deve ter entre 3 e 30 caracteres e pode incluir letras, números, espaços, hífens ou underscores.",
+    "validation.invalid_role_name": "O nome do cargo deve ter entre 3 e 30 caracteres e pode incluir letras, números, espaços, hífens ou underscores.",
     "validation.invalid_permission_name" : "O nome da permissão deve ter entre 3 e 30 caracteres e pode incluir letras, números, traços ou underscores.",
-    "validation.invalid_cellphone": "Please enter a valid 9-digit phone number."
+    "validation.invalid_cellphone": "Insira um nº de télemovel de 9 dígitos."
 }

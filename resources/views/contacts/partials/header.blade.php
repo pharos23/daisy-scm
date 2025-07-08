@@ -1,7 +1,7 @@
 <header class="flex flex-nowrap justify-between gap-4 m-5">
     {{-- Search and filter inputs --}}
     <div class="flex gap-4">
-        <input type="text" id="searchInput" placeholder="{{ __('Search') }} {{ __('Contacts') }}..." class="input input-bordered" value="{{ request('search') }}" />
+        <input type="text" id="searchInput" placeholder="{{ __('Search') }}..." class="input input-bordered" value="{{ request('search') }}" />
 
         <select id="filterLocal" class="select select-bordered">
             <option value="">{{ __('AllLocals') }}</option>

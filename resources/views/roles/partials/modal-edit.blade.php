@@ -4,7 +4,7 @@
             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         </form>
 
-        <h3 class="text-2xl font-semibold mb-4">{{ __('Edit Role') }}</h3>
+        <h3 class="text-2xl font-semibold mb-4">{{ __('Edit') }} {{ __('Role') }}</h3>
 
         <form method="POST" id="edit-role-form">
             @csrf

@@ -9,7 +9,7 @@
             {{-- Table Heading --}}
             <div class="flex w-full justify-between">
                 {{-- Search Bar --}}
-                <input type="text" id="permissionSearch" placeholder="{{__("Search")}} {{__("Permissions")}}..." class="input input-bordered w-full max-w-xs m-5" />
+                <input type="text" id="permissionSearch" placeholder="{{__("Search")}}..." class="input input-bordered w-full max-w-xs m-5" />
 
                 {{-- Button for creating a new permission --}}
                 @can('create-permission')

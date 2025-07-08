@@ -13,7 +13,7 @@
             <div class="flex w-full justify-between">
                 {{-- Search + Role Filter --}}
                 <div class="flex gap-4 m-5">
-                    <input type="text" id="userSearch" placeholder="{{ __('Search') }} {{ __('Users') }}..." class="input input-bordered w-full max-w-xs" />
+                    <input type="text" id="userSearch" placeholder="{{ __('Search') }}..." class="input input-bordered w-full max-w-xs" />
 
                     <select id="roleFilter" class="select select-bordered max-w-xs">
                         <option value="">{{ __('All Roles') }}</option>
