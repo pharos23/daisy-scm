@@ -104,7 +104,7 @@
     "validation.username_required": "O nome de utilizador é obrigatório.",
     "validation.password_required": "A palavra-passe é obrigatória.",
     "validation.name_required": "O nome é obrigatório.",
-    "validation.select_at_least_one_role": "Selecione pelo menos um papel.",
+    "validation.select_at_least_one_role": "Selecione pelo menos um cargo.",
     "validation.invalid_username": "Formato de nome de utilizador inválido.",
     "validation.invalid_name": "O nome deve ter entre 3 e 50 letras e pode conter espaços, hífens e apóstrofos",
     "validation.invalid_password": "Formato de palavra-passe inválido.",
