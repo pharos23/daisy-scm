@@ -1,5 +1,7 @@
 <?php
 
+// Ficheiro para detetar a linguagem a ser usada no browser
+
 namespace App\Http\Middleware;
 
 use Closure;

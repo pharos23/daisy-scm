@@ -1,5 +1,7 @@
 <?php
 
+// Ficheiro para forçar a mudança da password de um utilizador
+
 namespace App\Http\Middleware;
 
 use Closure;

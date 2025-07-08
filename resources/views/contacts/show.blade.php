@@ -63,10 +63,10 @@
 
                 let formId = null;
                 switch (activeTab.getAttribute('aria-label')) {
-                    case 'Pessoal':
+                    case 'Contacto':
                         formId = 'contact-form';
                         break;
-                    case 'Ticketing':
+                    case 'Equipamento':
                         formId = 'contact-form-ticket';
                         break;
                 }

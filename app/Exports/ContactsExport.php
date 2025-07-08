@@ -1,5 +1,7 @@
 <?php
 
+// Ficheiro para fazer a exportação da base de dados "Contacts"
+
 namespace App\Exports;
 
 use App\Models\Contact;
