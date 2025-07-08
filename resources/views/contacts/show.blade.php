@@ -8,18 +8,19 @@
     @endphp
 
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
-        <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">
+        <div
+            class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200 w-200 min-w-[90%] h-250 max-h-[90%] relative">
 
             {{-- Tabs --}}
             <div class="tabs tabs-border m-5">
-                <input type="radio" name="dataTabs" class="tab" aria-label="Contacto" checked="checked" />
+                <input type="radio" name="dataTabs" class="tab" aria-label="Contacto" checked="checked"/>
                 <div class="tab-content bg-base-200 p-10">
-                    @include('contacts.pessoal')
+                    @include('contacts.partials.pessoal')
                 </div>
 
-                <input type="radio" name="dataTabs" class="tab" aria-label="Equipamento" />
+                <input type="radio" name="dataTabs" class="tab" aria-label="Equipamento"/>
                 <div class="tab-content bg-base-200 p-10">
-                    @include('contacts.ticketing')
+                    @include('contacts.partials.ticketing')
                 </div>
             </div>
 
@@ -44,10 +45,10 @@
                 @else
                     <button class="btn btn-accent" disabled="disabled">Save</button>
                 @endcan
-                    <button class="btn btn-primary"
-                            onclick="window.location='{{ route('contacts.index') }}?{{ http_build_query(request()->all()) }}'">
-                        {{__("Back")}}
-                    </button>
+                <button class="btn btn-primary"
+                        onclick="window.location='{{ route('contacts.index') }}?{{ http_build_query(request()->all()) }}'">
+                    {{__("Back")}}
+                </button>
             </div>
         </div>
     </div>
