@@ -3,11 +3,6 @@
 @section('content')
     @vite('resources/js/pages/home.js')
 
-    @php
-        $isAdmin = Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin');
-        $activeTab = request()->query('tab', $isAdmin ? 'admin' : 'contact');
-    @endphp
-
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
         <div class="rounded-box border border-base-content/5 bg-base-200 w-[90%] h-[90%] p-4 relative">
 
@@ -32,37 +27,26 @@
             {{-- Admin Dashboard --}}
             @if ($isAdmin && $activeTab === 'admin')
                 <div class="space-y-6">
-                    {{-- your admin cards/stats --}}
+                    {{-- Admin cards/stats --}}
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("Total Users")}}</div>
-                            <div class="stat-value text-primary">{{ \App\Models\User::count() }}</div>
+                            <div class="stat-value text-primary">{{ $adminStats['totalUsers'] }}</div>
                             <div class="stat-desc">{{__("All time")}}</div>
                         </div>
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("New Users")}}</div>
-                            <div class="stat-value text-primary">
-                                {{ \App\Models\User::whereBetween('created_at', [now()->startOfMonth(), now()])->count() }}
-                            </div>
+                            <div class="stat-value text-primary">{{ $adminStats['newUsers'] }}</div>
                             <div class="stat-desc">{{__("This month")}}</div>
                         </div>
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("Roles")}}</div>
-                            <div class="stat-value text-primary">{{ \Spatie\Permission\Models\Role::count() }}</div>
+                            <div class="stat-value text-primary">{{ $adminStats['totalRoles'] }}</div>
                             <div class="stat-desc">{{__("Available")}}</div>
                         </div>
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("Top Role")}}</div>
-                            <div class="stat-value text-primary">
-                                {{
-                                    DB::table('model_has_roles')
-                                        ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-                                        ->select('roles.name', DB::raw('count(*) as total'))
-                                        ->groupBy('roles.name')
-                                        ->orderByDesc('total')
-                                        ->first()?->name ?? 'N/A'
-                                }}
-                            </div>
+                            <div class="stat-value text-primary">{{ $adminStats['topRole'] }}</div>
                             <div class="stat-desc">{{__("Most assigned")}}</div>
                         </div>
                     </div>
@@ -80,7 +64,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach(\App\Models\User::latest()->take(5)->get() as $user)
+                                @foreach($adminStats['recentUsers'] as $user)
                                     <tr>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->username }}</td>
@@ -122,21 +106,17 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("Total")}} {{__("Contacts")}}</div>
-                            <div class="stat-value text-primary">{{ DB::table('contacts')->count() }}</div>
+                            <div class="stat-value text-primary">{{ $contactStats['totalContacts'] }}</div>
                             <div class="stat-desc">{{__("All time")}}</div>
                         </div>
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("New Contacts")}}</div>
-                            <div class="stat-value text-primary">
-                                {{ DB::table('contacts')->whereBetween('created_at', [now()->startOfMonth(), now()])->count() }}
-                            </div>
+                            <div class="stat-value text-primary">{{ $contactStats['newContacts'] }}</div>
                             <div class="stat-desc">{{__("This month")}}</div>
                         </div>
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("Groups")}}</div>
-                            <div class="stat-value text-primary ">
-                                {{ DB::table('contacts')->distinct('grupo')->count('grupo') }}
-                            </div>
+                            <div class="stat-value text-primary">{{ $contactStats['totalGroups'] }}</div>
                             <div class="stat-desc">{{__("Active groups")}}</div>
                         </div>
                     </div>
@@ -155,7 +135,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach(DB::table('contacts')->latest()->take(5)->get() as $contact)
+                                @foreach($contactStats['recentContacts'] as $contact)
                                     <tr>
                                         <td>{{ $contact->local }}</td>
                                         <td>{{ $contact->grupo }}</td>
