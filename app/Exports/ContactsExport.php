@@ -1,6 +1,6 @@
 <?php
 
-// Ficheiro para fazer a exportação da base de dados "Contacts"
+// File to export data from the "contacts" database table
 
 namespace App\Exports;
 
@@ -13,6 +13,10 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class ContactsExport implements FromCollection, WithHeadings, WithMapping, WithColumnFormatting
 {
+    /**
+     * Returns the collection of data to export.
+     * This selects only the relevant fields from the `contacts` table.
+     */
     public function collection()
     {
         return Contact::select([
@@ -34,6 +38,10 @@ class ContactsExport implements FromCollection, WithHeadings, WithMapping, WithC
         ])->get();
     }
 
+    /**
+     * Defines the column headers to appear in the first row of the Excel file.
+     * These are static labels that match the selected fields above.
+     */
     public function headings(): array
     {
         return [
@@ -55,6 +63,12 @@ class ContactsExport implements FromCollection, WithHeadings, WithMapping, WithC
         ];
     }
 
+    /**
+     * Maps each database row into an array of values to be exported.
+     * You can format or transform values here as needed.
+     * The IMEI is prefixed with an apostrophe to ensure Excel treats it as plain text
+     * (preventing it from removing leading zeros or applying scientific notation).
+     */
     public function map($row): array
     {
         return [
@@ -76,6 +90,11 @@ class ContactsExport implements FromCollection, WithHeadings, WithMapping, WithC
         ];
     }
 
+    /**
+     * Specifies formatting for certain Excel columns.
+     * Column 'N' (14th column, which is IMEI) is set to plain text format
+     * to avoid any issues with large numbers being misinterpreted by Excel.
+     */
     public function columnFormats(): array
     {
         return [

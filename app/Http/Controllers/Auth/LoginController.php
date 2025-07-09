@@ -19,19 +19,28 @@ class LoginController extends Controller
     |
     */
 
+    /** This trait includes all default login functionality such as
+     *  - showing the login form
+     *  - validating credentials
+     *  - logging in the user
+     *  - redirecting after login
+     */
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
+     * The path users will be redirected to after logging in successfully.
      *
      * @var string
      */
     protected $redirectTo = '/home';
 
     /**
-     * Create a new controller instance.
+     * Constructor method.
      *
-     * @return void
+     * - Applies the `guest` middleware to all routes except `logout`,
+     *   which means logged-in users cannot access the login page.
+     * - Applies `auth` middleware to `logout` to ensure only authenticated
+     *   users can log out.
      */
     public function __construct()
     {
@@ -39,11 +48,26 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
+    /**
+     * Override the default identifier used for login.
+     * By default, Laravel uses 'email' — this changes it to 'username'.
+     *
+     * @return string
+     */
     protected function username()
     {
         return 'username';
     }
 
+    /**
+     * Override the default logout method.
+     * - Logs out the user
+     * - Flushes and regenerates the session
+     * - Redirects to the login page
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     protected function logout(Request $request)
     {
         $this->guard()->logout();

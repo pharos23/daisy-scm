@@ -5,27 +5,44 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-// Controller for authenticating the login
+/**
+ * Controller responsible for user authentication (custom login logic).
+ * Displays the login form and handles login attempts manually.
+ */
 class LoginController extends Controller
 {
-    // Function to send to the login page in case the user is not logged in
+    /**
+     * Displays the login view if the user is not authenticated.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         return view('auth.login');
     }
 
-    // Function to authenticate the user login
+    /**
+     * Handles login form submission and user authentication.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function login(Request $request)
     {
+        // Validate login form input
         $credentials = $request->validate([
-            'email' => 'required',
-            'password' => 'required|email',
+            'username' => 'required',
+            'password' => 'required',
         ]);
 
+        // Attempt to authenticate with the provided credentials
         if (Auth::attempt($credentials)) {
-            return redirect('/contacts'); // If the Login was successful redirects to the contacts page
+            // If authentication is successful, redirect to the home page
+            return redirect('/home');
         }
 
-        return back()->withErrors(['email' => __("Invalid credentials")]); // If the Login failed, show the error message
+        // If authentication fails, return with an error message
+        return back()
+            ->withErrors(['username' => __("Invalid credentials")]);
     }
 }

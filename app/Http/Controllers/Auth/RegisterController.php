@@ -21,19 +21,25 @@ class RegisterController extends Controller
     |
     */
 
+    /** This trait provides all default registration functionality:
+     *  - displaying the registration form
+     *  - validating form data
+     *  - creating a new user
+     *  - logging them in
+     *  - redirecting them
+     */
     use RegistersUsers;
 
     /**
-     * Where to redirect users after registration.
+     * The route to redirect users to after successful registration.
      *
      * @var string
      */
     protected $redirectTo = '/home';
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * Constructor method.
+     * Applies the `guest` middleware to prevent logged-in users from accessing the registration page.
      */
     public function __construct()
     {
@@ -41,9 +47,9 @@ class RegisterController extends Controller
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Validates incoming registration data.
      *
-     * @param  array  $data
+     * @param  array  $data  The form data submitted by the user.
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -56,9 +62,9 @@ class RegisterController extends Controller
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Creates a new user in the database after validation passes.
      *
-     * @param  array  $data
+     * @param  array  $data  The validated user input.
      * @return \App\Models\User
      */
     protected function create(array $data)

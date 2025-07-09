@@ -18,19 +18,21 @@ class ConfirmPasswordController extends Controller
     |
     */
 
+    // Includes default password confirmation logic provided by Laravel
     use ConfirmsPasswords;
 
     /**
-     * Where to redirect users when the intended url fails.
+     * Where to redirect the user if there's no intended URL after confirmation.
+     * For example, after confirming the password manually.
      *
      * @var string
      */
     protected $redirectTo = '/home';
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * Constructor method.
+     * Applies the `auth` middleware to ensure only authenticated users
+     * can access this controller’s actions.
      */
     public function __construct()
     {

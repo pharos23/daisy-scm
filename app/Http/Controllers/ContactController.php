@@ -9,16 +9,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
-// Controller for managing contacts. Create, edit, etc.
+/**
+ * Controller for managing contacts.
+ * Handles creation, editing, viewing, deleting, filtering, exporting, and importing.
+ */
 class ContactController extends Controller
 {
-    // Function to paginate
+    /**
+     * Displays a paginated list of contacts with optional search, filters, and soft-delete visibility.
+     */
     public function index(Request $request)
     {
         $query = Contact::query();
 
+        // Determine if user wants to filter by deleted/active/all
         $deletedFilter = $request->query('deleted', 'active');
 
+        // Apply search filter (partial match on name, phone, location, group)
         if ($request->filled('search')) {
             $searchTerm = $request->search;
             $query->where(function ($q) use ($searchTerm) {
@@ -29,14 +36,17 @@ class ContactController extends Controller
             });
         }
 
+        // Apply filter by location
         if ($request->filled('local')) {
             $query->where('local', $request->local);
         }
 
+        // Apply filter by group
         if ($request->filled('group')) {
             $query->where('grupo', $request->group);
         }
 
+        // If the user has Admin/Super Admin role, allow soft-delete filtering
         if (auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Super Admin')) {
             switch ($deletedFilter) {
                 case 'deleted':
@@ -51,11 +61,13 @@ class ContactController extends Controller
             }
         }
 
+        // Paginate results, preserving query string filters
         $contacts = $query->paginate(8)->withQueryString();
 
         // Check if the user is an admin
         $isAdmin = Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Super Admin');
 
+        // Optional: pass translations to frontend for use in JS
         $translations = [
             "validation.name_required" => __('validation.name_required'),
             "validation.invalid_cellphone" => __('validation.invalid_cellphone')
@@ -64,16 +76,17 @@ class ContactController extends Controller
         return view('contacts.index', compact('contacts', 'isAdmin', 'translations'));
     }
 
-
-
-
-    // Function to search the database
+    /**
+     * Placeholder for a database search method (currently unused).
+     */
     public function search(Request $request)
     {
-        //
+        // Not implemented
     }
 
-    // Function to store the data in the database when creating a new entry
+    /**
+     * Stores a new contact in the database.
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -88,14 +101,18 @@ class ContactController extends Controller
         return back()->with('success', __('Contact') . ' ' . __('created successfully'));
     }
 
-    // Function to show the selected contact (dependent on the id)
+    /**
+     * Shows a specific contact’s details.
+     */
     public function show($id)
     {
         $contact = Contact::find($id);
         return view('contacts.show', compact('contact'));
     }
 
-    // Function to update the entries in the "Pessoal" tab
+    /**
+     * Updates contact info in "Pessoal" tab.
+     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -115,7 +132,9 @@ class ContactController extends Controller
         return redirect()->back()->with('success', __('Save successful'));
     }
 
-    // Function to update the entries in the "Ticketing" tab
+    /**
+     * Updates fields in the "Equipment" tab.
+     */
     public function updateTicket(Request $request, $id)
     {
         $request->validate([
@@ -132,11 +151,13 @@ class ContactController extends Controller
         $contact->update($request->all());
 
         return redirect()->back()->with('success', __('Save successful'))
-            ->with('activeTab', 'ticketing');
+            ->with('activeTab', 'ticketing'); // Keep "Equipment" tab active in UI
 
     }
 
-    // Function to delete an entry
+    /**
+     * Soft-deletes a contact.
+     */
     public function destroy(Contact $contact)
     {
         $contact->delete();
@@ -145,11 +166,17 @@ class ContactController extends Controller
             ->with('deleted', __('Contact') . ' ' . __('deleted successfully'));
     }
 
+    /**
+     * Exports all contact data as an Excel file.
+     */
     public function export()
     {
         return Excel::download(new ContactsExport, 'contacts.xlsx');
     }
 
+    /**
+     * Imports contacts from an uploaded Excel file.
+     */
     public function import(Request $request)
     {
         $request->validate([

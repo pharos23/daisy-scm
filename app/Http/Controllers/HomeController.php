@@ -8,18 +8,35 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
+/**
+ * Controller responsible for rendering the home/dashboard view.
+ * Displays different statistics and panels depending on user role and active tab.
+ */
 class HomeController extends Controller
 {
+    /**
+     * Displays the main dashboard with either admin or contact stats,
+     * depending on user role and selected tab.
+     */
     public function index(Request $request)
     {
+        // Check if the current user has Admin or Super Admin role
         $isAdmin = Auth::user()->hasRole(['Admin', 'Super Admin']);
+
+        // Get the currently active tab from query string (?tab=admin/contact)
+        // If the user is an admin, default to 'admin'; otherwise, 'contact'
         $activeTab = $request->query('tab', $isAdmin ? 'admin' : 'contact');
 
+        // Initialize data array with access-level and UI state
         $data = [
             'isAdmin' => $isAdmin,
             'activeTab' => $activeTab,
         ];
 
+        /**
+         * If the user is an admin and the active tab is 'admin',
+         * prepare statistics related to users and roles.
+         */
         if ($isAdmin && $activeTab === 'admin') {
             $data['adminStats'] = [
                 'totalUsers' => User::count(),
@@ -35,6 +52,10 @@ class HomeController extends Controller
             ];
         }
 
+        /**
+         * If the active tab is 'contact', show contact-related statistics.
+         * This is available to all users.
+         */
         if ($activeTab === 'contact') {
             $data['contactStats'] = [
                 'totalContacts' => DB::table('contacts')->count(),
@@ -44,6 +65,7 @@ class HomeController extends Controller
             ];
         }
 
+        // Return the home view with the assembled data
         return view('home', $data);
     }
 }

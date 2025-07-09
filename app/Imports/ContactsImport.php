@@ -10,14 +10,16 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class ContactsImport implements ToModel, WithHeadingRow
 {
     /**
-     * @param array $row
+     * This method is called for each row in the Excel file (after the heading row).
+     * It converts a row of data into a Contact model instance that can be inserted into the database.
      *
+     * @param array $row The current row being processed (as an associative array)
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function model(array $row)
     {
         return new Contact([
-            'local'            => $row['local'],
+            'local'            => $row['local'],            // Must match the column header in Excel
             'grupo'            => $row['grupo'],
             'nome'             => $row['nome'],
             'telemovel'        => $row['telemovel'],
