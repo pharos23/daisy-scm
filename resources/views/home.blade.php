@@ -31,22 +31,22 @@
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("Total Users")}}</div>
-                            <div class="stat-value text-primary">{{ $adminStats['totalUsers'] }}</div>
+                            <div class="stat-value text-info">{{ $adminStats['totalUsers'] }}</div>
                             <div class="stat-desc">{{__("All time")}}</div>
                         </div>
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("New Users")}}</div>
-                            <div class="stat-value text-primary">{{ $adminStats['newUsers'] }}</div>
+                            <div class="stat-value text-info">{{ $adminStats['newUsers'] }}</div>
                             <div class="stat-desc">{{__("This month")}}</div>
                         </div>
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("Roles")}}</div>
-                            <div class="stat-value text-primary">{{ $adminStats['totalRoles'] }}</div>
+                            <div class="stat-value text-info">{{ $adminStats['totalRoles'] }}</div>
                             <div class="stat-desc">{{__("Available")}}</div>
                         </div>
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("Top Role")}}</div>
-                            <div class="stat-value text-primary">{{ $adminStats['topRole'] }}</div>
+                            <div class="stat-value text-info">{{ $adminStats['topRole'] }}</div>
                             <div class="stat-desc">{{__("Most assigned")}}</div>
                         </div>
                     </div>
@@ -106,17 +106,17 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("Total")}} {{__("Contacts")}}</div>
-                            <div class="stat-value text-primary">{{ $contactStats['totalContacts'] }}</div>
+                            <div class="stat-value text-info">{{ $contactStats['totalContacts'] }}</div>
                             <div class="stat-desc">{{__("All time")}}</div>
                         </div>
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("New Contacts")}}</div>
-                            <div class="stat-value text-primary">{{ $contactStats['newContacts'] }}</div>
+                            <div class="stat-value text-info">{{ $contactStats['newContacts'] }}</div>
                             <div class="stat-desc">{{__("This month")}}</div>
                         </div>
                         <div class="stat shadow place-items-center">
                             <div class="stat-title">{{__("Groups")}}</div>
-                            <div class="stat-value text-primary">{{ $contactStats['totalGroups'] }}</div>
+                            <div class="stat-value text-info">{{ $contactStats['totalGroups'] }}</div>
                             <div class="stat-desc">{{__("Active groups")}}</div>
                         </div>
                     </div>
