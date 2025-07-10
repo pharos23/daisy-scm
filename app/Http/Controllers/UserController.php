@@ -26,9 +26,6 @@ class UserController extends Controller
     {
         $query = User::query();
 
-        // Filter soft deletes
-        $deletedFilter = $request->query('deleted', 'active');
-
         // Apply search
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -43,19 +40,6 @@ class UserController extends Controller
             $query->whereHas('roles', function ($q) use ($request) {
                 $q->where('name', $request->role);
             });
-        }
-
-        // Apply soft deleted filter
-        switch ($deletedFilter) {
-            case 'deleted':
-                $query->onlyTrashed();
-                break;
-            case 'all':
-                $query->withTrashed();
-                break;
-            case 'active':
-            default:
-                break;
         }
 
         $users = $query->latest('id')->paginate(8)->withQueryString();
@@ -151,20 +135,6 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('users.index')
-            ->withSuccess(__('User') . ' ' . __('deactivated successfully'));
+            ->withSuccess(__('User') . ' ' . __('deleted successfully'));
     }
-
-    public function restore($id)
-    {
-        $user = User::onlyTrashed()->findOrFail($id);
-
-        if (!auth()->user()->hasRole('Admin') && !auth()->user()->hasRole('Super Admin')) {
-            abort(403);
-        }
-
-        $user->restore();
-
-        return redirect()->route('users.index')->withSuccess(__('User') . ' ' . __('restored successfully'));
-    }
-
 }
