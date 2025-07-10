@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\DeployController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PasswordChangeController;
 use App\Http\Controllers\PermissionController;
@@ -51,10 +50,6 @@ Route::middleware(['role:Admin|Super Admin'])->group(function () {
         PermissionController::class)->only([
         'index', 'store', 'destroy'
     ]);
-
-    // Deploy project
-    Route::post('/deploy', [DeployController::class, 'deploy'])
-        ->name('deploy');
 });
 
 // ----------------------
