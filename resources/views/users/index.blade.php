@@ -61,9 +61,15 @@
                                         </li>
                                     @empty
                                         <li>
-                                            <div class="badge badge-error text-white font-bold animate-pulse">
-                                                {{ __("No role") }}
-                                            </div>
+                                            @if(!$user->trashed())
+                                                <div class="badge badge-error text-white font-bold animate-pulse">
+                                                    {{ __("No role") }}
+                                                </div>
+                                            @else
+                                                <div class="text-gray-400 italic">
+                                                    {{ __("No role") }}
+                                                </div>
+                                            @endif
                                         </li>
                                     @endforelse
                                 </ul>
@@ -82,7 +88,7 @@
                                                 data-roles='@json($user->getRoleNames())'>
                                                 {{ __("Edit") }}
                                             </button>
-                                            <button class="btn btn-sm btn-error" disabled>{{ __("Delete") }}</button>
+                                            <button class="btn btn-sm btn-error" disabled>{{ __("Deactivate") }}</button>
                                             @if($user->trashed())
                                                 <form action="{{ route('users.restore', $user->id) }}" method="POST" class="inline">
                                                     @csrf
@@ -122,13 +128,13 @@
                                                 <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ __('Delete this user?') }}');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button class="btn btn-sm btn-error">{{ __("Delete") }}</button>
+                                                    <button class="btn btn-sm btn-error">{{ __("Deactivate") }}</button>
                                                 </form>
                                             @else
-                                                <button class="btn btn-sm btn-error" disabled>{{ __("Delete") }}</button>
+                                                <button class="btn btn-sm btn-error" disabled>{{ __("Deactivate") }}</button>
                                             @endif
                                         @else
-                                            <button class="btn btn-sm btn-error" disabled>{{ __("Delete") }}</button>
+                                            <button class="btn btn-sm btn-error" disabled>{{ __("Deactivate") }}</button>
                                         @endcan
                                     @endif
                                 </div>
