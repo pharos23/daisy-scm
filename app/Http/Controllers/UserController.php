@@ -166,4 +166,17 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', __('User') . ' ' . __('restored successfully'));
     }
+
+    public function restore($id)
+    {
+        $user = User::onlyTrashed()->findOrFail($id);
+
+        if (!auth()->user()->hasRole('Admin') && !auth()->user()->hasRole('Super Admin')) {
+            abort(403);
+        }
+
+        $user->restore();
+
+        return redirect()->route('users.index')->with('success', __('User restored successfully.'));
+    }
 }
