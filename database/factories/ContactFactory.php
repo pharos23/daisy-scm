@@ -6,16 +6,26 @@ use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-// Factory to fill the Contacts table with fake data
 /**
+ * Factory to generate fake data for the Contact model.
+ *
+ * This is useful for seeding the database during development or testing.
+ *
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Contact>
  */
 class ContactFactory extends Factory
 {
+    // Specify the model this factory is for
     protected $model = Contact::class;
 
+    /**
+     * Define the default state for a Contact instance.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
+        // Predefined options for "local" and "grupo" fields
         $locals = ['Hospital Prelada', 'Spec', 'Conde de Ferreira'];
         $grupos = ['DSI', 'OPS', 'Transporte'];
 
