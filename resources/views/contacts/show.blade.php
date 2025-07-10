@@ -33,26 +33,24 @@
                             {{ __('Restore') }}
                         </button>
                     </form>
-                @endif
-
-                    @can('delete-contact')
-                        <button class="btn btn-error" type="button"
-                                onclick="confirmAndSubmit('{{ route('contacts.destroy', $contact) }}')">
-                            {{__("Deactivate")}}
-                        </button>
-
-                        <form id="delete-form-{{ $contact->id }}"
-                              action="" method="POST" class="hidden">
-                            @csrf
-                            @method('DELETE')
-                        </form>
+                @elseif(!$contact->trashed() && Gate::allows('delete-contact'))
+                    <button class="btn btn-error" type="button"
+                            onclick="confirmAndSubmit('{{ route('contacts.destroy', $contact) }}')">
+                        {{__("Deactivate")}}
+                    </button>
+                    <form id="delete-form-{{ $contact->id }}"
+                          action="" method="POST" class="hidden">
+                        @csrf
+                        @method('DELETE')
+                    </form>
                 @else
                     <button class="btn btn-error" disabled="disabled">{{__("Deactivate")}}</button>
-                @endcan
+                @endif
+
                 @can('edit-contact')
                     <button id="save-button" class="btn btn-primary" type="button">{{__("Save")}}</button>
                 @else
-                    <button class="btn btn-accent" disabled="disabled">Save</button>
+                    <button class="btn btn-accent" disabled="disabled">{{__("Save")}}</button>
                 @endcan
                 <button class="btn btn-primary"
                         onclick="window.location='{{ route('contacts.index') }}?{{ http_build_query(request()->all()) }}'">
