@@ -8,6 +8,9 @@ class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * Always returns true here, meaning all authenticated users (as defined by route middleware)
+     * can proceed. You can override this for more complex permission checks if needed.
      */
     public function authorize(): bool
     {
@@ -15,7 +18,7 @@ class UpdateUserRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Define the validation rules for updating a user.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
