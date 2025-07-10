@@ -1,4 +1,6 @@
 export function setupSearchContact() {
+
+    // Get references to search/filter inputs and table/pagination containers
     const searchInput = document.getElementById('searchInput');
     const filterLocal = document.getElementById('filterLocal');
     const filterGroup = document.getElementById('filterGroup');
@@ -6,6 +8,7 @@ export function setupSearchContact() {
     const table = document.getElementById('contactsTable');
     const paginationContainer = document.querySelector('.pagination')?.parentElement;
 
+    // Build the URL query string with current filter values
     function buildQuery(url = '/contacts') {
         const fullUrl = new URL(url, window.location.origin);
         fullUrl.searchParams.set('search', searchInput?.value || '');
@@ -15,32 +18,42 @@ export function setupSearchContact() {
         return fullUrl.toString();
     }
 
+    // Update the browser's URL bar without reloading the page
     function updateBrowserURL(url) {
         window.history.pushState({}, '', url);
     }
 
+    // Fetch filtered contacts and update the table and pagination dynamically
     function loadContacts(url = '/contacts') {
         const fullUrl = buildQuery(url);
         fetch(fullUrl)
             .then(response => response.text())
             .then(html => {
+                // Parse the fetched HTML string into a document object
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
+
+                // Extract the new tbody content from the fetched page
                 const newTbody = doc.querySelector('#contactsTable tbody');
+                // Extract the new pagination container from the fetched page
                 const newPagination = doc.querySelector('.pagination')?.parentElement;
 
+                // Replace current table body with the new filtered results
                 if (newTbody) {
                     table.querySelector('tbody').innerHTML = newTbody.innerHTML;
                 }
+                // Replace current pagination with new pagination controls
                 if (newPagination && paginationContainer) {
                     paginationContainer.innerHTML = newPagination.innerHTML;
                 }
 
+                // Update the browser URL to reflect current filters and page
                 updateBrowserURL(fullUrl);
             })
             .catch(error => console.error('Error loading contacts:', error));
     }
 
+    // Set the filters inputs based on the current URL query parameters
     function restoreFiltersFromURL() {
         const params = new URLSearchParams(window.location.search);
 
@@ -60,16 +73,17 @@ export function setupSearchContact() {
             filterDeleted.value = params.get('deleted') || 'active';
         }
 
+        // Load contacts immediately after restoring filters
         loadContacts();
     }
 
-    // Attach input/change events to trigger filtering
+    // Attach event listeners to inputs to reload filtered contacts on change/input
     searchInput?.addEventListener('input', () => loadContacts());
     filterLocal?.addEventListener('change', () => loadContacts());
     filterGroup?.addEventListener('change', () => loadContacts());
     filterDeleted?.addEventListener('change', () => loadContacts());
 
-    // Handle pagination clicks and merge current filters
+    // Listen for pagination link clicks and load contacts with current filters + selected page
     document.addEventListener('click', function (e) {
         const link = e.target.closest('.pagination a');
         if (link) {
@@ -86,7 +100,7 @@ export function setupSearchContact() {
         }
     });
 
-    // Restore filters on page load and back/forward navigation
+    // On page load and when user navigates back/forward, restore filters and reload contacts
     document.addEventListener('DOMContentLoaded', () => {
         restoreFiltersFromURL();
     });

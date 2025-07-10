@@ -1,8 +1,6 @@
 @extends('layouts.app')
 <title>{{ __('Dashboard') }}</title>
 @section('content')
-    @vite('resources/js/pages/home.js')
-
     <div class="bg-base size-full flex justify-center items-center max-h-screen">
         <div class="rounded-box border border-base-content/5 bg-base-200 w-[90%] h-[90%] p-4 relative">
 
@@ -82,19 +80,6 @@
                     </div>
 
                     <div class="flex justify-end gap-4 mt-8">
-                        <form
-                            action="{{ route('deploy') }}"
-                            method="POST"
-                            id="deployForm"
-                            data-confirm-message="{{ __('UpdateConfirm') }}"
-                        >
-                            @csrf
-                            <button type="submit" id="deployBtn" class="btn btn-warning">
-                                <span id="deployText">{{ __('UpdateCode') }}</span>
-                                <span id="deploySpinner" class="loading loading-spinner hidden"></span>
-                            </button>
-                        </form>
-
                         <a href="{{ route('users.index') }}" class="btn btn-primary">{{__("Manage")}} {{__("Users")}}</a>
                     </div>
                 </div>

@@ -1,20 +1,20 @@
+// Import Bootstrap's JavaScript bundle (for components like modals, dropdowns, tooltips, etc.)
 import 'bootstrap';
 
 /**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
+ * Load Axios, a promise-based HTTP client for the browser.
+ * It's configured to automatically send the CSRF token from cookies,
+ * which Laravel expects for secure requests.
  */
-
 import axios from 'axios';
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
+ * (Optional) Laravel Echo Setup — for real-time event broadcasting.
+ * Echo works with tools like Pusher to listen for server-side events via websockets.
+ * Uncomment and configure if your app uses real-time features.
  */
 
 // import Echo from 'laravel-echo';

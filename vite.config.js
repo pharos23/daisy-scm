@@ -9,7 +9,6 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/js/pages/login.js',
-                'resources/js/pages/home.js',
                 'resources/js/pages/contacts.js',
                 'resources/js/pages/users.js',
                 'resources/js/pages/roles.js',
