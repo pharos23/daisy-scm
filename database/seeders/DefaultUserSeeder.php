@@ -22,6 +22,7 @@ class DefaultUserSeeder extends Seeder
         ]);
         $superAdmin->assignRole('Super Admin');
 
+
         // Creating Admin User
         $admin = User::create([
             'name' => 'Admin',
@@ -30,7 +31,17 @@ class DefaultUserSeeder extends Seeder
         ]);
         $admin->assignRole('Admin');
 
-        // Creating Application User
+
+        // Creating View User
+        $user = User::create([
+            'name' => 'User Control',
+            'username' => 'user-control',
+            'password' => Hash::make('Usercontrol123')
+        ]);
+        $user->assignRole('User Control');
+
+
+        // Creating View User
         $user = User::create([
             'name' => 'User',
             'username' => 'user',
