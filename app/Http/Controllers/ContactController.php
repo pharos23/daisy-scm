@@ -174,7 +174,11 @@ class ContactController extends Controller
     {
         $contact->delete();
 
-        return redirect()->route('contacts.index')
+        // Get current query params (local, group, search, page, etc.)
+        $queryParams = request()->query();
+
+        // Redirect back to index with filters preserved
+        return redirect()->route('contacts.show', ['id' => $contact->id] + $queryParams)
             ->with('deleted', __('Contact') . ' ' . __('deactivated successfully'));
     }
 
@@ -188,7 +192,11 @@ class ContactController extends Controller
 
         $contact->restore();
 
-        return redirect()->route('contacts.show', $contact->id)
+        // Get current query params
+        $queryParams = request()->query();
+
+        // Redirect back to same contact with filters preserved
+        return redirect()->route('contacts.show', ['id' => $contact->id] + $queryParams)
             ->with('success', __('Contact') . ' ' . __('restored successfully'));
     }
 

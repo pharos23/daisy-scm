@@ -27,7 +27,7 @@
             {{-- Buttons --}}
             <div class="flex gap-4 m-5 absolute bottom-5 right-5">
                 @if($contact->trashed() && $isAdmin)
-                    <form action="{{ route('contacts.restore', $contact->id) }}" method="POST">
+                    <form action="{{ route('contacts.restore', ['id' => $contact->id] + request()->all()) }}" method="POST">
                         @csrf
                         <button class="btn btn-info" type="submit" onclick="return confirm('{{ __('Are you sure you want to restore this contact?') }}')">
                             {{ __('Restore') }}
@@ -35,17 +35,17 @@
                     </form>
                 @endif
 
-                @can('delete-contact')
-                    <button class="btn btn-error" type="submit"
-                            onclick="if(confirm('{{ __('DeactivateIf') }}')) document.getElementById('delete-form-{{ $contact->id }}').submit()">
-                        {{__("Deactivate")}}
-                    </button>
+                    @can('delete-contact')
+                        <button class="btn btn-error" type="button"
+                                onclick="confirmAndSubmit('{{ route('contacts.destroy', $contact) }}')">
+                            {{__("Deactivate")}}
+                        </button>
 
-                    <form id="delete-form-{{ $contact->id }}"
-                          action="{{ route('contacts.destroy', $contact) }}" method="POST" class="hidden">
-                        @csrf
-                        @method('DELETE')
-                    </form>
+                        <form id="delete-form-{{ $contact->id }}"
+                              action="" method="POST" class="hidden">
+                            @csrf
+                            @method('DELETE')
+                        </form>
                 @else
                     <button class="btn btn-error" disabled="disabled">{{__("Deactivate")}}</button>
                 @endcan
@@ -98,6 +98,24 @@
             const tabInput = document.querySelector(`input[aria-label="${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}"]`);
             if (tabInput) {
                 tabInput.checked = true;
+            }
+        }
+    </script>
+
+    <script>
+        function confirmAndSubmit(deleteUrl) {
+            if (confirm("{{ __('DeactivateIf') }}")) {
+                const form = document.getElementById('delete-form-{{ $contact->id }}');
+                const url = new URL(deleteUrl);
+                const params = new URLSearchParams(window.location.search);
+
+                // Append all current query params to the delete URL
+                params.forEach((value, key) => {
+                    url.searchParams.set(key, value);
+                });
+
+                form.setAttribute('action', url.toString());
+                form.submit();
             }
         }
     </script>
