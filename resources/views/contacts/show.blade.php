@@ -26,10 +26,19 @@
 
             {{-- Buttons --}}
             <div class="flex gap-4 m-5 absolute bottom-5 right-5">
+                @if($contact->trashed() && $isAdmin)
+                    <form action="{{ route('contacts.restore', $contact->id) }}" method="POST">
+                        @csrf
+                        <button class="btn btn-info" type="submit" onclick="return confirm('{{ __('Are you sure you want to restore this contact?') }}')">
+                            {{ __('Restore') }}
+                        </button>
+                    </form>
+                @endif
+
                 @can('delete-contact')
                     <button class="btn btn-error" type="submit"
-                            onclick="if(confirm('Tem a certeza que deseja apagar este contacto?')) document.getElementById('delete-form-{{ $contact->id }}').submit()">
-                        {{__("Delete")}}
+                            onclick="if(confirm('{{ __('DeactivateIf') }}')) document.getElementById('delete-form-{{ $contact->id }}').submit()">
+                        {{__("Deactivate")}}
                     </button>
 
                     <form id="delete-form-{{ $contact->id }}"
@@ -38,7 +47,7 @@
                         @method('DELETE')
                     </form>
                 @else
-                    <button class="btn btn-error" disabled="disabled">{{__("Delete")}}</button>
+                    <button class="btn btn-error" disabled="disabled">{{__("Deactivate")}}</button>
                 @endcan
                 @can('edit-contact')
                     <button id="save-button" class="btn btn-primary" type="button">{{__("Save")}}</button>

@@ -76,6 +76,9 @@ Route::group(['middleware' => ['permission:view-contact']], function () {
     Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])
         ->middleware('permission:delete-contact')
         ->name('contacts.destroy');
+
+    Route::post('/contacts/{id}/restore', [ContactController::class, 'restore'])
+        ->name('contacts.restore');
 });
 
 Route::get('/export-contacts', [ContactController::class, 'export'])->name('contacts.export');

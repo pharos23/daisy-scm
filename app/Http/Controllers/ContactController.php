@@ -106,8 +106,20 @@ class ContactController extends Controller
      */
     public function show($id)
     {
-        $contact = Contact::find($id);
-        return view('contacts.show', compact('contact'));
+        $contact = Contact::withTrashed()->find($id);
+
+        if (!$contact) {
+            abort(404); // Optional: show 404 if not found at all
+        }
+
+        // If the contact is soft deleted, only allow Admins or Super Admins to view
+        if ($contact->trashed() && !auth()->user()->hasRole('Admin') && !auth()->user()->hasRole('Super Admin')) {
+            abort(403);
+        }
+
+        $isAdmin = auth()->user()->hasRole('Admin') || auth()->user()->hasRole('Super Admin');
+
+        return view('contacts.show', compact('contact', 'isAdmin'));
     }
 
     /**
@@ -163,7 +175,21 @@ class ContactController extends Controller
         $contact->delete();
 
         return redirect()->route('contacts.index')
-            ->with('deleted', __('Contact') . ' ' . __('deleted successfully'));
+            ->with('deleted', __('Contact') . ' ' . __('deactivated successfully'));
+    }
+
+    public function restore($id)
+    {
+        $contact = Contact::onlyTrashed()->findOrFail($id);
+
+        if (!auth()->user()->hasRole('Admin') && !auth()->user()->hasRole('Super Admin')) {
+            abort(403);
+        }
+
+        $contact->restore();
+
+        return redirect()->route('contacts.show', $contact->id)
+            ->with('success', __('Contact') . ' ' . __('restored successfully'));
     }
 
     /**

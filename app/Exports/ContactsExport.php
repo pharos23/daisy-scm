@@ -85,7 +85,7 @@ class ContactsExport implements FromCollection, WithHeadings, WithMapping, WithC
             $row->iccid,
             $row->equipamento,
             $row->serial_number,
-            "'" . $row->imei, // Prefix with apostrophe to preserve format
+            "'" . $row->imei, // Prefix with apostrophe to preserve the format
             $row->obs,
         ];
     }
