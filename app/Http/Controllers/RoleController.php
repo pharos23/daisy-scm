@@ -10,8 +10,15 @@ use Illuminate\View\View;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
+/**
+ * Controller for managing user roles using Spatie Permission.
+ * Handles listing, creating, updating, and deleting roles.
+ */
 class RoleController extends Controller
 {
+    /**
+     * Apply middleware for authentication and authorization on each action.
+     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -20,8 +27,11 @@ class RoleController extends Controller
         $this->middleware('permission:edit-role', ['only' => ['edit','update']]);
         $this->middleware('permission:delete-role', ['only' => ['destroy']]);
     }
+
     /**
-     * Display a listing of the resource.
+     * Display a paginated list of roles with their permissions.
+     *
+     * @return View
      */
     public function index(): View
     {
@@ -37,7 +47,7 @@ class RoleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new role (not used).
      */
     public function create(): View
     {
@@ -45,7 +55,10 @@ class RoleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new role and assign selected permissions.
+     *
+     * @param StoreRoleRequest $request
+     * @return RedirectResponse
      */
     public function store(StoreRoleRequest $request): RedirectResponse
     {
@@ -53,6 +66,7 @@ class RoleController extends Controller
 
         $permissions = Permission::whereIn('id', $request->permissions)->get(['name'])->toArray();
 
+        // Assign permissions to role
         $role->syncPermissions($permissions);
 
         return redirect()->route('roles.index')
@@ -60,7 +74,9 @@ class RoleController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Redirects to the index. No specific role detail view implemented.
+     *
+     * @return RedirectResponse
      */
     public function show(): RedirectResponse
     {
@@ -68,7 +84,10 @@ class RoleController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the edit form for a role (not used).
+     *
+     * @param Role $role
+     * @return View
      */
     public function edit(Role $role): View
     {
@@ -76,7 +95,11 @@ class RoleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a role's name and permissions.
+     *
+     * @param UpdateRoleRequest $request
+     * @param Role $role
+     * @return RedirectResponse
      */
     public function update(UpdateRoleRequest $request, Role $role): RedirectResponse
     {
@@ -93,7 +116,10 @@ class RoleController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a role unless it is protected (e.g. Super Admin or own role).
+     *
+     * @param Role $role
+     * @return RedirectResponse
      */
     public function destroy(Role $role): RedirectResponse
     {
