@@ -11,25 +11,34 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Role;
 
+/**
+ * Controller for managing application users.
+ * Includes listing, creating, updating, deleting, and restoring users.
+ */
 class UserController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+
+        // Grant method-level access based on roles/permissions
         $this->middleware('permission:create-user|edit-user|delete-user', ['only' => ['index', 'show']]);
         $this->middleware('permission:create-user', ['only' => ['create', 'store']]);
         $this->middleware('permission:edit-user', ['only' => ['edit', 'update']]);
         $this->middleware('permission:delete-user', ['only' => ['destroy']]);
     }
 
+    /**
+     * Display a list of users with filtering, searching, and role/soft-delete support.
+     */
     public function index(Request $request): View
     {
         $query = User::query();
 
-        // Filter soft deletes
+        // Handle soft delete filtering
         $deletedFilter = $request->query('deleted', 'active');
 
-        // Apply search
+        // Search by name or username
         if ($request->filled('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
@@ -38,7 +47,7 @@ class UserController extends Controller
             });
         }
 
-        // Apply role filter
+        // Filter by role
         if ($request->filled('role')) {
             $query->whereHas('roles', function ($q) use ($request) {
                 $q->where('name', $request->role);
@@ -60,6 +69,7 @@ class UserController extends Controller
 
         $users = $query->latest('id')->paginate(8)->withQueryString();
 
+        // Translation keys used in frontend validation
         $translations = [
             "validation.passwords_do_not_match" => __("validation.passwords_do_not_match"),
             "validation.password_strength" => __("validation.password_strength"),
@@ -83,16 +93,25 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Disabled route – search is handled via js.
+     */
     public function search(Request $request)
     {
         //
     }
 
+    /**
+     * Disabled route – creation is handled via modal.
+     */
     public function create(): View
     {
         abort(404);
     }
 
+    /**
+     * Store a newly created user with hashed password and roles.
+     */
     public function store(StoreUserRequest $request): RedirectResponse
     {
         $input = $request->all();
@@ -108,17 +127,25 @@ class UserController extends Controller
             ->withSuccess(__('User') . ' ' . __('created successfully'));
     }
 
-
+    /**
+     * Redirects to the list page. No dedicated user profile view is implemented.
+     */
     public function show(User $user): RedirectResponse
     {
         return redirect()->route('users.index');
     }
 
+    /**
+     * Disabled route – editing handled via modal.
+     */
     public function edit(User $user): View
     {
         abort(404);
     }
 
+    /**
+     * Update user details, password (optional), and roles.
+     */
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         $input = $request->all();
@@ -126,11 +153,12 @@ class UserController extends Controller
         // Convert checkbox to boolean once
         $input['force_password_change'] = $request->boolean('force_password_change');
 
+        // Only hash and update password if provided
         if (!empty($request->password)) {
             $input['password'] = Hash::make($request->password);
         } else {
+            // Exclude password from update if blank
             $input = $request->except('password');
-            // even if password is blank, still allow forcing password change
             $input['force_password_change'] = $request->boolean('force_password_change');
         }
 
@@ -141,12 +169,16 @@ class UserController extends Controller
             ->withSuccess(__('User') . ' ' . __('Updated successfully'));
     }
 
+    /**
+     * Soft delete a user (if allowed).
+     */
     public function destroy(User $user): RedirectResponse
     {
         if ($user->hasRole('Super Admin') || $user->id === auth()->id()) {
             abort(403,  __('USER DOES NOT HAVE THE RIGHT PERMISSIONS'));
         }
 
+        // Remove roles and soft-delete user
         $user->syncRoles([]);
         $user->delete();
 
@@ -154,6 +186,9 @@ class UserController extends Controller
             ->withSuccess(__('User') . ' ' . __('deactivated successfully'));
     }
 
+    /**
+     * Restore a soft-deleted user.
+     */
     public function restore($id)
     {
         $user = User::onlyTrashed()->findOrFail($id);
