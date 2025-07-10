@@ -21,6 +21,12 @@
                             <option value="{{ $role }}">{{ $role }}</option>
                         @endforeach
                     </select>
+
+                    <select id="filterDeleted" class="select select-bordered">
+                        <option value="active" {{ request('deleted') == 'active' ? 'selected' : '' }}>{{ __('Active') }}</option>
+                        <option value="deleted" {{ request('deleted') == 'deleted' ? 'selected' : '' }}>{{ __('Deleted') }}</option>
+                        <option value="all" {{ request('deleted') == 'all' ? 'selected' : '' }}>{{ __('All') }}</option>
+                    </select>
                 </div>
 
                 {{-- New User Button --}}
@@ -50,9 +56,15 @@
                             <td class="roles">
                                 <ul>
                                     @forelse ($user->getRoleNames() as $role)
-                                        <div class="badge badge-outline">{{ $role }}</div>
+                                        <li>
+                                            <div class="badge badge-outline">{{ $role }}</div>
+                                        </li>
                                     @empty
-                                        <li class="text-gray-400 italic">{{__("No role")}}</li>
+                                        <li>
+                                            <div class="badge badge-error text-white font-bold animate-pulse">
+                                                {{ __("No role") }}
+                                            </div>
+                                        </li>
                                     @endforelse
                                 </ul>
                             </td>
@@ -71,8 +83,25 @@
                                                 {{ __("Edit") }}
                                             </button>
                                             <button class="btn btn-sm btn-error" disabled>{{ __("Delete") }}</button>
+                                            @if($user->trashed())
+                                                <form action="{{ route('users.restore', $user->id) }}" method="POST" class="inline">
+                                                    @csrf
+                                                    <button class="btn btn-sm btn-info" onclick="return confirm('{{ __('Are you sure you want to restore this user?') }}')">
+                                                        {{ __('Restore') }}
+                                                    </button>
+                                                </form>
+                                            @endif
                                         @endif
                                     @else
+                                        @if($user->trashed())
+                                            <form action="{{ route('users.restore', $user->id) }}" method="POST" class="inline">
+                                                @csrf
+                                                <button class="btn btn-sm btn-info" onclick="return confirm('{{ __('Are you sure you want to restore this user?') }}')">
+                                                    {{ __('Restore') }}
+                                                </button>
+                                            </form>
+                                        @endif
+
                                         @can('edit-user')
                                             <button
                                                 class="btn btn-sm btn-primary open-edit-user"

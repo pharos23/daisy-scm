@@ -1,6 +1,7 @@
 export function setupSearchUser() {
     const searchInput = document.getElementById('userSearch');
     const roleFilter = document.getElementById('roleFilter');
+    const filterDeleted = document.getElementById('filterDeleted');
     const table = document.getElementById('usersTable');
     const paginationContainer = document.querySelector('.pagination')?.parentElement;
 
@@ -35,6 +36,25 @@ export function setupSearchUser() {
             })
             .catch(err => console.error('Error loading users:', err));
     }
+
+    [searchInput, filterDeleted].forEach(el => {
+        if (el) {
+            el.addEventListener('change', () => {
+                const search = searchInput.value;
+                const deleted = filterDeleted?.value || '';
+
+                const params = new URLSearchParams(window.location.search);
+                params.set('search', search);
+                if (deleted) {
+                    params.set('deleted', deleted);
+                } else {
+                    params.delete('deleted');
+                }
+
+                window.location.href = `${window.location.pathname}?${params.toString()}`;
+            });
+        }
+    });
 
     function applyFilters() {
         searchTerm = searchInput.value;

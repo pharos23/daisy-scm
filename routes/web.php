@@ -36,6 +36,9 @@ Route::middleware(['role:Admin|Super Admin'])->group(function () {
     Route::get('/user-search', [UserController::class, 'search'])
         ->name('users.search');
 
+    Route::post('/users/{id}/restore', [UserController::class, 'restore'])
+        ->name('users.restore');
+
     Route::resource('permissions',
         PermissionController::class)->only([
         'index', 'store', 'destroy'
