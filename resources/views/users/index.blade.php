@@ -124,7 +124,7 @@
                                         @endcan
 
                                         @can('delete-user')
-                                            @if (Auth::user()->id !== $user->id)
+                                            @if (!$user->trashed() && Auth::user()->id !== $user->id)
                                                 <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ __('Delete this user?') }}');">
                                                     @csrf
                                                     @method('DELETE')
