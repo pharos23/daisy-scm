@@ -125,7 +125,7 @@
 
                                         @can('deactivate-user')
                                             @if (!$user->trashed() && Auth::user()->id !== $user->id)
-                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ __('Delete this user?') }}');">
+                                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ __('Deactivate this user?') }}');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-sm btn-error">{{ __("Deactivate") }}</button>
