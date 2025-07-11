@@ -33,11 +33,11 @@
             <input type="file" id="import-file" name="file" accept=".xlsx,.csv" required />
         </form>
 
-        <button class="btn btn-success" id="trigger-import">
+        <button class="btn btn-neutral" id="trigger-import">
             {{ __('Import') }}
         </button>
 
-        <button class="btn btn-success" onclick="window.location.href='{{ route('contacts.export') }}'">
+        <button class="btn btn-neutral" onclick="window.location.href='{{ route('contacts.export') }}'">
             {{ __('Export') }}
         </button>
 
