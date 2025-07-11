@@ -174,7 +174,11 @@ class ContactController extends Controller
     {
         $contact->delete();
 
-        return redirect()->route('contacts.index')
+        // Get current query params
+        $queryParams = request()->query();
+
+        // Redirect back to same contact with filters preserved
+        return redirect()->route('contacts.index', ['id' => $contact->id] + $queryParams)
             ->with('deleted', __('Contact') . ' ' . __('deactivated successfully'));
     }
 
