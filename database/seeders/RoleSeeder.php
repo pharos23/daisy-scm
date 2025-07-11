@@ -29,7 +29,8 @@ class RoleSeeder extends Seeder
             'create-contact',
             'edit-contact',
             'deactivate-contact',
-            'restore-contact'
+            'restore-contact',
+            'excel-contact'
         ]);
 
 

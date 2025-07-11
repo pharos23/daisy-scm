@@ -24,7 +24,8 @@ class PermissionSeeder extends Seeder
             'create-contact',
             'edit-contact',
             'deactivate-contact',
-            'restore-contact'
+            'restore-contact',
+            'excel-contact',
         ];
 
         // Looping and Inserting Array's Permissions into Permission Table

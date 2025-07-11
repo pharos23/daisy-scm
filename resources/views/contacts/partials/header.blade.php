@@ -28,18 +28,20 @@
 
     {{-- Buttons --}}
     <div class="flex gap-4 ml-4">
-        <form id="import-form" action="{{ route('contacts.import') }}" method="POST" enctype="multipart/form-data" class="hidden">
-            @csrf
-            <input type="file" id="import-file" name="file" accept=".xlsx,.csv" required />
-        </form>
+        @can('excel-contact')
+            <form id="import-form" action="{{ route('contacts.import') }}" method="POST" enctype="multipart/form-data" class="hidden">
+                @csrf
+                <input type="file" id="import-file" name="file" accept=".xlsx,.csv" required />
+            </form>
 
-        <button class="btn btn-neutral" id="trigger-import">
-            {{ __('Import') }}
-        </button>
+            <button class="btn btn-neutral" id="trigger-import">
+                {{ __('Import') }}
+            </button>
 
-        <button class="btn btn-neutral" onclick="window.location.href='{{ route('contacts.export') }}'">
-            {{ __('Export') }}
-        </button>
+            <button class="btn btn-neutral" onclick="window.location.href='{{ route('contacts.export') }}'">
+                {{ __('Export') }}
+            </button>
+        @endcan
 
         @can('create-contact')
             <button class="btn btn-primary" onclick="modal_new.showModal()">{{ __('New') }}</button>

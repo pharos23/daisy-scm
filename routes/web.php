@@ -100,5 +100,7 @@ Route::group(['middleware' => ['permission:view-contact']], function () {
 // ----------------------
 // Export / Import
 // ----------------------
-Route::get('/export-contacts', [ContactController::class, 'export'])->name('contacts.export');
-Route::post('/contacts/import', [ContactController::class, 'import'])->name('contacts.import');
+Route::group(['middleware' => ['permission:excel-contact']], function () {
+    Route::get('/export-contacts', [ContactController::class, 'export'])->name('contacts.export');
+    Route::post('/contacts/import', [ContactController::class, 'import'])->name('contacts.import');
+});
