@@ -86,14 +86,14 @@
             </button>
         </div>
 
-        {{-- @if (Route::has('register'))
-        <div class="text-center mt-3">
-            <a class="btn btn-outline btn-sm mt-2" href="{{ route('register') }}">
-        {{ __('Register') }}
-            </a>
-</div>
-@endif--}}
-
+        {{-- Register Page
+        @if (Route::has('register'))
+            <div class="text-center mt-3">
+                <a class="btn btn-outline btn-sm mt-2" href="{{ route('register') }}">
+            {{ __('Register') }}
+                </a>
+            </div>
+        @endif --}}
     </form>
 </div>
 </body>

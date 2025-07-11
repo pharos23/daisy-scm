@@ -33,7 +33,7 @@
                             {{ __('Restore') }}
                         </button>
                     </form>
-                @elseif(!$contact->trashed() && Gate::allows('delete-contact'))
+                @elseif(!$contact->trashed() && auth()->user()->can('delete-contact'))
                     <button class="btn btn-error" type="button"
                             onclick="confirmAndSubmit('{{ route('contacts.destroy', $contact) }}')">
                         {{__("Deactivate")}}
