@@ -163,7 +163,7 @@ class ContactController extends Controller
         $contact->update($request->all());
 
         return redirect()->back()->with('success', __('Save successful'))
-            ->with('activeTab', 'ticketing'); // Keep "Equipment" tab active in UI
+            ->with('activeTab', 'equipamento'); // Keep "Equipment" tab active in UI
 
     }
 
@@ -174,11 +174,7 @@ class ContactController extends Controller
     {
         $contact->delete();
 
-        // Get current query params (local, group, search, page, etc.)
-        $queryParams = request()->query();
-
-        // Redirect back to index with filters preserved
-        return redirect()->route('contacts.show', ['id' => $contact->id] + $queryParams)
+        return redirect()->route('contacts.index')
             ->with('deleted', __('Contact') . ' ' . __('deactivated successfully'));
     }
 
