@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 
 // ----------------------
 // Laravel Authentication// Routes to redirect the user around the page
-
 // ----------------------
 Auth::routes(['register' => false]);
 
