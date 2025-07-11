@@ -93,7 +93,7 @@ Route::group(['middleware' => ['permission:view-contact']], function () {
         ->name('contacts.destroy');
 
     Route::post('/contacts/{id}/restore', [ContactController::class, 'restore'])
-        ->middleware('role:admin|super-admin')
+        ->middleware('role:admin|super admin')
         ->name('contacts.restore');
 });
 
