@@ -26,14 +26,14 @@
 
             {{-- Buttons --}}
             <div class="flex gap-4 m-5 absolute bottom-5 right-5">
-                @if($contact->trashed() && $isAdmin)
+                @if($contact->trashed() && auth()->user()->can('restore-contact'))
                     <form action="{{ route('contacts.restore', ['id' => $contact->id] + request()->all()) }}" method="POST">
                         @csrf
                         <button class="btn btn-info" type="submit" onclick="return confirm('{{ __('Are you sure you want to restore this contact?') }}')">
                             {{ __('Restore') }}
                         </button>
                     </form>
-                @elseif(!$contact->trashed() && auth()->user()->can('delete-contact'))
+                @elseif(!$contact->trashed() && auth()->user()->can('deactivate-contact'))
                     <button class="btn btn-error" type="button"
                             onclick="confirmAndSubmit('{{ route('contacts.destroy', $contact) }}')">
                         {{__("Deactivate")}}

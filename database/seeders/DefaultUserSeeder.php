@@ -32,13 +32,13 @@ class DefaultUserSeeder extends Seeder
         $admin->assignRole('Admin');
 
 
-        // Creating View User
+        // Creating Contact Manager User
         $user = User::create([
-            'name' => 'User Control',
-            'username' => 'user-control',
-            'password' => Hash::make('Usercontrol123')
+            'name' => 'Contact Manager',
+            'username' => 'contactmanager',
+            'password' => Hash::make('ContactManager123')
         ]);
-        $user->assignRole('User Control');
+        $user->assignRole('Contact Manager');
 
 
         // Creating View User

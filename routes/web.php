@@ -89,11 +89,11 @@ Route::group(['middleware' => ['permission:view-contact']], function () {
         ->name('contacts.updateTicket');
 
     Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])
-        ->middleware('permission:delete-contact')
+        ->middleware('permission:deactivate-contact')
         ->name('contacts.destroy');
 
     Route::post('/contacts/{id}/restore', [ContactController::class, 'restore'])
-        ->middleware('role:Admin|Super Admin')
+        ->middleware('permission:restore-contact')
         ->name('contacts.restore');
 });
 

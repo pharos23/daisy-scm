@@ -15,7 +15,7 @@ class RoleSeeder extends Seeder
     {
         Role::create(['name' => 'Super Admin']);
         $admin = Role::create(['name' => 'Admin']);
-        $usercontrol = Role::create(['name' => 'User Control']);
+        $contactmanager = Role::create(['name' => 'Contact Manager']);
         $user = Role::create(['name' => 'User']);
 
         $admin->givePermissionTo([
@@ -24,19 +24,20 @@ class RoleSeeder extends Seeder
             'delete-role',
             'create-user',
             'edit-user',
-            'delete-user',
+            'deactivate-user',
             'view-contact',
             'create-contact',
             'edit-contact',
-            'delete-contact'
+            'deactivate-contact',
+            'restore-contact'
         ]);
 
 
-        $usercontrol->givePermissionTo([
+        $contactmanager->givePermissionTo([
             'view-contact',
             'create-contact',
             'edit-contact',
-            'delete-contact'
+            'deactivate-contact'
         ]);
 
 
