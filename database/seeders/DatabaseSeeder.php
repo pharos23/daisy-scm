@@ -25,11 +25,9 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class,
             DefaultUserSeeder::class,
-
-            // ❗ Important: This is *not* a seeder class, it's a call to generate 20 fake contacts.
-            // It uses the ContactFactory to insert 20 records into the "contacts" table.
-            Contact::factory()->count(20)->create(),
-            Contact::factory()->count(20)->create(), // Use the Contact Factory to create 20 users
         ]);
+
+        // Optionally create 20 fake contacts (commented out by default)
+        Contact::factory()->count(20)->create();
     }
 }

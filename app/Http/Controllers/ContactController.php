@@ -186,7 +186,7 @@ class ContactController extends Controller
     {
         $contact = Contact::onlyTrashed()->findOrFail($id);
 
-        if (!auth()->user()->hasRole('Admin') && !auth()->user()->hasRole('Super Admin')) {
+        if (!auth()->user()->can('restore-contact')) {
             abort(403);
         }
 
