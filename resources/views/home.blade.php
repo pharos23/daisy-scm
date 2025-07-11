@@ -47,6 +47,11 @@
                             <div class="stat-value text-info">{{ $adminStats['topRole'] }}</div>
                             <div class="stat-desc">{{__("Most assigned")}}</div>
                         </div>
+                        <div class="col-span-full flex justify-center items-center text-center mt-4">
+                            <div class="stat-value text-info place-items-center">
+                                Vai um café {{ Auth::user()->name }}? ☕
+                            </div>
+                        </div>
                     </div>
 
                     <div class="card bg-base-100 shadow overflow-x-auto">
@@ -78,7 +83,6 @@
                             </table>
                         </div>
                     </div>
-
                     <div class="flex justify-end gap-4 mt-8">
                         <a href="{{ route('users.index') }}" class="btn btn-primary">{{__("Manage")}} {{__("Users")}}</a>
                     </div>
@@ -87,6 +91,7 @@
 
             {{-- Contact Dashboard (default for non-admins, available for admins in tab) --}}
             @if ($activeTab === 'contact')
+                @can('view-contacts')
                 <div class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="stat shadow place-items-center">
@@ -138,6 +143,7 @@
                         <a href="{{ route('contacts.index') }}" class="btn btn-primary">{{__("Manage")}} {{__("Contacts")}}</a>
                     </div>
                 </div>
+                @endcan
             @endif
         </div>
     </div>
