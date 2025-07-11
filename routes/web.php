@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 
 // ----------------------
 // Laravel Authentication// Routes to redirect the user around the page
-
 // ----------------------
 Auth::routes(['register' => false]);
 
@@ -54,7 +53,7 @@ Route::middleware(['auth'])->group(function () {
             'users' => UserController::class,
         ]);
 
-        // User search & restore
+        // User search and restore
         Route::get('/user-search', [UserController::class, 'search'])->name('users.search');
         Route::post('/users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
 
