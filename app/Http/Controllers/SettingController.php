@@ -68,6 +68,6 @@ class SettingController extends Controller
 
         $user->save();
 
-        return redirect()->route('userSettings.edit')->with('success', __('Settings') .' '. __('updated successfully')); // Returns to the user settings with a success message, acts like a refresh
+        return redirect()->route('userSettings.edit')->with('success', __('Settings') .' '. __('Updateda successfully')); // Returns to the user settings with a success message, acts like a refresh
     }
 }
