@@ -28,6 +28,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Optionally create 20 fake contacts (commented out by default)
-        Contact::factory()->count(20)->create();
+        // Contact::factory()->count(20)->create();
     }
 }
