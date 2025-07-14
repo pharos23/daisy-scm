@@ -213,23 +213,28 @@ class ContactController extends Controller
      */
     public function import(Request $request)
     {
+        // Validate the incoming request
         $request->validate([
             'file' => 'required|file|mimes:xlsx,xls,csv',
         ]);
 
+        // Check if the file is present and valid
         if (!$request->hasFile('file') || !$request->file('file')->isValid()) {
-            return back()->withErrors(['file' => __('Invalid or missing file.')]);
-        }
-
-        try {
-            Excel::import(new ContactsImport, $request->file('file')->getRealPath());
-            // Optional: Also works — Excel::import(new ContactsImport, $request->file('file'));
-        } catch (\Throwable $e) {
             return back()->withErrors([
-                'file' => __('Import failed: ') . $e->getMessage()
+                'file' => __('Invalid or missing file.'),
             ]);
         }
 
-        return back()->with('success', __('Contacts') . ' ' . __('imported successfully'));
+        try {
+            // Use the file object directly so Laravel Excel can detect the extension
+            Excel::import(new ContactsImport, $request->file('file'));
+
+            return back()->with('success', __('Contacts') . ' ' . __('imported successfully.'));
+        } catch (\Throwable $e) {
+            // Catch any exception and show a friendly message
+            return back()->withErrors([
+                'file' => __('Import failed: ') . $e->getMessage(),
+            ]);
+        }
     }
 }
