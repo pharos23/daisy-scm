@@ -213,34 +213,27 @@ class ContactController extends Controller
      */
     public function import(Request $request)
     {
-        // Validate the incoming request
         $request->validate([
             'file' => 'required|file|mimes:xlsx,xls,csv',
         ]);
 
-        // Check if the file is present and valid
         if (!$request->hasFile('file') || !$request->file('file')->isValid()) {
-            return back()->withErrors([
-                'file' => __('Invalid or missing file.'),
-            ]);
+            return back()->withErrors(['file' => __('Invalid or missing file.')]);
         }
 
-        dd([
-            'hasFile'   => $request->hasFile('file'),
-            'isValid'   => $request->file('file')->isValid(),
-            'originalName' => $request->file('file')->getClientOriginalName(),
-            'realPath'  => $request->file('file')->getRealPath(),
-            'exists'    => file_exists($request->file('file')->getRealPath()),
-            'tempDir'   => sys_get_temp_dir(),
-        ]);
-
         try {
-            // Use the file object directly so Laravel Excel can detect the extension
-            Excel::import(new ContactsImport, $request->file('file'));
+            // Save the uploaded file to storage/app/imports/
+            $filename = 'contacts_import_' . time() . '.' . $request->file('file')->getClientOriginalExtension();
+            $path = $request->file('file')->storeAs('imports', $filename);
+
+            // Use the full path for import
+            Excel::import(new ContactsImport, storage_path('app/' . $path));
+
+            // Optional: delete the file after import
+            Storage::delete($path);
 
             return back()->with('success', __('Contacts') . ' ' . __('imported successfully.'));
         } catch (\Throwable $e) {
-            // Catch any exception and show a friendly message
             return back()->withErrors([
                 'file' => __('Import failed: ') . $e->getMessage(),
             ]);
