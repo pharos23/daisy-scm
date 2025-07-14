@@ -217,9 +217,19 @@ class ContactController extends Controller
             'file' => 'required|file|mimes:xlsx,xls,csv',
         ]);
 
-        Excel::import(new ContactsImport, $request->file('file'));
+        if (!$request->hasFile('file') || !$request->file('file')->isValid()) {
+            return back()->withErrors(['file' => __('Invalid or missing file.')]);
+        }
+
+        try {
+            Excel::import(new ContactsImport, $request->file('file')->getRealPath());
+            // Optional: Also works — Excel::import(new ContactsImport, $request->file('file'));
+        } catch (\Throwable $e) {
+            return back()->withErrors([
+                'file' => __('Import failed: ') . $e->getMessage()
+            ]);
+        }
 
         return back()->with('success', __('Contacts') . ' ' . __('imported successfully'));
     }
-
 }
