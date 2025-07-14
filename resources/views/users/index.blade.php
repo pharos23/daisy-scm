@@ -109,18 +109,26 @@
                                         @endif
 
                                         @can('edit-user')
-                                            <button
-                                                class="btn btn-sm btn-primary open-edit-user"
-                                                data-id="{{ $user->id }}"
-                                                data-name="{{ $user->name }}"
-                                                data-username="{{ $user->username }}"
-                                                data-roles='@json($user->getRoleNames())'
-                                                data-force-password-change="{{ $user->force_password_change ? 'true' : 'false' }}"
-                                            >
+                                            @if ($user->deleted_at)
+                                                <button class="btn btn-sm btn-primary" disabled>
+                                                    {{ __("Edit") }}
+                                                </button>
+                                            @else
+                                                <button
+                                                    class="btn btn-sm btn-primary open-edit-user"
+                                                    data-id="{{ $user->id }}"
+                                                    data-name="{{ $user->name }}"
+                                                    data-username="{{ $user->username }}"
+                                                    data-roles='@json($user->getRoleNames())'
+                                                    data-force-password-change="{{ $user->force_password_change ? 'true' : 'false' }}"
+                                                >
+                                                    {{ __("Edit") }}
+                                                </button>
+                                            @endif
+                                        @else
+                                            <button class="btn btn-sm btn-primary" disabled>
                                                 {{ __("Edit") }}
                                             </button>
-                                        @else
-                                            <button class="btn btn-sm btn-primary" disabled>{{ __("Edit") }}</button>
                                         @endcan
 
                                         @can('deactivate-user')
