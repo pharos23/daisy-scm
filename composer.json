@@ -8,6 +8,13 @@
         "framework"
     ],
     "license": "MIT",
+
+    "authors": [
+        {
+            "name": "Fábio & Ricardo"
+        }
+    ],
+
     "require": {
         "php": "^8.2",
         "laravel/framework": "^12.0",
