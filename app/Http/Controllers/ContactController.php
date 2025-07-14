@@ -225,6 +225,15 @@ class ContactController extends Controller
             ]);
         }
 
+        dd([
+            'hasFile'   => $request->hasFile('file'),
+            'isValid'   => $request->file('file')->isValid(),
+            'originalName' => $request->file('file')->getClientOriginalName(),
+            'realPath'  => $request->file('file')->getRealPath(),
+            'exists'    => file_exists($request->file('file')->getRealPath()),
+            'tempDir'   => sys_get_temp_dir(),
+        ]);
+
         try {
             // Use the file object directly so Laravel Excel can detect the extension
             Excel::import(new ContactsImport, $request->file('file'));
