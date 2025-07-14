@@ -91,7 +91,7 @@
 
             {{-- Contact Dashboard (default for non-admins, available for admins in tab) --}}
             @if ($activeTab === 'contact')
-                @can('view-contacts')
+                @can('view-contact')
                 <div class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="stat shadow place-items-center">
@@ -143,8 +143,8 @@
                         <a href="{{ route('contacts.index') }}" class="btn btn-primary">{{__("Manage")}} {{__("Contacts")}}</a>
                     </div>
                 </div>
-                @endcan
             @endif
         </div>
     </div>
+    @endcan
 @endsection
